@@ -37,7 +37,8 @@ export default {
       },
     }),
     Credentials({
-      name: "mobile",
+      id: "mobile-otp",
+      name: "Mobile OTP",
       credentials: {
         phone: { label: "Phone", type: "text" },
         otp: { label: "OTP", type: "text" },
@@ -54,11 +55,11 @@ export default {
         });
 
         if (!user && !credentials.isSignup) {
-          return null; // User not found and not signing up
+          return null;
         }
 
         const isValid = await verifyOTP(
-          user ? BigInt(user.id) : BigInt(0),
+          user ? user.id : "",
           Number(credentials.otp),
         );
 
@@ -67,7 +68,7 @@ export default {
         }
 
         if (!user && credentials.isSignup) {
-          
+
           const newUser = await db.user.create({
             data: {
               phone: String(credentials.phone),

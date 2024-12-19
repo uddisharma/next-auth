@@ -2,14 +2,13 @@ import { db } from "@/lib/db";
 
 export const getUserByEmailorPhone = async (email: string, phone?: string) => {
   try {
-
     if (email && phone) {
 
-      const user = await db.user.findUnique({
+      const user = await db.user.findFirst({
         where: {
-          OR: [{ email: email }, { phone: phone }],
+          OR: [{ email }, { phone }],
         },
-      } as any);
+      });
 
       return user
 
