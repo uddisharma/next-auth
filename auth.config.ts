@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { LoginSchema } from "@/schemas";
+import { LoginSchema, LoginWithPhoneSchema } from "@/schemas";
 import { getUserByEmailorPhone } from "@/data/user";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
@@ -16,14 +16,14 @@ export default {
     }),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     Credentials({
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
-        if (credentials.loginType == "EMAIL") {
-          if (validatedFields.success) {
 
+        if (credentials.loginType === "EMAIL") {
+          if (validatedFields.success) {
             const { email, password } = validatedFields.data;
             const user = await getUserByEmailorPhone(email);
 
@@ -34,59 +34,34 @@ export default {
             if (passwordsMatch) return user;
           }
         }
-        if (credentials.loginType == "PHONE") {
-          if(!validatedFields.success) return null
-          const user = await getUserByEmailorPhone(validatedFields.data.email);
-          return user
+
+        if (credentials.loginType === "PHONE") {
+          const validatedPhoneFields = LoginWithPhoneSchema.safeParse(credentials);
+
+          if (!validatedPhoneFields.success) return null;
+
+          const { phone, otp } = validatedPhoneFields.data;
+
+          // Check if the user exists by phone
+          const user = await db.user.findUnique({
+            where: { phone },
+          });
+
+          if (!user) {
+            return null; // User does not exist
+          }
+
+          // Verify OTP
+          const isValid = await verifyOTP(user.id, otp);
+          if (!isValid) {
+            throw new Error("Invalid OTP");
+          }
+
+          return { ...user, id: user.id.toString() };
         }
+
         return null;
       },
     }),
-    // Credentials({
-    //   id: "mobile-otp",
-    //   name: "Mobile OTP",
-    //   credentials: {
-    //     phone: { label: "Phone", type: "text" },
-    //     otp: { label: "OTP", type: "text" },
-    //     email: { label: "Email", type: "email" },
-    //     isSignup: { label: "Is Signup", type: "boolean" },
-    //   },
-    //   async authorize(credentials) {
-    //     if (!credentials?.phone || !credentials?.otp) {
-    //       throw new Error("Phone and OTP are required");
-    //     }
-
-    //     const user = await db.user.findUnique({
-    //       where: { phone: String(credentials.phone) },
-    //     });
-
-    //     if (!user && !credentials.isSignup) {
-    //       return null;
-    //     }
-
-    //     const isValid = await verifyOTP(
-    //       user ? user.id : "",
-    //       Number(credentials.otp),
-    //     );
-
-    //     if (!isValid) {
-    //       throw new Error("Invalid OTP");
-    //     }
-
-    //     if (!user && credentials.isSignup) {
-
-    //       const newUser = await db.user.create({
-    //         data: {
-    //           phone: String(credentials.phone),
-    //           loginType: "PHONE",
-    //           email: String(credentials.email),
-    //         },
-    //       });
-    //       return { ...newUser, id: newUser.id.toString() };
-    //     }
-
-    //     return user ? { ...user, id: user.id.toString() } : null;
-    //   },
-    // })
   ],
 } satisfies NextAuthConfig;
