@@ -6,7 +6,8 @@ import { OtpSchema } from '@/schemas'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { signIn } from '@/auth'
+import { LoginWithOtp } from '@/actions/loginwithotp'
+
 
 interface OtpFormProps {
     phone_email: { phone: string, email: string };
@@ -30,16 +31,10 @@ const OtpForm = ({ phone_email }: OtpFormProps) => {
         setSuccess("");
 
         startTransition(async () => {
-            const result = await signIn("credentials", {
-                phone: phone_email.phone,
-                otp: values.otp,
-                email: phone_email.email,
-                isSignup: true,
-                redirect: false,
-            });
-
-            console.log(result)
-
+            LoginWithOtp(values.otp).then((data) => { 
+               setError(data?.error);
+               setSuccess(data?.success);
+            })
         });
     };
     return (
