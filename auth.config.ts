@@ -21,66 +21,72 @@ export default {
     Credentials({
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
+        if (credentials.loginType == "EMAIL") {
+          if (validatedFields.success) {
 
-        if (validatedFields.success) {
-          const { email, password } = validatedFields.data;
-          const user = await getUserByEmailorPhone(email);
+            const { email, password } = validatedFields.data;
+            const user = await getUserByEmailorPhone(email);
 
-          if (!user || !user.password) return null;
+            if (!user || !user.password) return null;
 
-          const passwordsMatch = await bcrypt.compare(password, user.password);
+            const passwordsMatch = await bcrypt.compare(password, user.password);
 
-          if (passwordsMatch) return user;
+            if (passwordsMatch) return user;
+          }
         }
-
+        if (credentials.loginType == "PHONE") {
+          if(!validatedFields.success) return null
+          const user = await getUserByEmailorPhone(validatedFields.data.email);
+          return user
+        }
         return null;
       },
     }),
-    Credentials({
-      id: "mobile-otp",
-      name: "Mobile OTP",
-      credentials: {
-        phone: { label: "Phone", type: "text" },
-        otp: { label: "OTP", type: "text" },
-        email: { label: "Email", type: "email" },
-        isSignup: { label: "Is Signup", type: "boolean" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.phone || !credentials?.otp) {
-          throw new Error("Phone and OTP are required");
-        }
+    // Credentials({
+    //   id: "mobile-otp",
+    //   name: "Mobile OTP",
+    //   credentials: {
+    //     phone: { label: "Phone", type: "text" },
+    //     otp: { label: "OTP", type: "text" },
+    //     email: { label: "Email", type: "email" },
+    //     isSignup: { label: "Is Signup", type: "boolean" },
+    //   },
+    //   async authorize(credentials) {
+    //     if (!credentials?.phone || !credentials?.otp) {
+    //       throw new Error("Phone and OTP are required");
+    //     }
 
-        const user = await db.user.findUnique({
-          where: { phone: String(credentials.phone) },
-        });
+    //     const user = await db.user.findUnique({
+    //       where: { phone: String(credentials.phone) },
+    //     });
 
-        if (!user && !credentials.isSignup) {
-          return null;
-        }
+    //     if (!user && !credentials.isSignup) {
+    //       return null;
+    //     }
 
-        const isValid = await verifyOTP(
-          user ? user.id : "",
-          Number(credentials.otp),
-        );
+    //     const isValid = await verifyOTP(
+    //       user ? user.id : "",
+    //       Number(credentials.otp),
+    //     );
 
-        if (!isValid) {
-          throw new Error("Invalid OTP");
-        }
+    //     if (!isValid) {
+    //       throw new Error("Invalid OTP");
+    //     }
 
-        if (!user && credentials.isSignup) {
+    //     if (!user && credentials.isSignup) {
 
-          const newUser = await db.user.create({
-            data: {
-              phone: String(credentials.phone),
-              loginType: "PHONE",
-              email: String(credentials.email),
-            },
-          });
-          return { ...newUser, id: newUser.id.toString() };
-        }
+    //       const newUser = await db.user.create({
+    //         data: {
+    //           phone: String(credentials.phone),
+    //           loginType: "PHONE",
+    //           email: String(credentials.email),
+    //         },
+    //       });
+    //       return { ...newUser, id: newUser.id.toString() };
+    //     }
 
-        return user ? { ...user, id: user.id.toString() } : null;
-      },
-    })
+    //     return user ? { ...user, id: user.id.toString() } : null;
+    //   },
+    // })
   ],
 } satisfies NextAuthConfig;
