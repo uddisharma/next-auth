@@ -38,26 +38,25 @@ export default {
         if (credentials.loginType === "PHONE") {
           const validatedPhoneFields = LoginWithPhoneSchema.safeParse(credentials);
 
-          if (!validatedPhoneFields.success) return null;
+          if (validatedPhoneFields.success) {
 
-          const { phone, otp } = validatedPhoneFields.data;
+            const { phone, otp } = validatedPhoneFields.data;
 
-          // Check if the user exists by phone
-          const user = await db.user.findUnique({
-            where: { phone },
-          });
+            const user = await db.user.findUnique({
+              where: { phone },
+            });
 
-          if (!user) {
-            return null; // User does not exist
+            if (!user) {
+              return null;
+            }
+
+            const isValid = await verifyOTP(user.id, otp);
+            if (!isValid) {
+              throw new Error("Invalid OTP");
+            }
+
+            return user
           }
-
-          // Verify OTP
-          const isValid = await verifyOTP(user.id, otp);
-          if (!isValid) {
-            throw new Error("Invalid OTP");
-          }
-
-          return { ...user, id: user.id.toString() };
         }
 
         return null;
