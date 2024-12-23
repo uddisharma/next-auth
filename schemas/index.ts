@@ -11,6 +11,7 @@ export const LoginSchema = z.object({
   code: z.optional(z.string()),
 });
 export const LoginWithPhoneSchema = z.object({
+  email: z.string().email("Invalid email"),
   phone: z.string().min(10, ({ message: "Phone number is required" })),
   otp: z.string().length(6, { message: "OTP must be exactly 6 digits" }),
 });

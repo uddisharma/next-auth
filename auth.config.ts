@@ -40,19 +40,18 @@ export default {
 
           if (validatedPhoneFields.success) {
 
-            const { phone, otp } = validatedPhoneFields.data;
+            const { email, phone, otp } = validatedPhoneFields.data;
 
-            const user = await db.user.findUnique({
-              where: { phone },
-            });
+            const user = await getUserByEmailorPhone(email);
 
             if (!user) {
               return null;
             }
 
-            const isValid = await verifyOTP(user.id, otp);
+            const isValid = await verifyOTP(user.id, Number(otp));
             if (!isValid) {
               throw new Error("Invalid OTP");
+              
             }
 
             return user

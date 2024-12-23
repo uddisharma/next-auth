@@ -6,7 +6,10 @@ import { OtpSchema } from '@/schemas'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { signIn } from '@/auth'
+import { useSearchParams } from 'next/navigation'
+import { FormError } from '../form-error'
+import { FormSucess } from '../form-sucess'
+import { loginOTP } from '@/actions/loginotp'
 
 interface OtpFormProps {
     phone_email: { phone: string, email: string };
@@ -16,6 +19,13 @@ const OtpForm = ({ phone_email }: OtpFormProps) => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
+
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl");
+    const urlError =
+        searchParams.get("error") === "OAuthAccountNotLinked"
+            ? "Email already in use with different Provider!"
+            : "";
 
     // OTP form
     const otpForm = useForm<z.infer<typeof OtpSchema>>({
@@ -29,17 +39,21 @@ const OtpForm = ({ phone_email }: OtpFormProps) => {
         setError("");
         setSuccess("");
 
-        startTransition(async () => {
-            const result = await signIn("credentials", {
-                phone: phone_email.phone,
-                otp: values.otp,
-                email: phone_email.email,
-                isSignup: true,
-                redirect: false,
-            });
+        startTransition(() => {
+            loginOTP({ ...phone_email, otp: values.otp }, callbackUrl)
+                .then((data) => {
+                    if (data?.error) {
+                        otpForm.reset();
+                        setError(data?.error);
+                    }
 
-            console.log(result)
+                    if (data?.success) {
+                        otpForm.reset();
+                        setSuccess(data?.success);
+                    }
 
+                })
+                .catch(() => setError("Something went wrong"));
         });
     };
     return (
@@ -69,8 +83,8 @@ const OtpForm = ({ phone_email }: OtpFormProps) => {
                 </div>
 
                 {/* Error and Success Messages */}
-                {error && <p className="text-red-500">{error}</p>}
-                {success && <p className="text-green-500">{success}</p>}
+                <FormError message={error || urlError} />
+                <FormSucess message={success} />
 
                 {/* Submit Button */}
                 <Button disabled={isPending} type="submit" className="w-full">
