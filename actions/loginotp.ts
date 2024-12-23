@@ -6,6 +6,8 @@ import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { LoginWithPhoneSchema } from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { getUserByEmailorPhone } from "@/data/user";
+import { verifyOTP } from "@/data/verifyOtp";
 
 export const loginOTP = async (
     values: z.infer<typeof LoginWithPhoneSchema>,
@@ -18,6 +20,18 @@ export const loginOTP = async (
     }
 
     const { phone, otp, email } = validatedFields.data;
+
+
+    const user = await getUserByEmailorPhone(email);
+
+    if (!user) {
+        return { error: "User not found!" };
+    }
+
+    const isValid = await verifyOTP(user.id, Number(otp));
+    if (!isValid) {
+        return { error: "Invalid OTP!" };
+    }
 
     try {
         await signIn("credentials", {
