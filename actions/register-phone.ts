@@ -4,6 +4,7 @@ import * as z from "zod";
 import { RegisterWithOtpSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmailorPhone } from "@/data/user";
+import { generateOtp } from "@/lib/otp";
 
 async function sendSMS(phone: string, message: string): Promise<void> {
     console.log(`Sending SMS to ${phone}: ${message}`);
@@ -20,12 +21,19 @@ export const registerWithOTP = async (values: z.infer<typeof RegisterWithOtpSche
 
     const existingUser = await getUserByEmailorPhone(email, phone);
 
-    if (existingUser) {
-        return { error: "Email or Phone already in use!" };
+    if(existingUser?.email==email &&existingUser.phone==phone){
+        return {error:'Email and Phone both are already in use!'}
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000);
-    const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+    if(existingUser?.email==email){
+        return{ error:"Email already in use!"}
+    }
+
+    if(existingUser?.phone==phone){
+        return {error:"Phone already in use!"}
+    }
+
+    const { otp, otpExpires } = generateOtp()
 
     await db.user.create({
         data: {

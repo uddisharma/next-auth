@@ -10,8 +10,9 @@ export const LoginSchema = z.object({
   }),
   code: z.optional(z.string()),
 });
+
 export const LoginWithPhoneSchema = z.object({
-  email: z.string().email("Invalid email"),
+  email: z.string(),
   phone: z.string().min(10, ({ message: "Phone number is required" })),
   otp: z.string().length(6, { message: "OTP must be exactly 6 digits" }),
 });
@@ -37,6 +38,11 @@ export const RegisterWithOtpSchema = z.object({
     .max(10, "Phone number must be at most 10 digits")
     .regex(/^\d+$/, "Phone number must contain only digits"),
 });
+
+export const PhoneSchema = z.object({
+  phone: z.string().min(10, 'Phone number must be at least 10 digits').max(10, 'Phone number is too long'),
+});
+
 
 export const OtpSchema = z.object({
   otp: z.string().min(6, "OTP must be 6 digits").max(6, "OTP must be 6 digits"),

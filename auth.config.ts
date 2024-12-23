@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { LoginSchema, LoginWithPhoneSchema } from "@/schemas";
-import { getUserByEmailorPhone } from "@/data/user";
+import { getUserByEmailorPhone, getUserByPhone } from "@/data/user";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
@@ -46,7 +46,13 @@ export default {
 
             const { email, phone } = validatedPhoneFields.data;
 
-            const user = await getUserByEmailorPhone(email, phone);
+            let user = null;
+
+            if (email == "") {
+              user = await getUserByPhone(phone)
+            } else {
+              user = await getUserByEmailorPhone(email, phone);
+            }
 
             if (!user) return null;
 

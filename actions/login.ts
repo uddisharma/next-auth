@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/schemas";
-import { getUserByEmailorPhone } from "@/data/user";
+import { getUserByEmail } from "@/data/user";
 import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";
 import {
@@ -16,6 +16,11 @@ import {
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+
+const capitalizeFirstLetter = (str: string | null): string => {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
@@ -29,10 +34,14 @@ export const login = async (
 
   const { email, password, code } = validatedFields.data;
 
-  const existingUser = await getUserByEmailorPhone(email);
+  const existingUser = await getUserByEmail(email);
 
-  if (!existingUser || !existingUser.email || !existingUser.password) {
+  if (!existingUser || !existingUser.email) {
     return { error: "Email does not exist!" };
+  }
+
+  if (existingUser.loginType !== "EMAIL") {
+    return { error: "Please login with " + capitalizeFirstLetter(existingUser.loginType) }
   }
 
   if (!existingUser.emailVerified) {
@@ -46,6 +55,10 @@ export const login = async (
     );
 
     return { success: "Confirmation email Sent!" };
+  }
+
+  if (existingUser.password === null) {
+    return { error: "Password is null" };
   }
 
   const passwordMatch = await bcrypt.compare(password, existingUser.password);
