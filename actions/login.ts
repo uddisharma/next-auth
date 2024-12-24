@@ -40,7 +40,7 @@ export const login = async (
     return { error: "Email does not exist!" };
   }
 
-  if (existingUser.loginType !== "EMAIL") {
+  if (existingUser.loginType && existingUser.loginType !== "EMAIL") {
     return { error: "Please login with " + capitalizeFirstLetter(existingUser.loginType) }
   }
 

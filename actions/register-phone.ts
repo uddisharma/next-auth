@@ -5,10 +5,7 @@ import { RegisterWithOtpSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmailorPhone } from "@/data/user";
 import { generateOtp } from "@/lib/otp";
-
-async function sendSMS(phone: string, message: string): Promise<void> {
-    console.log(`Sending SMS to ${phone}: ${message}`);
-}
+import { sendSMS } from "@/lib/sms";
 
 export const registerWithOTP = async (values: z.infer<typeof RegisterWithOtpSchema>) => {
     const validatedFields = RegisterWithOtpSchema.safeParse(values);

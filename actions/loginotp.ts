@@ -17,7 +17,6 @@ export const loginOTP = async (
 ) => {
     const validatedFields = LoginWithPhoneSchema.safeParse(values);
 
-
     if (!validatedFields.success) {
         return { error: "Invalid fields!" };
     }

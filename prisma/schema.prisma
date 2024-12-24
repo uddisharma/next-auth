@@ -7,17 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  ADMIN
-  USER
-}
-
-enum LoginType {
-  GOOGLE
-  PHONE
-  EMAIL
-}
-
 model User {
   id                      String                 @id @default(uuid())
   name                    String?
@@ -34,6 +23,19 @@ model User {
   otp                     Int?
   otpExpires              DateTime?
   loginType               LoginType?             @default(GOOGLE)
+  reports                 Report[]
+  firstName               String?                @db.VarChar(100)
+  lastName                String?                @db.VarChar(100)
+  gender                  Gender?                @default(MALE)
+  age                     Int?
+  location                String?
+  pinCode                 Int?
+  source                  String?
+  lastLogin               DateTime?
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+
+  blogs Blog[]
 
   @@map("users")
 }
@@ -95,4 +97,99 @@ model TwoFactorConfirmation {
 
   @@unique([userId])
   @@map("two_factor_confirmations")
+}
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  content     String   @db.Text
+  image       String?
+  published   Boolean  @default(false)
+  authorId    String
+  category    String   @db.VarChar(100)
+  subCategory String?  @db.VarChar(100)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@map("blogs")
+}
+
+model Report {
+  id             Int       @id @default(autoincrement())
+  userId         String
+  startTime      DateTime
+  endTime        DateTime
+  sessionId      String
+  recommendation Json
+  questions      Json[] // [{question: string, answer: string}]
+  deletedAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("reports")
+}
+
+model Question {
+  id           Int          @id @default(autoincrement())
+  text         String       @db.Text
+  sequence     Int
+  questionType QuestionType @default(SINGLE_SELECT)
+  required     Boolean      @default(true)
+  isActive     Boolean      @default(true)
+  isDeleted    Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @default(now()) @updatedAt
+
+  options Option[]
+
+  @@index([questionType])
+  @@map("questions")
+}
+
+model Option {
+  id         Int      @id @default(autoincrement())
+  questionId Int
+  text       String   @db.Text
+  sequence   Int
+  isActive   Boolean  @default(true)
+  isDeleted  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+  @@map("options")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  USER
+  EDITOR
+}
+
+enum QuestionType {
+  SINGLE_SELECT
+  MULTIPLE_SELECT
+  TEXT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum LoginType {
+  GOOGLE
+  PHONE
+  EMAIL
 }
