@@ -2,11 +2,26 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { addBlog, updateBlog } from "@/app/admin/blogs/actions";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { addBlog, updateBlog } from "@/actions/blogs";
+import { toast } from "sonner";
+import { Checkbox } from "./ui/checkbox";
+import { BlogSchema } from "@/schemas";
+
+type BlogFormValues = z.infer<typeof BlogSchema>;
 
 interface BlogFormProps {
   blog?: {
@@ -23,80 +38,109 @@ export default function BlogForm({ blog }: BlogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const form = useForm<BlogFormValues>({
+    resolver: zodResolver(BlogSchema),
+    defaultValues: {
+      title: blog?.title || "",
+      content: blog?.content || "",
+      category: blog?.category || "",
+      subCategory: blog?.subCategory || "",
+      published: blog?.published || false,
+    },
+  });
+
+  const onSubmit = async (values: BlogFormValues) => {
     setIsSubmitting(true);
-
-    const formData = new FormData(event.currentTarget);
-    const blogData = {
-      title: formData.get("title") as string,
-      content: formData.get("content") as string,
-      category: formData.get("category") as string,
-      subCategory: formData.get("subCategory") as string,
-      published: formData.get("published") === "on",
-    };
-
     try {
       if (blog) {
-        await updateBlog(blog.id, blogData);
+        await updateBlog(blog.id, values);
       } else {
-        await addBlog(blogData);
+        await addBlog(values);
       }
       router.push("/admin/blogs");
       router.refresh();
+      toast.success("Blog submitted successfully");
     } catch (error) {
-      console.error("Error submitting blog:", error);
-      alert("Failed to submit blog. Please try again.");
+      toast.error("Failed to submit blog");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label htmlFor="title">Title</Label>
-        <Input id="title" name="title" defaultValue={blog?.title} required />
-      </div>
-      <div>
-        <Label htmlFor="content">Content</Label>
-        <Textarea
-          id="content"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter blog title" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="content"
-          defaultValue={blog?.content}
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Content</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Enter blog content" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div>
-        <Label htmlFor="category">Category</Label>
-        <Input
-          id="category"
+        <FormField
+          control={form.control}
           name="category"
-          defaultValue={blog?.category}
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter category" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div>
-        <Label htmlFor="subCategory">Sub Category</Label>
-        <Input
-          id="subCategory"
+        <FormField
+          control={form.control}
           name="subCategory"
-          defaultValue={blog?.subCategory || ""}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Sub Category</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter sub category (optional)" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          id="published"
+        <FormField
+          control={form.control}
           name="published"
-          defaultChecked={blog?.published}
-          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          render={({ field }) => (
+            <FormItem className="flex items-center space-x-2">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>Published</FormLabel>
+            </FormItem>
+          )}
         />
-        <Label htmlFor="published">Published</Label>
-      </div>
-      <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : blog ? "Update Blog" : "Add Blog"}
-      </Button>
-    </form>
+        <Button type="submit" disabled={isSubmitting} className="w-full">
+          {isSubmitting ? "Submitting..." : blog ? "Update Blog" : "Add Blog"}
+        </Button>
+      </form>
+    </Form>
   );
 }

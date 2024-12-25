@@ -1,21 +1,19 @@
-// import { getServerSession } from "next-auth/next";
-// import { redirect } from "next/navigation";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/lib/db";
 import AdminProfileForm from "@/components/AdminProfileForm";
+import { currentUser } from "@/lib/auth";
 
 export default async function AdminProfilePage() {
-  // const session = await getServerSession(authOptions);
+  const session = await currentUser();
 
-  // if (
-  //   !session ||
-  //   (session.user.role !== "ADMIN" && session.user.role !== "SUPER_ADMIN")
-  // ) {
-  //   redirect("/auth/signin");
-  // }
+  if (
+    !session ||
+    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
+  ) {
+    throw new Error("Unauthorized");
+  }
 
   const user = await db.user.findUnique({
-    where: { id: "1" },
+    where: { id: session.id },
   });
 
   if (!user) {
@@ -25,7 +23,7 @@ export default async function AdminProfilePage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-4">Admin Profile</h1>
-      <AdminProfileForm user={{ ...user, id: BigInt(user.id), email: user.email || "" }} />
+      <AdminProfileForm user={{ ...user, name: user.name || "", email: user.email || "" }} />
     </div>
   );
 }

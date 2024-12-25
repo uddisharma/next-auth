@@ -9,7 +9,7 @@ import {
 
 interface ReportChartProps {
   data: Array<{
-    id: bigint;
+    id: string;
     createdAt: Date;
   }>;
 }

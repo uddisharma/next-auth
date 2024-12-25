@@ -1,16 +1,19 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import {db} from "@/lib/db";
-// import { getServerSession } from "next-auth/next";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { db } from "@/lib/db";
 import { reportSchema, type ReportFormData } from "@/schemas";
+import { currentUser } from "@/lib/auth";
 
 export async function submitReport(reportData: ReportFormData) {
-  // const session = await getServerSession(authOptions);
-  // if (!session) {
-  //   throw new Error("Unauthorized");
-  // }
+  const session = await currentUser();
+
+  if (
+    !session ||
+    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
+  ) {
+    throw new Error("Unauthorized");
+  }
 
   const validatedData = reportSchema.parse(reportData);
 
@@ -23,7 +26,7 @@ export async function submitReport(reportData: ReportFormData) {
         userId: userId.toString(),
         startTime: new Date(),
         endTime: new Date(),
-        sessionId: "", // Replace with actual session ID if available
+        sessionId: session.id,
         recommendation: {},
         questions: questions,
       },

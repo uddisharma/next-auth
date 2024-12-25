@@ -3,18 +3,18 @@
 import { revalidatePath } from "next/cache";
 import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
-// import { getServerSession } from "next-auth/next";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { userSchema, type UserFormData } from "@/schemas";
+import { currentUser } from "@/lib/auth";
 
 export async function addUser(userData: UserFormData) {
-  // const session = await getServerSession(authOptions);
-  // if (
-  //   !session ||
-  //   (session.user.role !== "ADMIN" && session.user.role !== "SUPER_ADMIN")
-  // ) {
-  //   throw new Error("Unauthorized");
-  // }
+  const session = await currentUser();
+
+  if (
+    !session ||
+    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
+  ) {
+    throw new Error("Unauthorized");
+  }
 
   const validatedData = userSchema.parse(userData);
 
@@ -27,13 +27,14 @@ export async function addUser(userData: UserFormData) {
 }
 
 export async function updateUser(userId: string, userData: UserFormData) {
-  // const session = await getServerSession(authOptions);
-  // if (
-  //   !session ||
-  //   (session.user.role !== "ADMIN" && session.user.role !== "SUPER_ADMIN")
-  // ) {
-  //   throw new Error("Unauthorized");
-  // }
+  const session = await currentUser();
+
+  if (
+    !session ||
+    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
+  ) {
+    throw new Error("Unauthorized");
+  }
 
   const validatedData = userSchema.parse(userData);
 

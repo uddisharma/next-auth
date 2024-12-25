@@ -107,10 +107,10 @@ export const userSchema = z.object({
   role: z.enum(["USER", "ADMIN", "SUPER_ADMIN", "EDITOR"]),
 });
 
-export const blogSchema = z.object({
-  title: z.string().min(5, "Title must be at least 5 characters"),
-  content: z.string().min(50, "Content must be at least 50 characters"),
-  category: z.string().min(2, "Category must be at least 2 characters"),
+export const BlogSchema = z.object({
+  title: z.string().min(10, "Title must be at least 10 characters long").max(255, "Title must be at least 255 characters long"),
+  content: z.string().min(10, "Content must be at least 10 characters long"),
+  category: z.string().min(2, "Category is required").max(100, "Content must be at most 100 characters long"),
   subCategory: z.string().optional(),
   published: z.boolean(),
 });
@@ -160,6 +160,6 @@ export const signinSchema = z.object({
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type SigninFormData = z.infer<typeof signinSchema>;
 export type UserFormData = z.infer<typeof userSchema>;
-export type BlogFormData = z.infer<typeof blogSchema>;
+export type BlogFormData = z.infer<typeof BlogSchema>;
 export type ReportFormData = z.infer<typeof reportSchema>;
 export type QuestionFormData = z.infer<typeof questionSchema>;

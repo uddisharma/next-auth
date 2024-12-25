@@ -110,7 +110,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
             <TableRow key={blog.id}>
               <TableCell>{blog.title}</TableCell>
               <TableCell>
-                {blog.author.firstName} {blog.author.lastName}
+                {blog.author.name}
               </TableCell>
               <TableCell>{blog.category}</TableCell>
               <TableCell>{blog.published ? "Yes" : "No"}</TableCell>

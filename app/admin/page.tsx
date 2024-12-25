@@ -1,14 +1,26 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getUsers } from "./users/actions";
-import { getBlogs } from "./blogs/actions";
+import { getBlogs } from "@/actions/blogs";
 import { getReports } from "../submit-report/actions";
 import { getQuestions } from "./questions/actions";
 import { StatCard } from "@/components/StatCard";
 import { UserChart } from "@/components/UserChart";
 import { ReportChart } from "@/components/ReportChart";
 import { BlogChart } from "@/components/BlogChart";
+import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function AdminDashboard() {
+
+  const session = await currentUser();
+
+  if (
+    !session ||
+    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
+  ) {
+    return redirect("/auth/login")
+  }
+
   const [users, blogs, reports, questions] = await Promise.all([
     getUsers(),
     getBlogs(),
@@ -44,7 +56,7 @@ export default async function AdminDashboard() {
           <CardContent>
             <UserChart
               data={users?.map((e) => {
-                return { id: BigInt(e.id), createdAt: e.createdAt };
+                return { id: e.id, createdAt: e.createdAt };
               })}
             />
           </CardContent>
@@ -57,7 +69,7 @@ export default async function AdminDashboard() {
             <ul className="space-y-2">
               {recentUsers.map((user) => (
                 <li key={user.id.toString()} className="text-sm">
-                  {user.firstName} {user.lastName} - {user.email}
+                  {user.name} - {user.email}
                 </li>
               ))}
             </ul>
@@ -73,7 +85,7 @@ export default async function AdminDashboard() {
           <CardContent>
             <ReportChart
               data={reports.map((report) => ({
-                id: BigInt(report.user.id),
+                id: report.user.id,
                 createdAt: report.createdAt,
               }))}
             />
@@ -87,7 +99,7 @@ export default async function AdminDashboard() {
             <ul className="space-y-2">
               {recentReports.map((report) => (
                 <li key={report.id.toString()} className="text-sm">
-                  {report.user.firstName} {report.user.lastName} -{" "}
+                  {report.user.name} -{" "}
                   {new Date(report.createdAt).toLocaleDateString()}
                 </li>
               ))}

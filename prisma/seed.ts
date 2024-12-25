@@ -1,4 +1,4 @@
-import {db} from "@/lib/db";
+import { db } from "@/lib/db";
 
 async function main() {
   // Create Users
@@ -81,13 +81,13 @@ async function main() {
         type: "oauth",
         provider: "google",
         providerAccountId: "google-account-id-1",
-        refreshToken: "refresh-token-1",
-        accessToken: "access-token-1",
-        expiresAt: Math.floor(Date.now() / 1000) + 3600, // 1 hour
-        tokenType: "Bearer",
+        refresh_token: "refresh-token-1",
+        access_token: "access-token-1",
+        expires_at: Math.floor(Date.now() / 1000) + 3600, // 1 hour
+        token_type: "Bearer",
         scope: "email profile",
-        idToken: "id-token-1",
-        sessionState: "active",
+        id_token: "id-token-1",
+        session_state: "active",
       },
     }),
     db.account.create({
@@ -96,13 +96,13 @@ async function main() {
         type: "oauth",
         provider: "google",
         providerAccountId: "google-account-id-2",
-        refreshToken: "refresh-token-2",
-        accessToken: "access-token-2",
-        expiresAt: Math.floor(Date.now() / 1000) + 3600, // 1 hour
-        tokenType: "Bearer",
+        refresh_token: "refresh-token-2",
+        access_token: "access-token-2",
+        expires_at: Math.floor(Date.now() / 1000) + 3600, // 1 hour
+        token_type: "Bearer",
         scope: "email profile",
-        idToken: "id-token-2",
-        sessionState: "active",
+        id_token: "id-token-2",
+        session_state: "active",
       },
     }),
     db.account.create({
@@ -111,38 +111,13 @@ async function main() {
         type: "oauth",
         provider: "facebook",
         providerAccountId: "facebook-account-id-1",
-        refreshToken: "refresh-token-3",
-        accessToken: "access-token-3",
-        expiresAt: Math.floor(Date.now() / 1000) + 3600, // 1 hour
-        tokenType: "Bearer",
+        refresh_token: "refresh-token-3",
+        access_token: "access-token-3",
+        expires_at: Math.floor(Date.now() / 1000) + 3600, // 1 hour
+        token_type: "Bearer",
         scope: "email public_profile",
-        idToken: "id-token-3",
-        sessionState: "active",
-      },
-    }),
-  ]);
-
-  // Create Sessions
-  const sessions = await Promise.all([
-    db.session.create({
-      data: {
-        sessionToken: "session-token-1",
-        userId: users[0].id,
-        expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
-      },
-    }),
-    db.session.create({
-      data: {
-        sessionToken: "session-token-2",
-        userId: users[1].id,
-        expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
-      },
-    }),
-    db.session.create({
-      data: {
-        sessionToken: "session-token-3",
-        userId: users[2].id,
-        expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+        id_token: "id-token-3",
+        session_state: "active",
       },
     }),
   ]);
@@ -197,7 +172,7 @@ async function main() {
         userId: users[0].id,
         startTime: new Date(),
         endTime: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
-        sessionId: sessions[0].sessionToken,
+        sessionId: users[0].id.toString(),
         recommendation: { message: "Keep up the good work!" },
         questions: [
           {
@@ -215,7 +190,7 @@ async function main() {
         userId: users[1].id,
         startTime: new Date(),
         endTime: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
-        sessionId: sessions[1].sessionToken,
+        sessionId: users[1].id.toString(),
         recommendation: { message: "Consider improving your response time." },
         questions: [
           {

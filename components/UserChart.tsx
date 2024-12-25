@@ -10,7 +10,7 @@ import {
 
 interface UserChartProps {
   data: Array<{
-    id: bigint;
+    id: string;
     createdAt: Date; // Assuming createdAt is a string
   }>;
 }

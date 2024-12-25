@@ -84,14 +84,14 @@ export default async function UsersPage({ searchParams }: PageProps) {
           {users.map((user) => (
             <TableRow key={user.id.toString()}>
               <TableCell>
-                {user.firstName} {user.lastName}
+                {user.name}
               </TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.role}</TableCell>
               <TableCell>
                 <UserActions
                   user={{
-                    id: BigInt(user.id),
+                    id: user.id,
                     email: user.email || "",
                   }}
                 />

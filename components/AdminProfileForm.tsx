@@ -9,7 +9,8 @@ import { updateAdminProfile } from "@/app/admin/profile/actions";
 
 interface AdminProfileFormProps {
   user: {
-    id: bigint;
+    id: string;
+    name: string;
     firstName: string | null;
     lastName: string | null;
     email: string;
@@ -27,6 +28,7 @@ export default function AdminProfileForm({ user }: AdminProfileFormProps) {
 
     const formData = new FormData(e.currentTarget);
     const userData = {
+      name: formData.get("name") as string,
       firstName: formData.get("firstName") as string,
       lastName: formData.get("lastName") as string,
       email: formData.get("email") as string,
@@ -45,6 +47,15 @@ export default function AdminProfileForm({ user }: AdminProfileFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <Label htmlFor="firstName">Name</Label>
+        <Input
+          id="name"
+          name="name"
+          defaultValue={user.name || ""}
+          required
+        />
+      </div>
       <div>
         <Label htmlFor="firstName">First Name</Label>
         <Input

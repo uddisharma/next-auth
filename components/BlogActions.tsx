@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 interface BlogActionsProps {
   blog: {
@@ -35,12 +36,12 @@ export default function BlogActions({ blog }: BlogActionsProps) {
       });
       if (response.ok) {
         router.refresh();
+        toast.success("Blog deleted successfully");
       } else {
-        throw new Error("Failed to delete blog");
+        toast.error("Blog failed to delete");
       }
     } catch (error) {
-      console.error("Error deleting blog:", error);
-      alert("Failed to delete blog. Please try again.");
+      toast.error("Failed to delete blog. Please try again.");
     } finally {
       setIsDeleting(false);
     }

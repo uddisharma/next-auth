@@ -7,10 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 
-export const metadata: Metadata = {
-  title: "Contact Us | Our Platform",
-  description: "Get in touch with us for any inquiries or support.",
-};
+// export const metadata: Metadata = {
+//   title: "Contact Us | Our Platform",
+//   description: "Get in touch with us for any inquiries or support.",
+// };
 
 export default function ContactUsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);

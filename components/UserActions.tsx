@@ -18,7 +18,7 @@ import {
 
 interface UserActionsProps {
   user: {
-    id: bigint;
+    id: string;
     email: string;
   };
 }
