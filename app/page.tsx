@@ -26,7 +26,7 @@ export default async function LandingPage1() {
               Streamline your reporting process and gain valuable insights with
               our powerful platform.
             </p>
-            <Link href="/auth/signup">
+            <Link href="/auth/register">
               <Button size="lg" variant="secondary">
                 Get Started
               </Button>

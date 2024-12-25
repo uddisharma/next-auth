@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getUsers } from "./users/actions";
 import { getBlogs } from "@/actions/blogs";
-import { getReports } from "../submit-report/actions";
+import { getReports } from "@/actions/submit-report";
 import { getQuestions } from "@/actions/questions";
 import { StatCard } from "@/components/StatCard";
 import { UserChart } from "@/components/UserChart";

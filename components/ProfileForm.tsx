@@ -17,6 +17,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { deleteProfile, updateProfile } from "@/actions/my-profile";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { FormControl, FormDescription, FormItem, FormLabel } from "./ui/form";
+import { Switch } from "./ui/switch";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface ProfileFormProps {
   user: {
@@ -26,6 +31,7 @@ interface ProfileFormProps {
     lastName: string | null;
     email: string;
     phone: string | null;
+    loginType: string | null;
   };
 }
 
@@ -33,6 +39,8 @@ export default function ProfileForm({ user }: ProfileFormProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
+  const { update } = useSession();
+  const session = useCurrentUser();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,11 +52,13 @@ export default function ProfileForm({ user }: ProfileFormProps) {
       lastName: formData.get("lastName") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
+      isTwoFactorEnabled: formData.get("isTwoFactorEnabled") == 'on',
     };
 
     try {
       await updateProfile(userData);
       router.refresh();
+      update();
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to update profile. Please try again.");
@@ -118,6 +128,12 @@ export default function ProfileForm({ user }: ProfileFormProps) {
           defaultValue={user.phone || ""}
         />
       </div>
+      {session?.isOAuth === false && user.loginType == "EMAIL" &&
+        <div>
+          <Label htmlFor="isTwoFactorEnabled">Enable Two-Factor Authentication</Label>
+          <Switch id="isTwoFactorEnabled" name="isTwoFactorEnabled" defaultChecked={session.isTwoFactorEnabled} />
+        </div>
+      }
       <Button type="submit" disabled={isUpdating}>
         {isUpdating ? "Updating..." : "Update Profile"}
       </Button>
@@ -143,6 +159,16 @@ export default function ProfileForm({ user }: ProfileFormProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </form>
+      <Link href="/">
+        <Button className="ml-4">
+          Go to Home
+        </Button>
+      </Link>
+      <Link href="/admin">
+        <Button className="ml-4" >
+          Admin
+        </Button>
+      </Link>
+    </form >
   );
 }

@@ -17,6 +17,9 @@ import {
 import { updateAdminProfile } from "@/actions/profile";
 import { toast } from "sonner";
 import { AdminProfileSchema, AdminFormData } from "@/schemas";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
 interface AdminProfileFormProps {
   user: {
     id: string;
@@ -25,12 +28,14 @@ interface AdminProfileFormProps {
     lastName: string | null;
     email: string;
     role: string;
+    loginType: string
   };
 }
 
 export default function AdminProfileForm({ user }: AdminProfileFormProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const router = useRouter();
+  const session = useCurrentUser();
 
   const form = useForm<AdminFormData>({
     resolver: zodResolver(AdminProfileSchema),
@@ -40,6 +45,7 @@ export default function AdminProfileForm({ user }: AdminProfileFormProps) {
       lastName: (user.lastName ?? user?.name?.split(" ")[1]) || "",
       email: user.email || "",
       role: user.role || "",
+      isTwoFactorEnabled: session?.isOAuth === false ? false : true,
     },
   });
 
@@ -132,6 +138,12 @@ export default function AdminProfileForm({ user }: AdminProfileFormProps) {
             </FormItem>
           )}
         />
+        {session?.isOAuth === false && user.loginType == "EMAIL" &&
+          <div>
+            <Label htmlFor="isTwoFactorEnabled">Enable Two-Factor Authentication</Label>
+            <Switch id="isTwoFactorEnabled" name="isTwoFactorEnabled" defaultChecked={session.isTwoFactorEnabled} />
+          </div>
+        }
         <Button type="submit" disabled={isUpdating} className="w-full">
           {isUpdating ? "Updating..." : "Update Profile"}
         </Button>

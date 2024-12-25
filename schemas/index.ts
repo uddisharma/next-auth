@@ -163,6 +163,7 @@ export const AdminProfileSchema = z.object({
   lastName: z.string().min(2, "Last name must be at least 2 characters long"),
   email: z.string().email("Invalid email address"),
   role: z.string(),
+  isTwoFactorEnabled: z.boolean(),
 });
 
 export const QuestionSchema = z.object({
