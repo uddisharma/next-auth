@@ -1,7 +1,4 @@
-// import { getServerSession } from "next-auth/next";
-// import { redirect } from "next/navigation";
 import Link from "next/link";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,16 +9,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function MyReportsPage() {
-  // const session = await getServerSession(authOptions);
-
-  // if (!session) {
-  //   redirect("/auth/signin");
-  // }
+  const sessions = await currentUser()
+  if (!sessions) {
+    return redirect("/auth/login");
+  }
 
   const reports = await db.report.findMany({
-    where: { userId: "3" },
+    where: { userId: sessions.id },
     orderBy: { createdAt: "desc" },
   });
 

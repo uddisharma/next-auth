@@ -125,21 +125,21 @@ export const reportSchema = z.object({
   ),
 });
 
-export const questionSchema = z.object({
-  text: z.string().min(5, "Question text must be at least 5 characters"),
-  sequence: z.number().int().positive(),
-  questionType: z.enum(["SINGLE_SELECT", "MULTIPLE_SELECT", "TEXT"]),
-  required: z.boolean(),
-  isActive: z.boolean(),
-  options: z
-    .array(
-      z.object({
-        text: z.string().min(1, "Option text must not be empty"),
-        sequence: z.number().int().positive(),
-      }),
-    )
-    .optional(),
-});
+// export const questionSchema = z.object({
+//   text: z.string().min(5, "Question text must be at least 5 characters"),
+//   sequence: z.number().int().positive(),
+//   questionType: z.enum(["SINGLE_SELECT", "MULTIPLE_SELECT", "TEXT"]),
+//   required: z.boolean(),
+//   isActive: z.boolean(),
+//   options: z
+//     .array(
+//       z.object({
+//         text: z.string().min(1, "Option text must not be empty"),
+//         sequence: z.number().int().positive(),
+//       }),
+//     )
+//     .optional(),
+// });
 
 export const signupSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -157,9 +157,42 @@ export const signinSchema = z.object({
   otp: z.string().regex(/^\d{6}$/, "OTP must be 6 digits"),
 });
 
+export const AdminProfileSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters long"),
+  firstName: z.string().min(2, "First name must be at least 2 characters long"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters long"),
+  email: z.string().email("Invalid email address"),
+  role: z.string(),
+});
+
+export const QuestionSchema = z.object({
+  text: z.string().min(5, "Question text must be at least 5 characters long"),
+  sequence: z.coerce.number().min(1, "Sequence must be at least 1").positive("Sequence must be a positive integer"),
+  questionType: z.enum(["SINGLE_SELECT", "MULTIPLE_SELECT", "TEXT"]),
+  required: z.boolean(),
+  isActive: z.boolean(),
+  options: z
+    .array(
+      z.object({
+        text: z.string().min(1, "Option text cannot be empty"),
+        sequence: z.number(),
+      })
+    )
+    .optional()
+  //@ts-ignore
+  // .refine((opts, ctx) => {
+  //   const { questionType } = ctx.parent as { questionType: "SINGLE_SELECT" | "MULTIPLE_SELECT" | "TEXT" };
+  //   if (questionType !== "TEXT" && (!opts || opts.length === 0)) {
+  //     return false;
+  //   }
+  //   return true;
+  // }, "Options are required for non-text questions."),
+});
+
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type SigninFormData = z.infer<typeof signinSchema>;
 export type UserFormData = z.infer<typeof userSchema>;
 export type BlogFormData = z.infer<typeof BlogSchema>;
 export type ReportFormData = z.infer<typeof reportSchema>;
-export type QuestionFormData = z.infer<typeof questionSchema>;
+export type AdminFormData = z.infer<typeof AdminProfileSchema>;
+export type QuestionFormValues = z.infer<typeof QuestionSchema>;

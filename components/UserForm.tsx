@@ -16,7 +16,8 @@ import { addUser, updateUser } from "@/app/admin/users/actions";
 
 interface UserFormProps {
   user?: {
-    id: bigint;
+    id: string;
+    name: string;
     firstName: string | null;
     lastName: string | null;
     email: string;
@@ -60,6 +61,15 @@ export default function UserForm({ user }: UserFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+        <Label htmlFor="name">First Name</Label>
+        <Input
+          id="name"
+          name="name"
+          defaultValue={user?.name || ""}
+          required
+        />
+      </div>
       <div>
         <Label htmlFor="firstName">First Name</Label>
         <Input

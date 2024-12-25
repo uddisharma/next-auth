@@ -1,27 +1,24 @@
-// import { getServerSession } from "next-auth/next";
-// import { redirect, notFound } from "next/navigation";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import {db} from "@/lib/db";
+import { db } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { currentUser } from "@/lib/auth";
 
 interface PageProps {
   params: { id: string };
 }
 
-
-
 export default async function ViewReportPage({ params }: PageProps) {
-  // const session = await getServerSession(authOptions);
 
-  // if (!session) {
-  //   redirect("/auth/signin");
-  // }
+  const sessions = await currentUser();
+
+  if (!sessions) {
+    return redirect("/auth/login");
+  }
 
   const report = await db.report.findUnique({
     where: {
       id: parseInt(params.id),
-      userId: "3",
+      userId: sessions.id,
     },
   });
 
@@ -44,7 +41,7 @@ export default async function ViewReportPage({ params }: PageProps) {
         </CardContent>
       </Card>
       <h2 className="text-xl font-semibold mt-6 mb-4">Questions and Answers</h2>
-      
+
       {report.questions.map((question: any, index: number) => (
         <Card key={index} className="mb-4">
           <CardHeader>

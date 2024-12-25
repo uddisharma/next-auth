@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getUsers } from "./users/actions";
 import { getBlogs } from "@/actions/blogs";
 import { getReports } from "../submit-report/actions";
-import { getQuestions } from "./questions/actions";
+import { getQuestions } from "@/actions/questions";
 import { StatCard } from "@/components/StatCard";
 import { UserChart } from "@/components/UserChart";
 import { ReportChart } from "@/components/ReportChart";
@@ -11,7 +11,6 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function AdminDashboard() {
-
   const session = await currentUser();
 
   if (

@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 interface QuestionActionsProps {
   question: {
@@ -35,12 +36,12 @@ export default function QuestionActions({ question }: QuestionActionsProps) {
       });
       if (response.ok) {
         router.refresh();
+        toast.success("Question deleted successfully")
       } else {
-        throw new Error("Failed to delete question");
+        toast.error("Failed to delete question");
       }
     } catch (error) {
-      console.error("Error deleting question:", error);
-      alert("Failed to delete question. Please try again.");
+      toast.error("Failed to delete question. Please try again.");
     } finally {
       setIsDeleting(false);
     }

@@ -18,7 +18,7 @@ export default async function EditUserPage({ params }: PageProps) {
   return (
     <div>
       <h1 className="text-2xl font-semibold mb-6">Edit User</h1>
-      <UserForm user={{ ...user, id: BigInt(user.id), email: user.email || "" }} />
+      <UserForm user={{ ...user, id: user.id, name: user.name || "", email: user.email || "" }} />
     </div>
   );
 }

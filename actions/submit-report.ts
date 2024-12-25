@@ -4,31 +4,27 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { reportSchema, type ReportFormData } from "@/schemas";
 import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export async function submitReport(reportData: ReportFormData) {
   const session = await currentUser();
-
-  if (
-    !session ||
-    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
-  ) {
-    throw new Error("Unauthorized");
+  if (!session) {
+    return redirect("/auth/login");
   }
 
   const validatedData = reportSchema.parse(reportData);
 
-  let { userId, questions } = validatedData;
-  userId = Number(userId);
+  let { questions } = validatedData;
 
   try {
     const report = await db.report.create({
       data: {
-        userId: userId.toString(),
+        userId: session?.id,
         startTime: new Date(),
         endTime: new Date(),
         sessionId: session.id,
         recommendation: {},
-        questions: questions,
+        questions,
       },
     });
 
@@ -37,7 +33,6 @@ export async function submitReport(reportData: ReportFormData) {
     return report;
   } catch (error) {
     console.error("Error submitting report:", error);
-    throw new Error("Failed to submit report");
   }
 }
 

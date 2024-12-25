@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +15,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { addQuestion, updateQuestion } from "@/app/admin/questions/actions";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { addQuestion, updateQuestion } from "@/actions/questions";
+import { toast } from "sonner";
+import { Checkbox } from "./ui/checkbox";
+import { QuestionFormValues, QuestionSchema } from "@/schemas";
 
 interface QuestionFormProps {
   question?: {
@@ -32,150 +45,196 @@ interface QuestionFormProps {
 }
 
 export default function QuestionForm({ question }: QuestionFormProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [options, setOptions] = useState(question?.options || []);
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const form = useForm<QuestionFormValues>({
+    resolver: zodResolver(QuestionSchema),
+    defaultValues: {
+      text: question?.text || "",
+      sequence: question?.sequence || 1,
+      questionType: question?.questionType || "SINGLE_SELECT",
+      required: question?.required || false,
+      isActive: question?.isActive || true,
+      options: question?.options || [],
+    },
+  });
+
+  const { watch, setValue } = form;
+  const questionType = watch("questionType");
+  const options = watch("options") || [];
+
+  const addOption = () => {
+    setValue("options", [
+      ...options,
+      { text: "", sequence: options.length + 1 },
+    ]);
+  };
+
+  const removeOption = (index: number) => {
+    setValue(
+      "options",
+      options.filter((_: { text: string; sequence: number }, i: number) => i !== index)
+    );
+  };
+
+  const handleSubmit = async (data: QuestionFormValues) => {
     setIsSubmitting(true);
-
-    const formData = new FormData(event.currentTarget);
-    const questionData = {
-      text: formData.get("text") as string,
-      sequence: parseInt(formData.get("sequence") as string),
-      questionType: formData.get("questionType") as
-        | "SINGLE_SELECT"
-        | "MULTIPLE_SELECT"
-        | "TEXT",
-      required: formData.get("required") === "on",
-      isActive: formData.get("isActive") === "on",
-      options: options.map((option, index) => ({
-        text: option.text,
-        sequence: index + 1,
-      })),
-    };
-
     try {
       if (question) {
-        await updateQuestion(question.id, questionData);
+        const addedQuestion = await updateQuestion(question.id, data);
+        if ('message' in addedQuestion) {
+          toast.error(addedQuestion.message as string);
+          return;
+        }
+        toast.success("Question updated successfully");
       } else {
-        await addQuestion(questionData);
+        const addedQuestion = await addQuestion(data);
+        if ('message' in addedQuestion) {
+          toast.error(addedQuestion.message as string);
+          return;
+        }
+        toast.success("Question added successfully");
       }
       router.push("/admin/questions");
       router.refresh();
     } catch (error) {
       console.error("Error submitting question:", error);
-      alert("Failed to submit question. Please try again.");
+      toast.error("Failed to submit question. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const addOption = () => {
-    setOptions([
-      ...options,
-      { id: Date.now(), text: "", sequence: options.length + 1 },
-    ]);
-  };
-
-  const removeOption = (index: number) => {
-    setOptions(options.filter((_, i) => i !== index));
-  };
-
-  const updateOption = (index: number, text: string) => {
-    const newOptions = [...options];
-    newOptions[index].text = text;
-    setOptions(newOptions);
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label htmlFor="text">Question Text</Label>
-        <Textarea
-          id="text"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
           name="text"
-          defaultValue={question?.text}
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Question Text</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Enter question text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div>
-        <Label htmlFor="sequence">Sequence</Label>
-        <Input
-          id="sequence"
+        <FormField
+          control={form.control}
           name="sequence"
-          type="number"
-          defaultValue={question?.sequence || 1}
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Sequence</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter sequence"
+                  type="number"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div>
-        <Label htmlFor="questionType">Question Type</Label>
-        <Select
+        <FormField
+          control={form.control}
           name="questionType"
-          defaultValue={question?.questionType || "SINGLE_SELECT"}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select question type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="SINGLE_SELECT">Single Select</SelectItem>
-            <SelectItem value="MULTIPLE_SELECT">Multiple Select</SelectItem>
-            <SelectItem value="TEXT">Text</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          id="required"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Question Type</FormLabel>
+              <FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select question type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="SINGLE_SELECT">
+                      Single Select
+                    </SelectItem>
+                    <SelectItem value="MULTIPLE_SELECT">
+                      Multiple Select
+                    </SelectItem>
+                    <SelectItem value="TEXT">Text</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="required"
-          defaultChecked={question?.required}
-          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          render={({ field }) => (
+            <FormItem className="flex items-center space-x-2">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>Required</FormLabel>
+            </FormItem>
+          )}
         />
-        <Label htmlFor="required">Required</Label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          id="isActive"
+        <FormField
+          control={form.control}
           name="isActive"
-          defaultChecked={question?.isActive}
-          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          render={({ field }) => (
+            <FormItem className="flex items-center space-x-2">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>Active</FormLabel>
+            </FormItem>
+          )}
         />
-        <Label htmlFor="isActive">Active</Label>
-      </div>
-      <div>
-        <Label>Options</Label>
-        {options.map((option, index) => (
-          <div key={option.id} className="flex items-center space-x-2 mt-2">
-            <Input
-              value={option.text}
-              onChange={(e) => updateOption(index, e.target.value)}
-              placeholder={`Option ${index + 1}`}
-            />
-            <Button
-              type="button"
-              onClick={() => removeOption(index)}
-              variant="destructive"
-              size="sm"
-            >
-              Remove
+        {(questionType == "MULTIPLE_SELECT" || questionType == "SINGLE_SELECT") && (
+          <div>
+            <Label>Options</Label>
+            {options.map((option: any, index: number) => (
+              <div key={index} className="flex items-center space-x-2 mt-2">
+                <Input
+                  value={option.text}
+                  onChange={(e) => {
+                    const updatedOptions = [...options];
+                    updatedOptions[index].text = e.target.value;
+                    setValue("options", updatedOptions);
+                  }}
+                  placeholder={`Option ${index + 1}`}
+                />
+                <Button
+                  type="button"
+                  onClick={() => removeOption(index)}
+                  variant="destructive"
+                  size="sm"
+                >
+                  Remove
+                </Button>
+              </div>
+            ))}
+            <Button type="button" onClick={addOption} className="mt-2">
+              Add Option
             </Button>
           </div>
-        ))}
-        <Button type="button" onClick={addOption} className="mt-2">
-          Add Option
+        )}
+        <Button type="submit" disabled={isSubmitting} className="w-full">
+          {isSubmitting
+            ? "Submitting..."
+            : question
+              ? "Update Question"
+              : "Add Question"}
         </Button>
-      </div>
-      <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting
-          ? "Submitting..."
-          : question
-            ? "Update Question"
-            : "Add Question"}
-      </Button>
-    </form>
+      </form>
+    </Form>
   );
 }

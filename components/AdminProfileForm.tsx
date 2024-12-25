@@ -2,11 +2,21 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { updateAdminProfile } from "@/app/admin/profile/actions";
-
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { updateAdminProfile } from "@/actions/profile";
+import { toast } from "sonner";
+import { AdminProfileSchema, AdminFormData } from "@/schemas";
 interface AdminProfileFormProps {
   user: {
     id: string;
@@ -22,75 +32,110 @@ export default function AdminProfileForm({ user }: AdminProfileFormProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const form = useForm<AdminFormData>({
+    resolver: zodResolver(AdminProfileSchema),
+    defaultValues: {
+      name: user.name || "",
+      firstName: (user.firstName ?? user?.name?.split(" ")[0]) || "",
+      lastName: (user.lastName ?? user?.name?.split(" ")[1]) || "",
+      email: user.email || "",
+      role: user.role || "",
+    },
+  });
+
+  const onSubmit = async (values: AdminFormData) => {
     setIsUpdating(true);
-
-    const formData = new FormData(e.currentTarget);
-    const userData = {
-      name: formData.get("name") as string,
-      firstName: formData.get("firstName") as string,
-      lastName: formData.get("lastName") as string,
-      email: formData.get("email") as string,
-    };
-
     try {
-      await updateAdminProfile(user.id.toString(), userData);
+      await updateAdminProfile(user.id.toString(), values);
       router.refresh();
+      toast.success("Profile updated successfully");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile. Please try again.");
+      toast.error("Failed to update profile. Please try again.");
     } finally {
       setIsUpdating(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label htmlFor="firstName">Name</Label>
-        <Input
-          id="name"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
           name="name"
-          defaultValue={user.name || ""}
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div>
-        <Label htmlFor="firstName">First Name</Label>
-        <Input
-          id="firstName"
+        <FormField
+          control={form.control}
           name="firstName"
-          defaultValue={user.firstName || ""}
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>First Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your first name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div>
-        <Label htmlFor="lastName">Last Name</Label>
-        <Input
-          id="lastName"
+        <FormField
+          control={form.control}
           name="lastName"
-          defaultValue={user.lastName || ""}
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your last name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div>
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
+        <FormField
+          control={form.control}
           name="email"
-          type="email"
-          defaultValue={user.email}
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter your email"
+                  type="email"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div>
-        <Label htmlFor="role">Role</Label>
-        <Input id="role" name="role" defaultValue={user.role} disabled />
-      </div>
-      <Button type="submit" disabled={isUpdating}>
-        {isUpdating ? "Updating..." : "Update Profile"}
-      </Button>
-    </form>
+        <FormField
+          control={form.control}
+          name="role"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Role</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Role"
+                  {...field}
+                  disabled
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <Button type="submit" disabled={isUpdating} className="w-full">
+          {isUpdating ? "Updating..." : "Update Profile"}
+        </Button>
+      </form>
+    </Form>
   );
 }

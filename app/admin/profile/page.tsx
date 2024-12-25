@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import AdminProfileForm from "@/components/AdminProfileForm";
 import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function AdminProfilePage() {
   const session = await currentUser();
@@ -9,7 +10,7 @@ export default async function AdminProfilePage() {
     !session ||
     (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
   ) {
-    throw new Error("Unauthorized");
+    redirect("/auth/login");
   }
 
   const user = await db.user.findUnique({
@@ -17,7 +18,7 @@ export default async function AdminProfilePage() {
   });
 
   if (!user) {
-    throw new Error("User not found");
+    redirect("/auth/login");
   }
 
   return (

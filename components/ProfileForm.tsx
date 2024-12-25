@@ -16,11 +16,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteProfile, updateProfile } from "@/app/profile/actions";
+import { deleteProfile, updateProfile } from "@/actions/my-profile";
 
 interface ProfileFormProps {
   user: {
-    id: bigint;
+    id: string;
+    name: string;
     firstName: string | null;
     lastName: string | null;
     email: string;
@@ -46,7 +47,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
     };
 
     try {
-      await updateProfile(user.id, userData);
+      await updateProfile(userData);
       router.refresh();
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -59,7 +60,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      await deleteProfile(user.id);
+      await deleteProfile();
       router.push("/auth/signin");
     } catch (error) {
       console.error("Error deleting profile:", error);
@@ -71,6 +72,15 @@ export default function ProfileForm({ user }: ProfileFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <Label htmlFor="name">Full Name</Label>
+        <Input
+          id="name"
+          name="name"
+          defaultValue={user.name || ""}
+          required
+        />
+      </div>
       <div>
         <Label htmlFor="firstName">First Name</Label>
         <Input

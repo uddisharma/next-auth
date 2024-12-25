@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,9 +18,7 @@ import {
 import { addBlog, updateBlog } from "@/actions/blogs";
 import { toast } from "sonner";
 import { Checkbox } from "./ui/checkbox";
-import { BlogSchema } from "@/schemas";
-
-type BlogFormValues = z.infer<typeof BlogSchema>;
+import { BlogSchema, BlogFormData } from "@/schemas";
 
 interface BlogFormProps {
   blog?: {
@@ -38,7 +35,7 @@ export default function BlogForm({ blog }: BlogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const form = useForm<BlogFormValues>({
+  const form = useForm<BlogFormData>({
     resolver: zodResolver(BlogSchema),
     defaultValues: {
       title: blog?.title || "",
@@ -49,7 +46,7 @@ export default function BlogForm({ blog }: BlogFormProps) {
     },
   });
 
-  const onSubmit = async (values: BlogFormValues) => {
+  const onSubmit = async (values: BlogFormData) => {
     setIsSubmitting(true);
     try {
       if (blog) {
