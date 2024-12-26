@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Resource, UserRole } from "@prisma/client";
 
 async function main() {
   // Create Users
@@ -273,6 +274,49 @@ async function main() {
       },
     }),
   ]);
+
+  const permissions = [
+    { role: UserRole.SUPER_ADMIN, resource: Resource.BLOGS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
+    { role: UserRole.SUPER_ADMIN, resource: Resource.REPORTS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
+    { role: UserRole.SUPER_ADMIN, resource: Resource.QUESTIONS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
+    { role: UserRole.SUPER_ADMIN, resource: Resource.USERS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
+
+    { role: UserRole.ADMIN, resource: Resource.BLOGS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
+    { role: UserRole.ADMIN, resource: Resource.REPORTS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
+    { role: UserRole.ADMIN, resource: Resource.QUESTIONS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
+    { role: UserRole.ADMIN, resource: Resource.USERS, canCreate: true, canRead: true, canUpdate: true, canDelete: false },
+
+    { role: UserRole.EDITOR, resource: Resource.BLOGS, canCreate: true, canRead: true, canUpdate: true, canDelete: false },
+    { role: UserRole.EDITOR, resource: Resource.REPORTS, canCreate: true, canRead: true, canUpdate: false, canDelete: false },
+    { role: UserRole.EDITOR, resource: Resource.QUESTIONS, canCreate: true, canRead: true, canUpdate: true, canDelete: false },
+    { role: UserRole.EDITOR, resource: Resource.USERS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
+
+    { role: UserRole.USER, resource: Resource.BLOGS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
+    { role: UserRole.USER, resource: Resource.REPORTS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
+    { role: UserRole.USER, resource: Resource.QUESTIONS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
+    { role: UserRole.USER, resource: Resource.USERS, canCreate: false, canRead: false, canUpdate: false, canDelete: false },
+  ];
+
+
+  for (const permission of permissions) {
+    await db.permission.upsert({
+      where: {
+        role_resource: {
+          role: permission.role,
+          resource: permission.resource,
+        },
+      },
+      update: {},
+      create: {
+        role: permission.role,
+        resource: permission.resource,
+        canCreate: permission.canCreate,
+        canRead: permission.canRead,
+        canUpdate: permission.canUpdate,
+        canDelete: permission.canDelete,
+      },
+    });
+  }
 
   console.log("Seed data created successfully!");
 }
