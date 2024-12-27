@@ -52,7 +52,11 @@ export default function BlogForm({ blog }: BlogFormProps) {
       if (blog) {
         await updateBlog(blog.id, values);
       } else {
-        await addBlog(values);
+        const data = await addBlog(values);
+        if ('message' in data) {
+          toast.error(data.message as string);
+          return;
+        }
       }
       router.push("/admin/blogs");
       router.refresh();

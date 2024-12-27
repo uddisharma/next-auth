@@ -49,7 +49,6 @@ export const {
           where: { id: twoFactorConfirmation.id },
         });
       }
-      console.log(52, user)
 
       return true;
     },
