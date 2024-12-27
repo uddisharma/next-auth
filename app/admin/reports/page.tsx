@@ -8,10 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {db} from "@/lib/db";
+import { db } from "@/lib/db";
 import ReportActions from "@/components/ReportActions";
-import { Prisma } from "@prisma/client";
+import { Prisma, Resource } from "@prisma/client";
 import SearchInput from "@/components/SearchInput";
+import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { checkPermission } from "@/lib/checkPermission";
+import { FormError } from "@/components/form-error";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -25,34 +29,46 @@ export default async function ReportsPage({ searchParams }: PageProps) {
 
   const where: Prisma.ReportWhereInput = search
     ? {
-        OR: [
-          {
-            user: {
-              firstName: {
-                contains: search,
-                mode: "insensitive" as Prisma.QueryMode,
-              },
+      OR: [
+        {
+          user: {
+            firstName: {
+              contains: search,
+              mode: "insensitive" as Prisma.QueryMode,
             },
           },
-          {
-            user: {
-              lastName: {
-                contains: search,
-                mode: "insensitive" as Prisma.QueryMode,
-              },
+        },
+        {
+          user: {
+            lastName: {
+              contains: search,
+              mode: "insensitive" as Prisma.QueryMode,
             },
           },
-          {
-            user: {
-              email: {
-                contains: search,
-                mode: "insensitive" as Prisma.QueryMode,
-              },
+        },
+        {
+          user: {
+            email: {
+              contains: search,
+              mode: "insensitive" as Prisma.QueryMode,
             },
           },
-        ],
-      }
+        },
+      ],
+    }
     : {};
+
+  const session = await currentUser();
+
+  if (!session) {
+    return redirect("/auth/login")
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.REPORTS, 'read');
+
+  if (!hasPermission) {
+    return <FormError message="You do not have permission to view this content!" />
+  }
 
   const reports = await db.report.findMany({
     where,

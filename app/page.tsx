@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
-// import { getServerSession } from "next-auth";
-// import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
   title: "Welcome to Our Platform",
@@ -11,8 +9,6 @@ export const metadata: Metadata = {
 };
 
 export default async function LandingPage1() {
-  // const sessions = await getServerSession(authOptions);
-  // console.log("sessions", sessions);
 
   return (
     <div className="min-h-screen flex flex-col">

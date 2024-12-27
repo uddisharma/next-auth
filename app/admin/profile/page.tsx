@@ -2,15 +2,21 @@ import { db } from "@/lib/db";
 import AdminProfileForm from "@/components/AdminProfileForm";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { Resource } from "@prisma/client";
+import { checkPermission } from "@/lib/checkPermission";
+import { FormError } from "@/components/form-error";
 
 export default async function AdminProfilePage() {
   const session = await currentUser();
 
-  if (
-    !session ||
-    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
-  ) {
-    redirect("/auth/login");
+  if (!session) {
+    return redirect("/auth/login")
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.USERS, 'read');
+
+  if (!hasPermission) {
+    return <FormError message="You do not have permission to view this content!" />
   }
 
   const user = await db.user.findUnique({

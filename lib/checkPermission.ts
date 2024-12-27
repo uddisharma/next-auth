@@ -3,7 +3,7 @@ import { UserRole, Resource } from '@prisma/client';
 
 type PermissionType = 'create' | 'read' | 'update' | 'delete';
 
-export async function checkServerActionPermission(
+export async function checkPermission(
   userRole: UserRole,
   resource: Resource,
   action: PermissionType

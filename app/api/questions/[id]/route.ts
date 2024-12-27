@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
+import { checkPermission } from "@/lib/checkPermission";
+import { Resource } from "@prisma/client";
 
 export async function DELETE(
   request: Request,
@@ -8,11 +10,14 @@ export async function DELETE(
 ) {
   const session = await currentUser();
 
-  if (
-    !session ||
-    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
-  ) {
-    throw new Error("Unauthorized");
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'delete');
+
+  if (!hasPermission) {
+    return NextResponse.json({ error: "You don't have permission to delete a question" }, { status: 403 });
   }
 
   const id = parseInt(params.id);
@@ -22,7 +27,7 @@ export async function DELETE(
       where: { id },
     });
 
-    return NextResponse.json({ message: "Question deleted successfully" });
+    return NextResponse.json({ message: "Question deleted successfully" }, { status: 200 });
   } catch (error) {
     console.error("Error deleting question:", error);
     return NextResponse.json(

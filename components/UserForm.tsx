@@ -12,7 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { addUser, updateUser } from "@/app/admin/users/actions";
+import { addUser, updateUser } from "@/actions/users";
+import { toast } from "sonner";
 
 interface UserFormProps {
   user?: {
@@ -45,9 +46,17 @@ export default function UserForm({ user }: UserFormProps) {
 
     try {
       if (user) {
-        await updateUser(user.id.toString(), userData);
+        const data = await updateUser(user.id.toString(), userData);
+        if ('message' in data) {
+          toast.error(data.message as string);
+          return;
+        }
       } else {
-        await addUser(userData);
+        const data = await addUser(userData);
+        if ('message' in data) {
+          toast.error(data.message as string);
+          return;
+        }
       }
       router.push("/admin/users");
       router.refresh();
@@ -61,7 +70,7 @@ export default function UserForm({ user }: UserFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+      <div>
         <Label htmlFor="name">First Name</Label>
         <Input
           id="name"

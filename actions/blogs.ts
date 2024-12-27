@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { BlogSchema, type BlogFormData } from "@/schemas";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { checkServerActionPermission } from "@/lib/checkServerActionPermission";
+import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
 
 export async function addBlog(blogData: BlogFormData) {
@@ -16,7 +16,7 @@ export async function addBlog(blogData: BlogFormData) {
         return redirect("/auth/login")
     }
 
-    const hasPermission = await checkServerActionPermission(session?.role, Resource.BLOGS, 'create');
+    const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'create');
 
     if (!hasPermission) {
         return { message: "You don't have permission to create a blog" };
@@ -38,11 +38,14 @@ export async function addBlog(blogData: BlogFormData) {
 export async function updateBlog(id: bigint, blogData: BlogFormData) {
     const session = await currentUser();
 
-    if (
-        !session ||
-        (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
-    ) {
+    if (!session) {
         return redirect("/auth/login")
+    }
+
+    const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'update');
+
+    if (!hasPermission) {
+        return { message: "You don't have permission to update a blog" };
     }
 
     const validatedData = BlogSchema.parse(blogData);
@@ -59,6 +62,19 @@ export async function updateBlog(id: bigint, blogData: BlogFormData) {
 
 export const getBlogs = unstable_cache(
     async () => {
+
+        const session = await currentUser();
+
+        if (!session) {
+            return redirect("/auth/login")
+        }
+
+        const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'read');
+
+        if (!hasPermission) {
+            return { message: "You don't have permission to read blogs" };
+        }
+
         return db.blog.findMany({
             orderBy: { createdAt: "desc" },
             include: { author: true },

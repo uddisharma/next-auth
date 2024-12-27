@@ -10,8 +10,12 @@ import {
 } from "@/components/ui/table";
 import { db } from "@/lib/db";
 import UserActions from "@/components/UserActions";
-import { Prisma } from "@prisma/client";
+import { Prisma, Resource } from "@prisma/client";
 import SearchInput from "@/components/SearchInput";
+import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { checkPermission } from "@/lib/checkPermission";
+import { FormError } from "@/components/form-error";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -47,6 +51,18 @@ export default async function UsersPage({ searchParams }: PageProps) {
       ],
     }
     : {};
+
+  const session = await currentUser();
+
+  if (!session) {
+    return redirect("/auth/login")
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.USERS, 'read');
+
+  if (!hasPermission) {
+    return <FormError message="You do not have permission to view this content!" />
+  }
 
   const users = await db.user.findMany({
     where,

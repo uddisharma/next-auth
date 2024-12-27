@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import {db} from "@/lib/db";
+import { db } from "@/lib/db";
 import {
   Card,
   CardContent,
@@ -8,6 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { checkPermission } from "@/lib/checkPermission";
+import { Resource } from "@prisma/client";
+import { FormError } from "@/components/form-error";
 
 export const metadata: Metadata = {
   title: "Blogs | Our Platform",
@@ -15,6 +20,19 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogsPage() {
+
+  const session = await currentUser();
+  
+  if (!session) {
+    return redirect("/auth/login")
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'read');
+
+  if (!hasPermission) {
+    return <FormError message="You do not have permission to view this content!" />
+  }
+
   const blogs = await db.blog.findMany({
     where: { published: true },
     orderBy: { createdAt: "desc" },

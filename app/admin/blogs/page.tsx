@@ -11,7 +11,11 @@ import {
 import { db } from "@/lib/db";
 import BlogActions from "@/components/BlogActions";
 import SearchInput from "@/components/SearchInput";
-import { Prisma } from "@prisma/client";
+import { Prisma, Resource } from "@prisma/client";
+import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { checkPermission } from "@/lib/checkPermission";
+import { FormError } from "@/components/form-error";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -43,6 +47,18 @@ export default async function BlogsPage({ searchParams }: PageProps) {
     }),
     ...(category && { category }),
   };
+
+  const session = await currentUser();
+
+  if (!session) {
+    return redirect("/auth/login")
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'read');
+
+  if (!hasPermission) {
+    return <FormError message="You do not have permission to view this content!" />
+  }
 
   const blogs = await db.blog.findMany({
     where,

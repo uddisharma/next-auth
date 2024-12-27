@@ -50,7 +50,11 @@ export default function BlogForm({ blog }: BlogFormProps) {
     setIsSubmitting(true);
     try {
       if (blog) {
-        await updateBlog(blog.id, values);
+        const data = await updateBlog(blog.id, values);
+        if ('message' in data) {
+          toast.error(data.message as string);
+          return;
+        }
       } else {
         const data = await addBlog(values);
         if ('message' in data) {

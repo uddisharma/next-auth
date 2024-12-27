@@ -8,10 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {db} from "@/lib/db";
+import { db } from "@/lib/db";
 import QuestionActions from "@/components/QuestionActions";
 import SearchInput from "@/components/SearchInput";
-import { Prisma } from "@prisma/client";
+import { Prisma, Resource } from "@prisma/client";
+import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { checkPermission } from "@/lib/checkPermission";
+import { FormError } from "@/components/form-error";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -25,12 +29,24 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
 
   const where: Prisma.QuestionWhereInput = search
     ? {
-        text: {
-          contains: search,
-          mode: "insensitive" as Prisma.QueryMode,
-        },
-      }
+      text: {
+        contains: search,
+        mode: "insensitive" as Prisma.QueryMode,
+      },
+    }
     : {};
+
+  const session = await currentUser();
+
+  if (!session) {
+    return redirect("/auth/login")
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'read');
+
+  if (!hasPermission) {
+    return <FormError message="You do not have permission to view this content!" />
+  }
 
   const questions = await db.question.findMany({
     where,

@@ -5,15 +5,21 @@ import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 import { QuestionFormValues, QuestionSchema } from "@/schemas";
 import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { Resource } from "@prisma/client";
+import { checkPermission } from "@/lib/checkPermission";
 
 export async function addQuestion(questionData: QuestionFormValues) {
     const session = await currentUser();
 
-    if (
-        !session ||
-        (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
-    ) {
-        throw new Error("Unauthorized");
+    if (!session) {
+        return redirect("/auth/login")
+    }
+
+    const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'create');
+
+    if (!hasPermission) {
+        return { message: "You don't have permission to add a question" };
     }
 
     const validatedData = QuestionSchema.parse(questionData);
@@ -47,11 +53,14 @@ export async function updateQuestion(
 ) {
     const session = await currentUser();
 
-    if (
-        !session ||
-        (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
-    ) {
-        throw new Error("Unauthorized");
+    if (!session) {
+        return redirect("/auth/login")
+    }
+
+    const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'update');
+
+    if (!hasPermission) {
+        return { message: "You don't have permission to update this question" };
     }
 
     const validatedData = QuestionSchema.parse(questionData);
@@ -84,6 +93,19 @@ export async function updateQuestion(
 
 export const getQuestions = unstable_cache(
     async () => {
+
+        const session = await currentUser();
+
+        if (!session) {
+            return redirect("/auth/login")
+        }
+    
+        const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'read');
+    
+        if (!hasPermission) {
+            return { message: "You don't have permission to read questions" };
+        }
+
         return db.question.findMany({
             orderBy: { sequence: "asc" },
             include: { options: true },

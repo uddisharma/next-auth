@@ -1,12 +1,29 @@
-import { notFound } from "next/navigation";
-import {db} from "@/lib/db";
+import { notFound, redirect } from "next/navigation";
+import { db } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { currentUser } from "@/lib/auth";
+import { checkPermission } from "@/lib/checkPermission";
+import { Resource } from "@prisma/client";
+import { FormError } from "@/components/form-error";
 
 interface PageProps {
   params: { id: string };
 }
 
 export default async function ViewReportPage({ params }: PageProps) {
+
+  const session = await currentUser();
+
+  if (!session) {
+    return redirect("/auth/login")
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.REPORTS, 'read');
+
+  if (!hasPermission) {
+    return <FormError message="You do not have permission to view this content!" />
+  }
+
   const report = await db.report.findUnique({
     where: { id: parseInt(params.id) },
     include: {

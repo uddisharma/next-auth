@@ -1,19 +1,24 @@
 import { NextResponse } from "next/server";
-// import { getServerSession } from "next-auth/next";
 import { db } from "@/lib/db";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { currentUser } from "@/lib/auth";
+import { Resource } from "@prisma/client";
+import { checkPermission } from "@/lib/checkPermission";
 
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } },
 ) {
-  // const session = await getServerSession(authOptions);
-  // if (
-  //   !session ||
-  //   (session.user.role !== "ADMIN" && session.user.role !== "SUPER_ADMIN")
-  // ) {
-  //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  // }
+  const session = await currentUser();
+
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const hasPermission = await checkPermission(session?.role, Resource.REPORTS, 'delete');
+
+  if (!hasPermission) {
+    return NextResponse.json({ error: "You don't have permission to delete a report" }, { status: 403 });
+  }
 
   const id = parseInt(params.id);
 

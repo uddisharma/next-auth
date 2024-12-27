@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getUsers } from "./users/actions";
+import { getUsers } from "@/actions/users";
 import { getBlogs } from "@/actions/blogs";
 import { getReports } from "@/actions/submit-report";
 import { getQuestions } from "@/actions/questions";
@@ -7,8 +7,7 @@ import { StatCard } from "@/components/StatCard";
 import { UserChart } from "@/components/UserChart";
 import { ReportChart } from "@/components/ReportChart";
 import { BlogChart } from "@/components/BlogChart";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { FormError } from "@/components/form-error";
 
 export default async function AdminDashboard() {
 
@@ -18,6 +17,10 @@ export default async function AdminDashboard() {
     getReports(),
     getQuestions(),
   ]);
+
+  if ("message" in users || "message" in blogs || "message" in reports || "message" in questions) {
+    return <FormError message="You do not have permission to view this content!" />
+  }
 
   const userCount = users.length;
   const blogCount = blogs.length;
