@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "Resource" AS ENUM ('BLOGS', 'REPORTS', 'QUESTIONS', 'USERS');
+
+-- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'USER', 'EDITOR');
 
 -- CreateEnum
@@ -157,6 +160,21 @@ CREATE TABLE "options" (
     CONSTRAINT "options_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Permission" (
+    "id" SERIAL NOT NULL,
+    "role" "UserRole" NOT NULL,
+    "resource" "Resource" NOT NULL,
+    "canCreate" BOOLEAN NOT NULL DEFAULT false,
+    "canRead" BOOLEAN NOT NULL DEFAULT false,
+    "canUpdate" BOOLEAN NOT NULL DEFAULT false,
+    "canDelete" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Permission_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -198,6 +216,9 @@ CREATE INDEX "questions_questionType_idx" ON "questions"("questionType");
 
 -- CreateIndex
 CREATE INDEX "options_questionId_idx" ON "options"("questionId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Permission_role_resource_key" ON "Permission"("role", "resource");
 
 -- AddForeignKey
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

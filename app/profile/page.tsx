@@ -24,8 +24,8 @@ export default async function ProfilePage() {
       <ProfileForm user={{
         id: user.id,
         name: user.name || "",
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstName: user.firstName ?? (user.name?.split(" ")[0] || ""),
+        lastName: user.lastName || user.name?.split(" ")[1] || "",
         email: user.email || "",
         phone: user.phone,
         loginType: user.loginType || ""

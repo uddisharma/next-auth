@@ -5,16 +5,21 @@ import { db } from "@/lib/db";
 import { BlogSchema, type BlogFormData } from "@/schemas";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { checkServerActionPermission } from "@/lib/checkServerActionPermission";
+import { Resource } from "@prisma/client";
 
 export async function addBlog(blogData: BlogFormData) {
 
     const session = await currentUser();
 
-    if (
-        !session ||
-        (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
-    ) {
+    if (!session) {
         return redirect("/auth/login")
+    }
+
+    const hasPermission = await checkServerActionPermission(session?.role, Resource.BLOGS, 'create');
+
+    if (!hasPermission) {
+        return { message: "You don't have permission to create a blog" };
     }
 
     const validatedData = BlogSchema.parse(blogData);

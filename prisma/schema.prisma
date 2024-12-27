@@ -169,6 +169,27 @@ model Option {
   @@map("options")
 }
 
+model Permission {
+  id          Int       @id @default(autoincrement())
+  role        UserRole
+  resource    Resource
+  canCreate   Boolean   @default(false)
+  canRead     Boolean   @default(false)
+  canUpdate   Boolean   @default(false)
+  canDelete   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([role, resource])
+}
+
+enum Resource {
+  BLOGS
+  REPORTS
+  QUESTIONS
+  USERS
+}
+
 enum UserRole {
   SUPER_ADMIN
   ADMIN
