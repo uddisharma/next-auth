@@ -8,8 +8,8 @@ import { Toaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MrMard",
-  description: "MrMard",
+  title: "Next Js",
+  description: "Next js",
   icons: {
     icon: "/icon.png",
   },

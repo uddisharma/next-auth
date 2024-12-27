@@ -37,6 +37,8 @@ export default function QuestionActions({ question }: QuestionActionsProps) {
       if (response.ok) {
         router.refresh();
         toast.success("Question deleted successfully")
+      } else if (response.status == 403) {
+        toast.error("You don't have permission to delete a question")
       } else {
         toast.error("Failed to delete question");
       }

@@ -10,10 +10,16 @@ import {
   User,
   Users,
   LogOut,
+  ScanFace
 } from "lucide-react";
 import { signOut } from "next-auth/react";
+import { UserRole } from "@prisma/client";
 
-const AdminSidebar = () => {
+interface AdminSidebarProps {
+  userRole: UserRole;
+}
+
+const AdminSidebar: React.FC<AdminSidebarProps> = ({ userRole }) => {
   const pathname = usePathname();
 
   return (
@@ -54,6 +60,15 @@ const AdminSidebar = () => {
           <Users className="inline-block mr-2" size={20} />
           Users
         </Link>
+        {userRole == "SUPER_ADMIN" &&
+          <Link
+            href="/admin/permissions"
+            className={`block py-2.5 px-4 rounded transition duration-200 ${pathname.startsWith("/admin/users") ? "bg-gray-700" : "hover:bg-gray-700"}`}
+          >
+            <ScanFace className="inline-block mr-2" size={20} />
+            Permissions
+          </Link>
+        }
         <Link
           href="/admin/profile"
           className={`block py-2.5 px-4 rounded transition duration-200 ${pathname === "/admin/profile" ? "bg-gray-700" : "hover:bg-gray-700"}`}

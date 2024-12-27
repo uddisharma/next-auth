@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 interface UserActionsProps {
   user: {
@@ -35,6 +36,8 @@ export default function UserActions({ user }: UserActionsProps) {
       });
       if (response.ok) {
         router.refresh();
+      } else if (response.status == 403) {
+        toast.error("You don't have permission to delete a question")
       } else {
         throw new Error("Failed to delete user");
       }

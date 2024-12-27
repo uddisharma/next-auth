@@ -17,7 +17,7 @@ export async function DELETE(
   const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'delete');
 
   if (!hasPermission) {
-    return NextResponse.json({ error: "You don't have permission to delete a question" }, { status: 403 });
+    return NextResponse.json({ error: "" }, { status: 403 });
   }
 
   const id = parseInt(params.id);

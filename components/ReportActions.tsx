@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 interface ReportActionsProps {
   report: {
@@ -34,6 +35,8 @@ export default function ReportActions({ report }: ReportActionsProps) {
       });
       if (response.ok) {
         router.refresh();
+      }else if (response.status == 403) {
+        toast.error("You don't have permission to delete a report")
       } else {
         throw new Error("Failed to delete report");
       }

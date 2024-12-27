@@ -37,6 +37,8 @@ export default function BlogActions({ blog }: BlogActionsProps) {
       if (response.ok) {
         router.refresh();
         toast.success("Blog deleted successfully");
+      } else if (response.status == 403) {
+        toast.error("You don't have permission to delete a blog");
       } else {
         toast.error("Blog failed to delete");
       }
