@@ -29,3 +29,15 @@ export async function updateAdminProfile(userId: string, userData: any) {
     revalidatePath("/admin/profile");
     return updatedUser;
 }
+
+export async function fetchPermissions() {
+    try {
+        const permissions = await db.permission.findMany()
+        return { success: true, data: permissions }
+    } catch (error) {
+        console.error('Error fetching permissions:', error)
+        return { success: false, error: 'Failed to fetch permissions' }
+    }
+}
+
+
