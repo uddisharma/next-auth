@@ -11,14 +11,6 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function AdminDashboard() {
-  const session = await currentUser();
-
-  if (
-    !session ||
-    (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN")
-  ) {
-    return redirect("/auth/login")
-  }
 
   const [users, blogs, reports, questions] = await Promise.all([
     getUsers(),
