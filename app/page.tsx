@@ -16,12 +16,12 @@ export default async function LandingPage1() {
         <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Transform Your Data Management
+              Mr Mard
             </h1>
-            <p className="text-xl mb-8">
+            {/* <p className="text-xl mb-8">
               Streamline your reporting process and gain valuable insights with
               our powerful platform.
-            </p>
+            </p> */}
             <Link href="/auth/register">
               <Button size="lg" variant="secondary">
                 Get Started
@@ -30,7 +30,7 @@ export default async function LandingPage1() {
           </div>
         </section>
 
-        <section className="py-20">
+        {/* <section className="py-20">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-8 text-center">
               Key Features
@@ -74,8 +74,8 @@ export default async function LandingPage1() {
               <Button size="lg">Sign Up Now</Button>
             </Link>
           </div>
-        </section>
+        </section> */}
       </main>
     </div>
   );
-}
+} 
