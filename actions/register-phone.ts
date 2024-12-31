@@ -18,16 +18,16 @@ export const registerWithOTP = async (values: z.infer<typeof RegisterWithOtpSche
 
     const existingUser = await getUserByEmailorPhone(email, phone);
 
-    if(existingUser?.email==email &&existingUser.phone==phone){
-        return {error:'Email and Phone both are already in use!'}
+    if (existingUser?.email == email && existingUser.phone == phone) {
+        return { error: 'Email and Phone both are already in use!' }
     }
 
-    if(existingUser?.email==email){
-        return{ error:"Email already in use!"}
+    if (existingUser?.email == email) {
+        return { error: "Email already in use!" }
     }
 
-    if(existingUser?.phone==phone){
-        return {error:"Phone already in use!"}
+    if (existingUser?.phone == phone) {
+        return { error: "Phone already in use!" }
     }
 
     const { otp, otpExpires } = generateOtp()
@@ -35,6 +35,8 @@ export const registerWithOTP = async (values: z.infer<typeof RegisterWithOtpSche
     await db.user.create({
         data: {
             name,
+            firstName: name.split(" ")[0] ?? "",
+            lastName: name.split(" ")[1] ?? "",
             email,
             phone,
             otp,

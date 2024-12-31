@@ -63,7 +63,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ userRole }) => {
         {userRole == "SUPER_ADMIN" &&
           <Link
             href="/admin/permissions"
-            className={`block py-2.5 px-4 rounded transition duration-200 ${pathname.startsWith("/admin/users") ? "bg-gray-700" : "hover:bg-gray-700"}`}
+            className={`block py-2.5 px-4 rounded transition duration-200 ${pathname.startsWith("/admin/permissions") ? "bg-gray-700" : "hover:bg-gray-700"}`}
           >
             <ScanFace className="inline-block mr-2" size={20} />
             Permissions

@@ -67,13 +67,13 @@ export async function updateQuestion(
 
     const { options, ...questionFields } = validatedData;
 
-    const existingQuestion = await db.question.findFirst({
-        where: { sequence: questionFields.sequence },
-    });
+    // const existingQuestion = await db.question.findFirst({
+    //     where: { sequence: questionFields.sequence },
+    // });
 
-    if (existingQuestion) {
-        return { message: "Question with this sequence already exists" };
-    }
+    // if (existingQuestion) {
+    //     return { message: "Question with this sequence already exists" };
+    // }
 
     const question = await db.question.update({
         where: { id },

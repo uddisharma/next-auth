@@ -6,6 +6,7 @@ async function main() {
   const users = await Promise.all([
     db.user.create({
       data: {
+        name: "John Doe",
         firstName: "John",
         lastName: "Doe",
         email: "john.doe@example.com",
@@ -23,6 +24,7 @@ async function main() {
     }),
     db.user.create({
       data: {
+        name: "Jane Smith",
         firstName: "Jane",
         lastName: "Smith",
         email: "jane.smith@example.com",
@@ -40,6 +42,7 @@ async function main() {
     }),
     db.user.create({
       data: {
+        name: "Alice Johnson",
         firstName: "Alice",
         lastName: "Johnson",
         email: "alice.johnson@example.com",
@@ -57,6 +60,7 @@ async function main() {
     }),
     db.user.create({
       data: {
+        name: "Bob Brown",
         firstName: "Bob",
         lastName: "Brown",
         email: "bob.brown@example.com",

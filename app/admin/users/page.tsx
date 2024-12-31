@@ -100,7 +100,7 @@ export default async function UsersPage({ searchParams }: PageProps) {
           {users.map((user) => (
             <TableRow key={user.id.toString()}>
               <TableCell>
-                {user.name}
+                {user.name ?? `${user.firstName} ${user.lastName}`}
               </TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.role}</TableCell>

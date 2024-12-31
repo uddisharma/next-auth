@@ -71,7 +71,7 @@ export default function UserForm({ user }: UserFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <Label htmlFor="name">First Name</Label>
+        <Label htmlFor="name">Full Name</Label>
         <Input
           id="name"
           name="name"

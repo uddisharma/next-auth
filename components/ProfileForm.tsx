@@ -18,10 +18,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteProfile, updateProfile } from "@/actions/my-profile";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { FormControl, FormDescription, FormItem, FormLabel } from "./ui/form";
 import { Switch } from "./ui/switch";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 interface ProfileFormProps {
   user: {
@@ -48,6 +48,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
 
     const formData = new FormData(e.currentTarget);
     const userData = {
+      name: formData.get("name") as string,
       firstName: formData.get("firstName") as string,
       lastName: formData.get("lastName") as string,
       email: formData.get("email") as string,
@@ -56,7 +57,11 @@ export default function ProfileForm({ user }: ProfileFormProps) {
     };
 
     try {
-      await updateProfile(userData);
+      const updatedUser = await updateProfile(userData);
+      console.log(updatedUser);
+      if ('message' in updatedUser) {
+        toast.error(updatedUser.message as string);
+      }
       router.refresh();
       update();
     } catch (error) {
@@ -70,8 +75,12 @@ export default function ProfileForm({ user }: ProfileFormProps) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      await deleteProfile();
-      router.push("/auth/signin");
+      const deleted_data = await deleteProfile();
+      if (deleted_data && 'message' in deleted_data) {
+        toast.error(deleted_data.message as string);
+        return;
+      }
+      router.push("/auth/login");
     } catch (error) {
       console.error("Error deleting profile:", error);
       alert("Failed to delete profile. Please try again.");

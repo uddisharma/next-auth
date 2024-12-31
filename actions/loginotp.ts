@@ -77,7 +77,6 @@ export const sendOtpRequest = async (
 
     const { phone } = validatedFields.data;
 
-
     const user = await getUserByPhone(phone);
 
     if (!user) {
