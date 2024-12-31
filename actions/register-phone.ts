@@ -47,5 +47,5 @@ export const registerWithOTP = async (values: z.infer<typeof RegisterWithOtpSche
 
     await sendSMS(phone, `Your OTP for signup is: ${otp}`);
 
-    return { sucess: "OTP sent successfully" };
+    return { sucess: "OTP sent successfully " + otp };
 };
