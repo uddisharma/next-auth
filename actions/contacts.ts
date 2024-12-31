@@ -1,19 +1,23 @@
 'use server'
 
 import { db } from '@/lib/db'
-import { revalidatePath } from 'next/cache'
+import { ContactSubmissionFormData } from '@/schemas'
 
-export async function submitContactForm(formData: FormData) {
-    const name = formData.get('name') as string
-    const email = formData.get('email') as string
-    const message = formData.get('message') as string
+export async function submitContactForm(data: ContactSubmissionFormData) {
 
-    const submission = await db.contactSubmission.create({
-        data: { name, email, message },
-    })
+    try {
+        const { name, email, message } = data
 
-    revalidatePath('/admin/contact-submissions')
-    return submission
+        await db.contactSubmission.create({
+            data: { name, email, message },
+        })
+
+        return { success: "The form was successfully submitted" }
+
+    } catch (error) {
+        return { error: "Failed to submit the form" }
+    }
+
 }
 
 export async function getContactSubmissions(

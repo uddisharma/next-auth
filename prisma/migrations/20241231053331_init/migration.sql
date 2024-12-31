@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Resource" AS ENUM ('BLOGS', 'REPORTS', 'QUESTIONS', 'USERS');
+CREATE TYPE "Resource" AS ENUM ('BLOGS', 'REPORTS', 'QUESTIONS', 'USERS', 'CONTACT_SUBMISSIONS');
 
 -- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'USER', 'EDITOR');
@@ -158,6 +158,17 @@ CREATE TABLE "options" (
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "options_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ContactSubmission" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "ContactSubmission_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable

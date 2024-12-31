@@ -14,6 +14,8 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/form-error";
+import { db } from "@/lib/db";
+import ContactActions from "@/components/ContactActions";
 
 interface PageProps {
     searchParams: { [key: string]: string | string[] | undefined };
@@ -21,7 +23,7 @@ interface PageProps {
 
 export default async function SubmissionsPage({ searchParams }: PageProps) {
     const page = Number(searchParams.page) || 1;
-    const limit = 10;
+    const limit = 1;
     const search =
         typeof searchParams.search === "string" ? searchParams.search : undefined;
 
@@ -84,6 +86,9 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
                             <TableCell>
                                 {new Date(submission.createdAt).toLocaleString()}
                             </TableCell>
+                            <TableCell>
+                                <ContactActions contact={{ id: submission.id, subject: submission.name }} />
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -95,14 +100,14 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
                 </div>
                 <div>
                     {page > 1 && (
-                        <Link href={`/admin/submissions?page=${page - 1}&search=${search || ''}`}>
+                        <Link href={`/admin/contact-submissions?page=${page - 1}&search=${search || ''}`}>
                             <Button variant="outline" className="mr-2">
                                 Previous
                             </Button>
                         </Link>
                     )}
                     {page < totalPages && (
-                        <Link href={`/admin/submissions?page=${page + 1}&search=${search || ''}`}>
+                        <Link href={`/admin/contact-submissions?page=${page + 1}&search=${search || ''}`}>
                             <Button variant="outline">Next</Button>
                         </Link>
                     )}
