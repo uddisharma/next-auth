@@ -279,26 +279,44 @@ async function main() {
     }),
   ]);
 
+  const sampleSubmissions = [
+    { name: 'John Doe', email: 'john@example.com', message: 'Hello, I have a question about your services.' },
+    { name: 'Jane Smith', email: 'jane@example.com', message: 'I\'d like to schedule a consultation.' },
+    { name: 'Bob Johnson', email: 'bob@example.com', message: 'Can you provide more information about pricing?' },
+    { name: 'Alice Brown', email: 'alice@example.com', message: 'I\'m interested in your product. Please contact me.' },
+    { name: 'Charlie Wilson', email: 'charlie@example.com', message: 'Do you offer support for international customers?' },
+  ]
+
+  for (const submission of sampleSubmissions) {
+    await db.contactSubmission.create({
+      data: submission,
+    })
+  }
+
   const permissions = [
     { role: UserRole.SUPER_ADMIN, resource: Resource.BLOGS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
     { role: UserRole.SUPER_ADMIN, resource: Resource.REPORTS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
     { role: UserRole.SUPER_ADMIN, resource: Resource.QUESTIONS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
     { role: UserRole.SUPER_ADMIN, resource: Resource.USERS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
+    { role: UserRole.SUPER_ADMIN, resource: Resource.CONTACT_SUBMISSIONS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
 
     { role: UserRole.ADMIN, resource: Resource.BLOGS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
     { role: UserRole.ADMIN, resource: Resource.REPORTS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
     { role: UserRole.ADMIN, resource: Resource.QUESTIONS, canCreate: true, canRead: true, canUpdate: true, canDelete: true },
     { role: UserRole.ADMIN, resource: Resource.USERS, canCreate: true, canRead: true, canUpdate: true, canDelete: false },
+    { role: UserRole.ADMIN, resource: Resource.CONTACT_SUBMISSIONS, canCreate: true, canRead: true, canUpdate: true, canDelete: false },
 
     { role: UserRole.EDITOR, resource: Resource.BLOGS, canCreate: true, canRead: true, canUpdate: true, canDelete: false },
     { role: UserRole.EDITOR, resource: Resource.REPORTS, canCreate: true, canRead: true, canUpdate: false, canDelete: false },
     { role: UserRole.EDITOR, resource: Resource.QUESTIONS, canCreate: true, canRead: true, canUpdate: true, canDelete: false },
     { role: UserRole.EDITOR, resource: Resource.USERS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
+    { role: UserRole.EDITOR, resource: Resource.CONTACT_SUBMISSIONS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
 
     { role: UserRole.USER, resource: Resource.BLOGS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
     { role: UserRole.USER, resource: Resource.REPORTS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
     { role: UserRole.USER, resource: Resource.QUESTIONS, canCreate: false, canRead: true, canUpdate: false, canDelete: false },
     { role: UserRole.USER, resource: Resource.USERS, canCreate: false, canRead: false, canUpdate: false, canDelete: false },
+    { role: UserRole.USER, resource: Resource.CONTACT_SUBMISSIONS, canCreate: false, canRead: false, canUpdate: false, canDelete: false },
   ];
 
 
