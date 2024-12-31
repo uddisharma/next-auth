@@ -14,7 +14,7 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'delete');
+  const hasPermission = await checkPermission(session?.role, Resource.CONTACT_SUBMISSIONS, 'delete');
 
   if (!hasPermission) {
     return NextResponse.json({ error: "You don't have permission to delete a contact submission" }, { status: 403 });
