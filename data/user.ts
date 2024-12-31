@@ -1,3 +1,4 @@
+'use server';
 import { db } from "@/lib/db";
 
 export const getUserByEmailorPhone = async (email: string, phone?: string) => {

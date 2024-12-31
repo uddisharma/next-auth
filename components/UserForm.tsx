@@ -37,6 +37,7 @@ export default function UserForm({ user }: UserFormProps) {
 
     const formData = new FormData(e.currentTarget);
     const userData = {
+      name: formData.get("name") as string,
       firstName: formData.get("firstName") as string,
       lastName: formData.get("lastName") as string,
       email: formData.get("email") as string,
@@ -53,7 +54,7 @@ export default function UserForm({ user }: UserFormProps) {
         }
       } else {
         const data = await addUser(userData);
-        if ('message' in data) {
+        if (data && 'message' in data) {
           toast.error(data.message as string);
           return;
         }
@@ -126,6 +127,7 @@ export default function UserForm({ user }: UserFormProps) {
             <SelectItem value="USER">User</SelectItem>
             <SelectItem value="ADMIN">Admin</SelectItem>
             <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
+            <SelectItem value="EDITOR">Editor</SelectItem>
           </SelectContent>
         </Select>
       </div>

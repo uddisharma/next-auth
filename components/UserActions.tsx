@@ -36,6 +36,7 @@ export default function UserActions({ user }: UserActionsProps) {
       });
       if (response.ok) {
         router.refresh();
+        toast.success("User deleted successfully");
       } else if (response.status == 403) {
         toast.error("You don't have permission to delete a question")
       } else {

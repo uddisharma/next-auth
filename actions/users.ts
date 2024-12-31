@@ -1,13 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { unstable_cache } from "next/cache";
+import { revalidatePath, unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
 import { userSchema, type UserFormData } from "@/schemas";
 import { currentUser } from "@/lib/auth";
 import { Resource } from "@prisma/client";
 import { checkPermission } from "@/lib/checkPermission";
 import { redirect } from "next/navigation";
+import bcrypt from "bcrypt";
 
 export async function addUser(userData: UserFormData) {
     const session = await currentUser();
@@ -22,14 +22,35 @@ export async function addUser(userData: UserFormData) {
         return { message: "You don't have permission to add a user" };
     }
 
-    const validatedData = userSchema.parse(userData);
+    try {
+        const validatedData = userSchema.parse(userData);
 
-    const user = await db.user.create({
-        data: validatedData,
-    });
+        if (validatedData?.password !== undefined) {
+            const hashedPassword = await bcrypt.hash(validatedData.password, 10);
+            const user = await db.user.create({
+                data: {
+                    ...validatedData,
+                    name: validatedData.firstName + " " + validatedData.lastName,
+                    password: hashedPassword,
+                },
+            });
+            revalidatePath("/admin/users");
+            return user
 
-    revalidatePath("/admin/users");
-    return user;
+        } else {
+            const user = await db.user.create({
+                data: {
+                    ...validatedData,
+                    name: validatedData.firstName + " " + validatedData.lastName,
+                },
+            });
+
+            revalidatePath("/admin/users");
+            return user;
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export async function updateUser(userId: string, userData: UserFormData) {
