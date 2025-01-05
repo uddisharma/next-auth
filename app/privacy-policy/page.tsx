@@ -1,53 +1,78 @@
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Privacy Policy | Our Platform",
-  description: "Read our privacy policy to understand how we handle your data.",
-};
-
-export default function PrivacyPolicyPage() {
+export default function PrivacyPolicy() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
-      <div className="space-y-4">
-        <p>
-          At Our Platform, we take your privacy seriously. This Privacy Policy
-          explains how we collect, use, disclose, and safeguard your information
-          when you visit our website or use our service.
+    <div className="text-black mx-40">
+      <main className="container mx-auto px-4 py-6">
+        <h2 className="text-[40px] mb-6 text-center">Privacy Policy</h2>
+        <h3 className="text-[28px] mb-3">Lorem Ipsum</h3>
+        <p className="mb-8 ">
+          At Mr. Mard, we prioritize your privacy and are committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, and safeguard your data.
         </p>
-        <h2 className="text-2xl font-semibold">Information We Collect</h2>
-        <p>
-          We collect information that you provide directly to us, such as when
-          you create an account, submit a report, or contact us for support.
-        </p>
-        <h2 className="text-2xl font-semibold">How We Use Your Information</h2>
-        <p>
-          We use the information we collect to provide, maintain, and improve
-          our services, to process your requests, and to communicate with you.
-        </p>
-        <h2 className="text-2xl font-semibold">
-          Information Sharing and Disclosure
-        </h2>
-        <p>
-          We do not share your personal information with third parties except as
-          described in this policy.
-        </p>
-        <h2 className="text-2xl font-semibold">Data Security</h2>
-        <p>
-          We use appropriate technical and organizational measures to protect
-          the personal information that we collect and process about you.
-        </p>
-        <h2 className="text-2xl font-semibold">Your Rights</h2>
-        <p>
-          You have the right to access, update, or delete your personal
-          information at any time.
-        </p>
-        <h2 className="text-2xl font-semibold">Changes to This Policy</h2>
-        <p>
-          We may update this privacy policy from time to time. We will notify
-          you of any changes by posting the new privacy policy on this page.
-        </p>
-      </div>
+
+        <section className="mb-8">
+          <h3 className="text-[28px]  mb-3">Information We Collect</h3>
+          <p className="mb-3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tincidunt augue eu turpis dignissim, non pulvinar nisl vehicula. We collect the following types of information:
+          </p>
+          <ul className="list-disc pl-8 mb-3">
+            <li>Personal Identification Information (e.g., name, email address, phone number)</li>
+            <li>Photographic Data (images uploaded for analysis)</li>
+            <li>Usage Data (browsing behavior on our website)</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px]  mb-3">How We Use Your Information</h3>
+          <p className="mb-3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis eros nec justo vehicula fermentum. Your data is used to:
+          </p>
+          <ul className="list-disc pl-8 mb-3">
+            <li>Provide personalized recommendations based on AI analysis</li>
+            <li>Improve the functionality of our platform</li>
+            <li>Communicate updates and promotional offers</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px]  mb-3">Sharing Your Information</h3>
+          <p className="mb-3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla, magna eget hendrerit cursus, sapien nulla suscipit quam, quis tincidunt odio libero id magna:
+          </p>
+          <ul className="list-disc pl-8 mb-3">
+            <li>We do not sell or share your data with third parties</li>
+            <li>Information may be shared with service providers to enhance our offerings</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px]  mb-3">Data Security</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac dolor et felis gravida varius. We use industry-standard encryption and security practices to protect your information.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px]  mb-3">Your Privacy Rights</h3>
+          <p className="mb-3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non tortor vitae purus pharetra tincidunt:
+          </p>
+          <ul className="list-disc pl-8 mb-3">
+            <li>Access, modify, or delete your personal data at any time</li>
+            <li>Opt-out of receiving marketing communications</li>
+          </ul>
+        </section>
+
+        <section className="mb-5">
+          <h3 className="text-[28px]  mb-3">Cookies and Tracking Technologies</h3>
+          <p className="mb-3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum est eu lacus ullamcorper, sit amet gravida magna sodales. We use cookies to:
+          </p>
+          <ul className="list-disc pl-8">
+            <li>Analyze website traffic</li>
+            <li>Enhance user experience</li>
+          </ul>
+        </section>
+      </main>
     </div>
-  );
+  )
 }
+

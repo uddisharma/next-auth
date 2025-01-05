@@ -1,81 +1,182 @@
-import Link from "next/link";
-import { Metadata } from "next";
-import { Button } from "@/components/ui/button";
+import Image from 'next/image'
+import Link from 'next/link'
+import { Button } from "@/components/ui/button" 
+import { Separator } from '@/components/ui/separator'
 
-export const metadata: Metadata = {
-  title: "Welcome to Our Platform",
-  description:
-    "Discover how our platform can help you manage and analyze your data effectively.",
-};
+export default function BlogPost() {
+    return (
+        <div className="min-h-screen flex flex-col px-24 mb-10">
+            <main className="flex-grow container mx-auto px-4 py-8">
+                <Link
+                    href="/articles"
+                    className="inline-flex items-center text-[#115FD6] mb-3 hover:text-gray-900"
+                >
+                    Category
+                </Link>
+                <div >
+                    <article>
+                        {/* Article Header */}
+                        <h1 className="text-[52px] mb-6 text-btnblue">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </h1>
 
-export default async function LandingPage1() {
+                        <div className="flex items-center gap-3 mb-8">
+                            <Image
+                                src="/how-we-do/image3.png"
+                                alt="Author"
+                                width={40}
+                                height={40}
+                                className="rounded-full"
+                            />
+                            <div className="text-[15px] text-gray-600 ">
+                                <p>By Sampath | Published on November 14, 2022 | 2 min read</p>
+                            </div>
+                        </div>
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-grow">
-        <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Mr Mard
-            </h1>
-            {/* <p className="text-xl mb-8">
-              Streamline your reporting process and gain valuable insights with
-              our powerful platform.
-            </p> */}
-            <Link href="/auth/register">
-              <Button size="lg" variant="secondary">
-                Get Started
-              </Button>
-            </Link>
-          </div>
-        </section>
+                        {/* Featured Image */}
+                        <div className="relative h-[400px] mb-8">
+                            <Image
+                                src="/blogs3.png"
+                                alt="Featured image"
+                                fill
+                                className="rounded-lg object-cover"
+                            />
+                        </div>
 
-        {/* <section className="py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">
-              Key Features
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <h3 className="text-xl font-semibold mb-4">
-                  Easy Report Submission
-                </h3>
-                <p>
-                  Submit reports quickly and efficiently through our
-                  user-friendly interface.
-                </p>
-              </div>
-              <div className="text-center">
-                <h3 className="text-xl font-semibold mb-4">
-                  Advanced Analytics
-                </h3>
-                <p>
-                  Gain deep insights from your data with our powerful analytics
-                  tools.
-                </p>
-              </div>
-              <div className="text-center">
-                <h3 className="text-xl font-semibold mb-4">
-                  Secure Data Storage
-                </h3>
-                <p>
-                  Rest easy knowing your data is protected with state-of-the-art
-                  security measures.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+                        {/* Article Content */}
+                        <div className='grid lg:grid-cols-[1fr,320px] gap-12'>
+                            <div>
+                                <div className="prose max-w-none flex flex-col gap-8">
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.
+                                        Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula
+                                        consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis
+                                        imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum
+                                        eu. Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet.
+                                        Pellentesque commodo lacus at sodales sodales.
+                                    </p>
 
-        <section className="bg-gray-100 py-20">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-8">Ready to Get Started?</h2>
-            <Link href="/auth/signup">
-              <Button size="lg">Sign Up Now</Button>
-            </Link>
-          </div>
-        </section> */}
-      </main>
-    </div>
-  );
-} 
+                                    <p>
+                                        Quisque sagittis orci ut diam condimentum, vel euismod erat placerat. In
+                                        iaculis arcu eros, eget tempus orci facilisis id.Lorem ipsum dolor sit amet,
+                                        consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
+                                        Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices
+                                        mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum
+                                        auctor ornare leo, non suscipit magna interdum eu. Curabitur pellentesque
+                                        nibh nibh, at maximus ante fermentum sit amet.
+                                    </p>
+
+                                    <h2 className='text-[52px] text-btnblue'>
+                                        Lorem ipsum dolor, sit amet consectetur
+                                    </h2>
+
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.
+                                        Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula
+                                        consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis
+                                        imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum
+                                        eu. Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet.
+                                        Pellentesque commodo lacus at sodales sodales.
+                                    </p>
+
+                                    <p>
+                                        Quisque sagittis orci ut diam condimentum, vel euismod erat placerat. In
+                                        iaculis arcu eros, eget tempus orci facilisis id.Lorem ipsum dolor sit amet,
+                                        consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna.
+                                        Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices
+                                        mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum
+                                        auctor ornare leo, non suscipit magna interdum eu. Curabitur pellentesque
+                                        nibh nibh, at maximus ante fermentum sit amet.
+                                    </p>
+
+                                    <p>
+                                        Pellentesque commodo lacus at sodales sodales. Quisque sagittis orci ut diam
+                                        condimentum, vel euismod erat placerat. In iaculis arcu eros, eget tempus orci
+                                        facilisis id.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa
+                                        mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis
+                                        ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus.
+                                    </p>
+                                </div>
+
+                                <div className="container mx-auto mt-20">
+                                    <Separator className="mb-3" />
+                                </div>
+
+                                {/* Twitter CTA */}
+                                <div className="mt-10  text-gray-600">
+                                    <p className="mb-1">Good or bad, wed love to hear your thoughts. Find us on Twitter <Link href="https://twitter.com" className="text-blue-500">@twitter</Link></p>
+                                    <p className="uppercase text-xs pt-3">WERE ALL ONLY AS HELPFUL AS YOU MAY FIND INTERESTING</p>
+                                </div>
+
+                                {/* Related Posts */}
+                                <div className="mt-16">
+                                    <div className="flex flex-col gap-8">
+                                        {[...Array(4)].map((_, i) => (
+                                            <article key={i} className="flex gap-4">
+                                                <Image
+                                                    src="/blogs2.png"
+                                                    alt="Related post"
+                                                    width={180}
+                                                    height={80}
+                                                    className="rounded object-cover"
+                                                />
+                                                <div>
+                                                    <h2 className="text-sm text-gray-500 mb-2">PRODUCT • 6 MINUTE READ</h2>
+                                                    <h3 className="mb-2 text-btnblue">
+                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                    </h3>
+                                                    <p className="text-sm text-gray-600">
+                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ligula molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ligula molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem.
+                                                    </p>
+                                                </div>
+                                            </article>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                            <aside className="space-y-8">
+                                <div>
+                                    <h2 className="text-gray-500 mb-4">POPULAR POSTS</h2>
+                                    <div className="space-y-4">
+                                        {[...Array(4)].map((_, i) => (
+                                            <>
+                                                <article key={i} className="flex gap-4">
+                                                    <Image
+                                                        src="/blogs2.png"
+                                                        alt="Popular post"
+                                                        width={80}
+                                                        height={60}
+                                                        className="rounded object-cover"
+                                                    />
+                                                    <div>
+                                                        <h2 className="text-sm text-gray-500 ">PRODUCT • 6 MINUTE READ</h2>
+                                                        <h3 className="text-sm text-btnblue">
+                                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                            Lorem ipsum dolor
+                                                        </h3>
+                                                    </div>
+                                                </article>
+                                                <Separator className='bg-btnblue' />
+                                            </>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="bg-yellow p-6 rounded-lg text-center">
+                                    <h2 className=" mb-2 text-[24px]">Get More Done Together With Us</h2>
+                                    <p className="text-[22px] text-black mb-10">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </p>
+                                    <Button className="px-6 py-2  bg-btnblue text-white hover:bg-btnblue/80">
+                                        Get Started
+                                    </Button>
+                                </div>
+                            </aside>
+                        </div>
+                    </article>
+                </div>
+            </main>
+        </div>
+    )
+}
+
