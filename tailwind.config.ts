@@ -19,7 +19,8 @@ const config: Config = {
         foreground: "var(--foreground)",
         gray1: "#4F4F4F",
         btnblue: "#1A2F4E",
-        yellow: "#EDDE79"
+        yellow: "#EDDE79",
+        whiteGray: "#F0F1FA",
       },
       backgroundImage: {
         "hero-pattern": "url('/hero.png')",

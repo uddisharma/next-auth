@@ -6,9 +6,6 @@ const navItems = [
     { icon: ShoppingCart, label: 'Products', href: '/products' },
     { icon: Users, label: 'Manage Users', href: '/manage-users' },
     { icon: UserCircle, label: 'Unique users', href: '/unique-users' },
-    { icon: ClipboardList, label: 'Order', href: '/order' },
-    { icon: RefreshCw, label: 'Refunds', href: '/refunds' },
-    { icon: MessageSquare, label: 'Message', href: '/message' },
     { icon: Mail, label: 'Email', href: '/email' },
     { icon: Activity, label: 'Transactions', href: '/transactions' },
     { icon: FileText, label: 'Invoices', href: '/invoices' },
@@ -30,7 +27,7 @@ export default function Sidebar() {
                         key={item.label}
                         href={item.href}
                         className={`flex items-center gap-3 px-4 py-3 rounded-lg mb-1 hover:bg-white/10 ${item.label === 'Profile Settings'
-                            ? 'bg-yellow-200 text-navy-900'
+                            ? 'bg-yellow text-btnblue'
                             : ''
                             }`}
                     >

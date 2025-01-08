@@ -1,5 +1,5 @@
 "use client"
-import { Bell, Search } from 'lucide-react'
+import { Bell, MailCheckIcon, Search } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import Sidebar from "@/components/sidebar"
 import ProfileCard from "@/components/profile-card"
@@ -25,18 +25,27 @@ export default function SettingsPage() {
                             <Bell className="w-5 h-5" />
                         </Button>
                         <Button variant="ghost" size="icon">
-                            <div className="w-8 h-8 rounded-full bg-gray-200" />
+                        <MailCheckIcon className="w-5 h-5" />
                         </Button>
                     </div>
                 </header>
 
                 <main className="p-6">
                     <h1 className="text-2xl font-semibold mb-6">Profile Settings</h1>
+                    <div className="bg-yellow h-[270px] w-full border-b rounded-xl ">
+                        <div className="grid lg:grid-cols-[300px,1fr] gap-6 px-5 pt-32">
+                            <ProfileCard />
+                            <div className="bg-white rounded-xl p-6 shadow-sm border-[1px] border-whiteGray">
+                                <ProfileForm />
+                                <div className="flex justify-end mt-5">
+                                    <Button className="bg-btnblue text-white">
+                                        Save
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="grid lg:grid-cols-[350px,1fr] gap-6 px-5 pt-32">
 
-                    <div className="grid lg:grid-cols-[350px,1fr] gap-6">
-                        <ProfileCard />
-                        <div className="bg-white rounded-xl p-6 shadow-sm">
-                            <ProfileForm />
                         </div>
                     </div>
                 </main>

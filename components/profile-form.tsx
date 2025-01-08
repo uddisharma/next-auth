@@ -8,69 +8,35 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Input } from "./ui/input"
 
 export default function ProfileForm() {
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 ">
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                     <label className="text-gray-600">First Name</label>
-                    <Select defaultValue="santhosh">
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select first name" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="santhosh">Santhosh</SelectItem>
-                        </SelectContent>
-                    </Select>
+                   <Input placeholder="Enter first name" />
                 </div>
 
                 <div className="space-y-2">
                     <label className="text-gray-600">Last Name</label>
-                    <Select defaultValue="kopparthi">
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select last name" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="kopparthi">Kopparthi</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <Input placeholder="Enter last name" />
                 </div>
 
                 <div className="space-y-2">
                     <label className="text-gray-600">Date of Birth</label>
-                    <Select>
-                        <SelectTrigger>
-                            <SelectValue placeholder="DD/MM/YYYY" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="date">DD/MM/YYYY</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <Input type="date" />
                 </div>
 
                 <div className="space-y-2">
                     <label className="text-gray-600">Phone</label>
-                    <Select defaultValue="phone">
-                        <SelectTrigger>
-                            <SelectValue placeholder="Enter phone number" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="phone">+910000000000</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <Input placeholder="Enter phone number" />
                 </div>
 
                 <div className="space-y-2">
                     <label className="text-gray-600">City</label>
-                    <Select defaultValue="bengaluru">
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select city" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="bengaluru">Bengaluru</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <Input placeholder="Enter city" />
                 </div>
 
                 <div className="space-y-2">
@@ -84,12 +50,6 @@ export default function ProfileForm() {
                         </SelectContent>
                     </Select>
                 </div>
-            </div>
-
-            <div className="flex justify-end">
-                <Button className="bg-navy-900 hover:bg-navy-800">
-                    Save
-                </Button>
             </div>
         </div>
     )
