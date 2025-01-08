@@ -10,8 +10,8 @@ import Footer from "@/components/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Next Js",
-  description: "Next js",
+  title: "Mr Mard",
+  description: "Mr Mard is a personal blog",
   icons: {
     icon: "/icon.png",
   },
@@ -29,10 +29,10 @@ export default async function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <div className="w-full bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2]">
-            {/* <Header /> */}
+            <Header />
             <Toaster />
             {children}
-            {/* <Footer /> */}
+            <Footer />
           </div>
         </body>
       </html>
