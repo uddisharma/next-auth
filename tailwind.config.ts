@@ -21,6 +21,7 @@ const config: Config = {
         btnblue: "#1A2F4E",
         yellow: "#EDDE79",
         whiteGray: "#F0F1FA",
+        textGray:"#999"
       },
       backgroundImage: {
         "hero-pattern": "url('/hero.png')",

@@ -29,12 +29,12 @@ export default function SignupForm() {
   const years = Array.from({ length: 100 }, (_, i) => currentYear - i)
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="p-8 lg:p-12">
+    <div className="grid min-h-screen space-y-5 text-textGray lg:grid-cols-2 bg-white gap-10 px-24 py-16">
+      <div className="">
         <div className="mx-auto max-w-md space-y-6">
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <h1 className="text-2xl font-bold">Mr. Mard</h1>
-          </div>
+          </div> */}
 
           <div className="space-y-4">
             <div className="space-y-2">
@@ -43,6 +43,7 @@ export default function SignupForm() {
                 id="firstName"
                 placeholder="Enter your first name"
                 required
+                className="border-btnblue"
               />
             </div>
 
@@ -52,6 +53,7 @@ export default function SignupForm() {
                 id="lastName"
                 placeholder="Enter your last name"
                 required
+                className="border-btnblue"
               />
             </div>
 
@@ -62,13 +64,16 @@ export default function SignupForm() {
                 type="email"
                 placeholder="Enter your email address"
                 required
+                className="border-btnblue"
               />
-              <Button 
-                className="w-full bg-btnblue hover:bg-btnblue/90" 
-                onClick={() => setVerificationSent(true)}
-              >
-                Send Code
-              </Button>
+              <div className="flex justify-end pt-3">
+                <Button
+                  className=" bg-btnblue hover:bg-btnblue/90 text-white"
+                  onClick={() => setVerificationSent(true)}
+                >
+                  Send Code
+                </Button>
+              </div>
             </div>
 
             {verificationSent && (
@@ -78,16 +83,19 @@ export default function SignupForm() {
                   id="verification"
                   placeholder="Enter the code sent on your email address"
                   required
+                  className="border-btnblue"
                 />
-                <Button className="w-full bg-btnblue hover:bg-btnblue/90">
-                  Verify
-                </Button>
+                <div className="flex justify-end pt-3">
+                  <Button className=" bg-btnblue hover:bg-btnblue/90 text-white">
+                    Verify
+                  </Button>
+                </div>
               </div>
             )}
 
             <div className="space-y-2">
               <Label>What&apos;s your gender? (optional)</Label>
-              <RadioGroup defaultValue="female" className="flex gap-4">
+              <RadioGroup defaultValue="female" className="flex gap-4 text-[#111]">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="female" id="female" />
                   <Label htmlFor="female">Female</Label>
@@ -103,47 +111,54 @@ export default function SignupForm() {
               </RadioGroup>
             </div>
 
-            <div className="space-y-2">
-              <Label>What&apos;s your date of birth?</Label>
+            <div className="space-y-5 pt-5">
+              <Label className="text-[#111]">What&apos;s your date of birth?</Label>
               <div className="grid grid-cols-3 gap-4">
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {months.map((month) => (
-                      <SelectItem key={month} value={month.toLowerCase()}>
-                        {month}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Date" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {days.map((day) => (
-                      <SelectItem key={day} value={day.toString()}>
-                        {day}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Year" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {years.map((year) => (
-                      <SelectItem key={year} value={year.toString()}>
-                        {year}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div>
+                  <p className="mb-3">Month</p>
+                  <Select >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Month" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {months.map((month) => (
+                        <SelectItem key={month} value={month.toLowerCase()}>
+                          {month}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <p className="mb-3">Day</p>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Date" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {days.map((day) => (
+                        <SelectItem key={day} value={day.toString()}>
+                          {day}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <p className="mb-3">Year</p>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Year" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {years.map((year) => (
+                        <SelectItem key={year} value={year.toString()}>
+                          {year}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
 
@@ -168,15 +183,15 @@ export default function SignupForm() {
               </div>
 
               {/* Placeholder for reCAPTCHA */}
-              <div className="h-[78px] w-full rounded border bg-gray-50"></div>
+              {/* <div className="h-[78px] w-full rounded border bg-gray-50"></div> */}
 
-              <Button className="w-full bg-btnblue hover:bg-btnblue/90">
+              <Button className="w-full bg-btnblue hover:bg-btnblue/90 text-white">
                 Sign up
               </Button>
 
-              <div className="text-center text-sm">
+              <div className="text-center text-sm text-black">
                 Already have an account?{" "}
-                <Link href="/login" className="underline">
+                <Link href="/login" className="underline text-btnblue">
                   Log in
                 </Link>
               </div>
@@ -187,11 +202,11 @@ export default function SignupForm() {
 
       <div className="hidden lg:block">
         <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-MCl2q98yHbot0Z3rnocxsSkX20uPal.png"
+          src="/user.png"
           alt="Profile"
-          width={800}
-          height={1000}
-          className="h-full w-full object-cover"
+          width={600}
+          height={700}
+          className=" "
         />
       </div>
     </div>
