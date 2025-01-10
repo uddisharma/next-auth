@@ -93,7 +93,7 @@ export const sendOtpRequest = async (
                 otpExpires
             },
         });
-        return { success: "OTP sent successfully!" + otp };
+        return { success: "OTP sent successfully!" + " " + otp };
 
     } catch (error) {
         return { error: "Failed to send OTP" };

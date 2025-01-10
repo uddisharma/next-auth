@@ -44,7 +44,8 @@ const LoginOtpForm = () => {
                     if (data?.error) {
                         setError(data.error);
                     } else if (data?.success) {
-                        setSuccess('OTP sent successfully!');
+                        setSuccess(data.success);
+
                         setIsOtpSent(true); 
                     }
                 })
