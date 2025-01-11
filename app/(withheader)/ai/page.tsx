@@ -1,9 +1,7 @@
-"use client"
-import Header from '@/components/header'
+"use client"    
 import ProcessCard from '@/components/process-card'
 import WhyChooseUs from '@/components/why-choose-us'
 import FAQ from '@/components/faq'
-import Footer from '@/components/footer'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {
@@ -96,14 +94,13 @@ export default function Home() {
 
     return (
         <div className="min-h-screen">
-            <Header />
-            <main className="max-w-7xl mx-auto px-4 py-8">
-                <div className="bg-[url('/hero.png')] bg-cover bg-center py-4 mb-16">
+            <main  className="md:px-4 md:py-8 px-5  ">
+                <div className="bg-[url('/hero.png')] bg-cover bg-center py-4 mb-8 md:mb-16">
                     <h1 className="text-4xl text-center mb-5">
                         How Our AI Model Works
                     </h1>
 
-                    <p className='text-btnblue px-10'>At Mr. Mard, we leverage cutting-edge Artificial Intelligence and Machine Learning (ML) technologies to analyze, detect, and deliver actionable insights for hair health. Our AI-driven bald spot detection system ensures precision and efficiency by blending computer vision, neural networks, and dermatological expertise.</p>
+                    <p className='text-btnblue'>At Mr. Mard, we leverage cutting-edge Artificial Intelligence and Machine Learning (ML) technologies to analyze, detect, and deliver actionable insights for hair health. Our AI-driven bald spot detection system ensures precision and efficiency by blending computer vision, neural networks, and dermatological expertise.</p>
 
                 </div>
 
@@ -115,7 +112,7 @@ export default function Home() {
 
                 <WhyChooseUs />
 
-                <div className="my-16 px-16 bg-white rounded-[144px] p-8">
+                <div className="my-16 md:px-16 bg-white rounded-[144px] md:p-8">
                     <h2 className="text-2xl font-semibold mb-4">
                         Start Your AI-Driven Mind Health Journey
                     </h2>
@@ -129,7 +126,6 @@ export default function Home() {
 
                 <FAQ />
             </main>
-            <Footer />
         </div>
     )
 }

@@ -84,21 +84,21 @@ import { MapPin, Mail, Phone } from 'lucide-react'
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen px-24">
+    <div className=" md:px-24">
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6 mb-20">
+      <main className="mx-auto px-4 py-2 md:py-6 mb-20">
         <div className="text-center mb-6">
           <h1 className="text-4xl text-btnblue mb-4">Contact Us</h1>
           <p className="text-[#717171]">Any question or remarks? Just write us a message !</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 bg-white p-5">
+        <div  className="grid md:grid-cols-2 gap-8 bg-white p-5 w-full">
           {/* Contact Information */}
           <div className="bg-[#011C2B] text-white p-8 rounded-lg">
             <h2 className="text-2xl mb-6">Contact Information</h2>
             <p className="text-gray-300 mb-8">Say something to start a live chat!</p>
 
-            <div className="space-y-12 mt-32">
+            <div className="space-y-8 md:space-y-12 md:mt-32">
               <div className="flex items-center gap-4">
                 <Phone className="h-5 w-5" />
                 <span>+910000000000</span>
@@ -113,7 +113,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="flex gap-4 mt-40">
+            <div className="flex gap-4 mt-10 md:mt-40">
               <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20">
                 <span className="sr-only">Facebook</span>
                 <div className="w-6 h-6 bg-yellow rounded-full" />
@@ -131,7 +131,7 @@ export default function ContactPage() {
 
           {/* Contact Form */}
           <form className="space-y-6 pt-10">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
                 <Input id="firstName" placeholder="First Name" className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0" />

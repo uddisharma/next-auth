@@ -61,8 +61,8 @@ import { Separator } from '@/components/ui/separator'
 
 export default function BlogPost() {
   return (
-    <div className="min-h-screen flex flex-col px-24 mb-10">
-      <main className="flex-grow container mx-auto px-4 py-8">
+    <div className="min-h-screen flex flex-col md:px-24 mb-10">
+      <main className="flex-grow container mx-auto px-4 py-2 md:py-8">
         <Link
           href="/articles"
           className="inline-flex items-center text-[#115FD6] mb-3 hover:text-gray-900"
@@ -72,7 +72,7 @@ export default function BlogPost() {
         <div >
           <article>
             {/* Article Header */}
-            <h1 className="text-[52px] mb-6 text-btnblue">
+            <h1 className="text-[35px] md:text-[52px] mb-6 text-btnblue">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </h1>
 
@@ -122,7 +122,7 @@ export default function BlogPost() {
                     nibh nibh, at maximus ante fermentum sit amet.
                   </p>
 
-                  <h2 className='text-[52px] text-btnblue'>
+                  <h2 className='text-[35px] md:text-[52px] text-btnblue'>
                     Lorem ipsum dolor, sit amet consectetur
                   </h2>
 
@@ -168,24 +168,44 @@ export default function BlogPost() {
                 <div className="mt-16">
                   <div className="flex flex-col gap-8">
                     {[...Array(4)].map((_, i) => (
-                      <article key={i} className="flex gap-4">
-                        <Image
-                          src="/blogs2.png"
-                          alt="Related post"
-                          width={180}
-                          height={80}
-                          className="rounded object-cover"
-                        />
-                        <div>
-                          <h2 className="text-sm text-gray-500 mb-2">PRODUCT • 6 MINUTE READ</h2>
-                          <h3 className="mb-2 text-btnblue">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          </h3>
-                          <p className="text-sm text-gray-600">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ligula molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ligula molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem.
-                          </p>
-                        </div>
-                      </article>
+                      <>
+                        <article key={i} className="hidden md:flex gap-4">
+                          <Image
+                            src="/blogs2.png"
+                            alt="Related post"
+                            width={180}
+                            height={80}
+                            className="rounded object-cover"
+                          />
+                          <div>
+                            <h2 className="text-sm text-gray-500 mb-2">PRODUCT • 6 MINUTE READ</h2>
+                            <h3 className="mb-2 text-btnblue">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            </h3>
+                            <p className="text-sm text-gray-600">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ligula molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ligula molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem.
+                            </p>
+                          </div>
+                        </article>
+                        <article key={i} className="md:hidden flex flex-wrap gap-4">
+                          <Image
+                            src="/blogs2.png"
+                            alt="Related post"
+                            width={1000}
+                            height={80}
+                            className="rounded object-cover"
+                          />
+                          <div>
+                            <h2 className="text-sm text-gray-500 mb-2">PRODUCT • 6 MINUTE READ</h2>
+                            <h3 className="mb-2 text-btnblue">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            </h3>
+                            <p className="text-sm text-gray-600">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ligula molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ligula molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem.
+                            </p>
+                          </div>
+                        </article>
+                      </>
                     ))}
                   </div>
                 </div>

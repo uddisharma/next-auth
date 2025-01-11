@@ -2,10 +2,10 @@ import Image from 'next/image'
 
 export default function AboutUs() {
   return (
-    <div className="text-black mx-24">
+    <div className="text-black md:mx-24">
 
-      <main className="container mx-auto px-4 py-6">
-        <h2 className="text-[40px] text-center mb-8">The Mr. Mard Story</h2>
+      <main className="container mx-auto px-4 py-2 md:py-6">
+        <h2 className="text-[35px] md:text-[40px] text-center mb-8">The Mr. Mard Story</h2>
         <h2 className="text-[28px] mb-8">Who is Mr. Mard?</h2>
 
         {/* First Section */}

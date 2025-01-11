@@ -83,8 +83,8 @@ import Link from 'next/link'
 export default function BlogHome() {
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-grow px-24">
-        <section className="py-6 text-center max-w-3xl mx-auto px-4">
+      <main className="flex-grow md:px-24">
+        <section className="py-2 md:py-6 text-center max-w-3xl mx-auto px-4">
           <h1 className="text-[32px] font-bold mb-4">Stay Updated with Our Latest Blogs</h1>
           <p className="text-black">
             Catch up with our latest news and stay in the loop on recent updates, insightful stories, and exciting
@@ -95,9 +95,9 @@ export default function BlogHome() {
           <Separator className="mb-8" />
         </div>
 
-        <section className="container mx-auto px-4 mb-20">
+        <section className="container mx-auto px-4 mb-10 md:mb-20">
           <h2 className="text-[24px] mb-6">Recent Post (08)</h2>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="relative">
               <Image
                 src="/blogs1.png"
@@ -130,7 +130,7 @@ export default function BlogHome() {
 
         </section>
         <div className="container mx-auto px-4 ">
-          <Separator className="mb-8 mt-14" />
+          <Separator className="mb-8 md:mt-14" />
         </div>
 
         <section className="container mx-auto px-4 mb-20">
@@ -184,7 +184,7 @@ export default function BlogHome() {
       <section className="bg-[#1E2A4A] py-16 my-10">
         <div className="container mx-auto">
           <h2 className="text-2xl text-white mb-8 px-16">Categories</h2>
-          <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar justify-center">
+          <div className="flex gap-4 flex-wrap pb-4 no-scrollbar justify-center">
             {[...Array(7)].map((_, i) => (
               <Button
                 key={i}

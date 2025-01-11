@@ -41,9 +41,9 @@ export default function FAQ() {
     };
 
     return (
-        <section className="mb-16 px-16">
+        <section className="mb-16 md:px-16">
             <h2 className="text-2xl font-semibold mb-6">FAQs</h2>
-            <div className=" grid grid-cols-2 gap-4">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
                 {faqItems.map((item, index) => (
                     <div key={index} className="border border-gray-200 bg-white rounded-lg">
                         <button

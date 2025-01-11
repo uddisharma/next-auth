@@ -20,7 +20,7 @@ export default function ProcessCard({
     const isWhiteBackground = bgColor === '';
 
     return (
-        <div className={`rounded-[100px] p-8 ${bgColor} mb-8 px-20`}>
+        <div className={`rounded-[100px] p-8 ${bgColor} mb-8 md:px-20`}>
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className={`${isWhiteBackground ? 'order-1' : 'order-2 md:order-1'}`}>
                     {isWhiteBackground ? (

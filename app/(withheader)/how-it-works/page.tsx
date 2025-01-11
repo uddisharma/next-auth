@@ -3,10 +3,10 @@ import Image from "next/image";
 
 export default function HowWeDoIt() {
   return (
-    <div className="text-black mx-40">
-      <main className="flex-grow container mx-auto px-4 py-8">
+    <div className="text-black md:mx-40">
+      <main className="flex-grow container mx-auto px-4 py-2 md:py-8">
         <section className="mb-8">
-          <h2 className="text-3xl text-left mb-8 text-[#1A2255]">Revolutionizing Hair Wellness with AI</h2>
+          <h2 className="text-3xl text-left mb-8 text-[#1A2255]">Revolutionizing Hair Wellness with AI - Mr. Mard</h2>
           <p className="text-[#5B5B5B] text-[24px]">Making things fun</p>
           <p className="text-lg my-4">
             At Mr. Mard, our mission is to redefine mens hair care with the power of
