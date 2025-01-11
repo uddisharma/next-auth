@@ -6,6 +6,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import OpenHeader from "@/components/openHeader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,10 +30,9 @@ export default async function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <div className="w-full bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2]">
-            <Header />
             <Toaster />
+            {/* <OpenHeader /> */}
             {children}
-            <Footer />
           </div>
         </body>
       </html>

@@ -52,7 +52,7 @@ export default function VerificationPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="">
       {/* Main Content */}
       <main className="flex justify-center items-center px-4 py-12">
         <div className="w-full max-w-md bg-yellow rounded-lg p-8 shadow-lg">
@@ -81,7 +81,7 @@ export default function VerificationPage() {
               ))}
             </div>
 
-            <div className="text-center text-orange-500">
+            <div className="text-center text-orange">
               {formatTime(timeLeft)}
             </div>
 
@@ -95,7 +95,7 @@ export default function VerificationPage() {
               <span className="text-gray-500">If you didn't receive a code!</span>
               <button
                 onClick={handleResend}
-                className="text-orange-500 hover:underline focus:outline-none"
+                className="text-orange hover:underline focus:outline-none"
               >
                 Resend
               </button>

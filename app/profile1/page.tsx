@@ -1,6 +1,6 @@
 'use client'
 
-import { Bell, ChevronDown, Mail } from 'lucide-react'
+import { Bell, Mail } from 'lucide-react'
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,24 +21,36 @@ export default function ProfilePage() {
   })
 
   return (
-    <div className="min-h-screen bg-white p-6 px-24">
-      {/* Header */}
-      {/* <header className="mb-8">
-        <h1 className="text-xl font-bold">Mr. Mard</h1>
-      </header> */}
+    <div className="min-h-screen px-5 md:px-16 mt-5">
+      <div className="mb-5 md:mb-8 flex flex-wrap md:flex-nowrap items-center w-full justify-between gap-4">
+        <div className="flex md:flex-row justify-between items-start md:items-center gap-4 w-full mb-2 md:mb-0">
+          <div  className="md:w-auto md:mb-0">
+            <h2 className="text-2xl font-medium text-gray-800">Welcome, Naveen</h2>
+            <p className="text-sm text-gray-500">{currentDate}</p>
+          </div>
 
-      {/* Welcome Section */}
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-medium text-gray-800">Welcome, Naveen</h2>
-          <p className="text-sm text-gray-500">{currentDate}</p>
+          <div className="flex md:hidden items-center gap-4">
+            <Button variant="ghost" size="icon">
+              <Bell className="h-5 w-5" />
+            </Button>
+            <div className="flex items-center gap-4">
+              <Image
+                src="/user.png"
+                alt="Profile"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+            </div>
+          </div>
         </div>
-        <div className="flex items-center gap-4 ">
-          <div className="relative flex-1 bg-btnblue rounded-xl text-white border-none">
+
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <div className="relative w-full md:w-[300px]">
             <Input
               type="search"
               placeholder="Search"
-              className="w-[300px] bg-btnblue pl-10 "
+              className="w-full bg-btnblue text-white pl-10 rounded-md border-none "
             />
             <svg
               className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
@@ -54,24 +66,29 @@ export default function ProfilePage() {
               />
             </svg>
           </div>
-          <Button variant="ghost" size="icon">
+
+          <Button className="hidden md:flex" variant="ghost" size="icon">
             <Bell className="h-5 w-5" />
           </Button>
-          <Image
-            src="/user.png"
-            alt="Profile"
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
+
+          <div className="hidden md:flex items-center gap-4 cursor-pointer">
+            <Image
+              src="/user.png"
+              alt="Profile"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          </div>
         </div>
       </div>
 
+
       {/* Alert Banner */}
-      <div className="mb-8 rounded-lg bg-[#F6E05E] p-6"></div>
+      <div className="mb-4 md:mb-8 rounded-lg bg-[#F6E05E] p-5 md:p-6"></div>
 
       {/* Profile Section */}
-      <div className="rounded-lg bg-white p-6 shadow-sm">
+      <div  className="rounded-lg bg-white p-6 shadow-sm pb-20">
         <div className="mb-6 flex items-start justify-between">
           <div className="flex items-center gap-4">
             <Image
@@ -92,18 +109,18 @@ export default function ProfilePage() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">First Name</label>
-            <Input placeholder="Your First Name" className='border-btnblue' />
+            <Input placeholder="Your First Name" className='border-none bg-[#F9F9F9]' />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Last Name</label>
-            <Input placeholder="Your Last Name" className='border-btnblue' />
+            <Input placeholder="Your Last Name" className='border-none bg-[#F9F9F9]' />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Gender</label>
             <Select defaultValue="male" >
-              <SelectTrigger>
+              <SelectTrigger className='border-none bg-[#F9F9F9]'>
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>
               <SelectContent>
@@ -117,7 +134,7 @@ export default function ProfilePage() {
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Country</label>
             <Select defaultValue="india">
-              <SelectTrigger>
+              <SelectTrigger className='border-none bg-[#F9F9F9]'>
                 <SelectValue placeholder="Select country" />
               </SelectTrigger>
               <SelectContent>
@@ -131,7 +148,7 @@ export default function ProfilePage() {
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Language</label>
             <Select>
-              <SelectTrigger>
+              <SelectTrigger className='border-none bg-[#F9F9F9]'>
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>
               <SelectContent>
@@ -145,7 +162,7 @@ export default function ProfilePage() {
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Time Zone</label>
             <Select>
-              <SelectTrigger>
+              <SelectTrigger className='border-none bg-[#F9F9F9]'>
                 <SelectValue placeholder="Select timezone" />
               </SelectTrigger>
               <SelectContent>
