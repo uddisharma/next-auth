@@ -122,7 +122,7 @@ export default function BlogHome() {
                 </p>
               </div>
 
-              <Button variant="default" className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[10px_20px] text-[14px] rounded-[10px]">
+              <Button variant="default" className="self-start mt-5 bg-btnblue text-white hover:bg-btnblue/80 p-[10px_20px] text-[14px] rounded-[10px]">
                 Read More
               </Button>
             </div>
@@ -172,7 +172,7 @@ export default function BlogHome() {
             <Button variant="default" className="bg-btnblue text-white hover:bg-btnblue/80">1</Button>
             <Button variant="outline" className="border-gray1 text-btnblue">2</Button>
             <Button variant="outline" className="border-gray1 text-btnblue">3</Button>
-            <Button variant="outline" className="border-gray1 text-btnblue">4</Button>
+            <Button variant="outline" className="border-gray1 text-btnblue hidden md:block">4</Button>
           </div>
           <Button variant="outline" className="border-gray1 text-btnblue">Next <ArrowRight /></Button>
         </div>

@@ -21,7 +21,7 @@ export default function ProfilePage() {
   })
 
   return (
-    <div className="min-h-screen px-5 md:px-16 mt-5">
+    <div className="min-h-screen px-5 md:px-16 pt-5">
       <div className="mb-5 md:mb-8 flex flex-wrap md:flex-nowrap items-center w-full justify-between gap-4">
         <div className="flex md:flex-row justify-between items-start md:items-center gap-4 w-full mb-2 md:mb-0">
           <div  className="md:w-auto md:mb-0">

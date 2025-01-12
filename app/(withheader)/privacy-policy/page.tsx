@@ -1,6 +1,6 @@
 export default function PrivacyPolicy() {
   return (
-    <div className="text-black md:mx-40">
+    <div className="text-black md:mx-40 mb-10">
       <main className="container mx-auto px-4 py-2 md:py-6">
         <h2 className="text-[40px] mb-6 text-center">Privacy Policy</h2>
         <h3 className="text-[28px] mb-3">Lorem Ipsum</h3>
