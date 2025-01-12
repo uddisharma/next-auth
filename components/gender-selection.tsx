@@ -24,21 +24,21 @@ export default function GenderSelection({ onNext }: GenderSelectionProps) {
             <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                     variant={selectedGender === "male" ? "default" : "outline"}
-                    className="flex-1 bg-btnblue text-white"
+                    className={`flex-1 border-[1px] border-black text-black bg-white ${selectedGender === 'male' ? 'bg-btnblue text-white' : ''}`}
                     onClick={() => setSelectedGender("male")}
                 >
                     Male
                 </Button>
                 <Button
                     variant={selectedGender === "female" ? "default" : "outline"}
-                    className="flex-1 border-[1px] border-black text-black bg-white"
+                    className={`flex-1 border-[1px] border-black text-black bg-white ${selectedGender === 'female' ? 'bg-btnblue text-white' : ''}`}
                     onClick={() => setSelectedGender("female")}
                 >
                     Female
                 </Button>
                 <Button
                     variant={selectedGender === "other" ? "default" : "outline"}
-                    className="flex-1 border-[1px] border-black text-black bg-white"
+                    className={`flex-1 border-[1px] border-black text-black bg-white ${selectedGender === 'other' ? 'bg-btnblue text-white' : ''}`}
                     onClick={() => setSelectedGender("other")}
                 >
                     Other

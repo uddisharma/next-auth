@@ -94,7 +94,7 @@ export default function Home() {
 
     return (
         <div className="min-h-screen">
-            <main  className="md:px-4 md:py-8 px-5  ">
+            <main  className="md:px-4 md:py-8 px-5">
                 <div className="bg-[url('/hero.png')] bg-cover bg-center py-4 mb-8 md:mb-16">
                     <h1 className="text-4xl text-center mb-5">
                         How Our AI Model Works

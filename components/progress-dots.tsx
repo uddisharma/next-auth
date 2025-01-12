@@ -5,7 +5,7 @@ interface ProgressDotsProps {
 
 export default function ProgressDots({ total, current }: ProgressDotsProps) {
     return (
-        <div className="flex justify-center gap-12 mb-8">
+        <div className="flex justify-center gap-6 md:gap-12 mb-8">
             {Array.from({ length: total }, (_, i) => (
                 <div
                     key={i}

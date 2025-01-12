@@ -10,13 +10,13 @@ export default function OnboardingPage() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col px-10">
-            <main className="flex-1 max-w-7xl mx-auto px-4 py-12 w-full">
-                <div className="grid md:grid-cols-2 gap-20 items-center">
-                    <div className="order-1 md:order-2">
+        <div className="flex flex-col px-5 md:px-10 my-2 mb-20 md:mb-0 md:py-10">
+            <main  className="flex-1 md:px-4 md:py-12 w-full">
+                <div className="grid md:grid-cols-2 justify-center gap-20 items-center">
+                    <div className="">
                         <AnalyticsIllustration />
                     </div>
-                    <div className="order-2 md:order-1">
+                    <div className="">
                         <ProgressDots total={7} current={1} />
                         <GenderSelection onNext={handleNext} />
                     </div>
