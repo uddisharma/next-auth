@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import Editor from '@/components/editor/editor'
 import { Button } from '@/components/ui/button'
+import { defaultValue } from '@/lib/defaultValue'
 
 export default function Home() {
     return (
@@ -15,15 +16,6 @@ export default function Home() {
     )
 }
 
-export const defaultValue = {
-    type: 'doc',
-    content: [
-        {
-            type: 'paragraph',
-            content: []
-        }
-    ]
-}
 function ContentForm() {
     const [content, setContent] = useState<string>('')
     const [pending, setPending] = useState(false)
