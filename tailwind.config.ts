@@ -15,8 +15,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         gray1: "#4F4F4F",
         btnblue: "#1A2F4E",
         yellow: "#EDDE79",
@@ -95,6 +95,7 @@ const config: Config = {
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
       );
     },
+    require('@tailwindcss/typography')
   ],
 };
 export default config;

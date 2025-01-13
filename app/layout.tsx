@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import "./globals.css";
+import "./prosemirror.css"
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -11,7 +12,7 @@ import OpenHeader from "@/components/openHeader";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mr Mard",
+  title: "",
   description: "Mr Mard is a personal blog",
   icons: {
     icon: "/icon.png",
