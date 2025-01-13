@@ -22,7 +22,7 @@ export default function SearchInput({ defaultValue }: SearchInputProps) {
 
   return (
     <Input
-      placeholder="Search questions..."
+      placeholder="Search items..."
       value={search}
       onChange={handleSearchChange}
     />

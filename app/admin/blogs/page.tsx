@@ -132,7 +132,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
               <TableCell>{blog.published ? "Yes" : "No"}</TableCell>
               <TableCell>
                 <BlogActions
-                  blog={{ id: BigInt(blog.id), title: blog?.title }}
+                  blog={{ id: blog.id, title: blog?.title }}
                 />
               </TableCell>
             </TableRow>

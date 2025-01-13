@@ -18,7 +18,6 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { User } from '@/schemas/types'
-import Header from '@/components/header'
 
 function getRoleColor(role: string) {
     switch (role) {
@@ -63,7 +62,6 @@ export default function Dashboard() {
 
     return (
         <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
-            <Header />
 
             <main className="container mx-auto py-8">
                 {/* Header Section */}
@@ -191,9 +189,9 @@ export default function Dashboard() {
                                         >
                                             {user.role}
                                         </span>
-                                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                                            <MoreHorizontal className="h-4 w-4" />
-                                        </Button>
+                                        <div className="flex items-center justify-end">
+                                            {/* <BlogActions blog={{ id: BigInt(4), title: "sdfaf" }} /> */}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
