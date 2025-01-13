@@ -64,13 +64,13 @@ export default function Editor({ initialValue, onChange }: EditorProps) {
   }
 
   return (
-    <div className='flex w-full rounded-md border hover:border-gray-950 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'>
-      <EditorRoot>
+    <div  className='flex w-full rounded-md bg-transparent py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'>
+      <EditorRoot >
         <EditorContent
           immediatelyRender={false}
           initialContent={initialValue}
           extensions={extensions}
-          className='min-h-96 rounded-xl border p-4 text-black'
+          className='min-h-96 w-full rounded-xl border p-4 text-black'
           editorProps={{
             handleDOMEvents: {
               keydown: (_view, event) => handleCommandNavigation(event)
@@ -78,7 +78,7 @@ export default function Editor({ initialValue, onChange }: EditorProps) {
             handlePaste: (view, event) => handleImagePaste(view, event, uploadFn),
             handleDrop: (view, event, _slice, moved) => handleImageDrop(view, event, moved, uploadFn),
             attributes: {
-              class: 'prose dark:prose-invert prose-headings:text-black prose-headings:font-title font-default focus:outline-none max-w-full text-black'
+              class: 'prose dark:prose-invert prose-headings:text-black prose-headings:font-title font-default focus:outline-none max-w-full text-black w-full' 
             }
 
           }}
@@ -88,7 +88,7 @@ export default function Editor({ initialValue, onChange }: EditorProps) {
           }}
           slotAfter={<ImageResizer />}
         >
-          <EditorCommand className='z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-white px-1 py-2 shadow-md transition-all'>
+          <EditorCommand  className='z-50 w-full  h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-white px-1 py-2 shadow-md transition-all'>
             <EditorCommandEmpty className='px-2 text-black'>
               No results
             </EditorCommandEmpty>
