@@ -191,6 +191,17 @@ model Permission {
   @@unique([role, resource])
 }
 
+model NewsLetter {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+}
+
+model Leads {
+  id    Int    @id @default(autoincrement())
+  name  String
+  phone String @unique
+}
+
 enum Resource {
   BLOGS
   REPORTS

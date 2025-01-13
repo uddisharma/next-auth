@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
     Form,
     FormField,
@@ -161,9 +160,17 @@ export default function BlogForm({ blog }: BlogFormProps) {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isSubmitting} className="w-full">
-                    {isSubmitting ? "Submitting..." : blog ? "Update Blog" : "Add Blog"}
-                </Button>
+
+                <div className="flex justify-end mt-5 w-full">
+                    <Button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-fit flex justify-center bg-btnblue text-white px-4 py-2"
+                    >
+                        {isSubmitting ? "Submitting..." : blog ? "Update Blog" : "Save Blog"}
+                    </Button>
+                </div>
+
             </form>
         </Form>
     );
