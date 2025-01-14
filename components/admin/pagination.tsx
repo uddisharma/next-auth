@@ -160,7 +160,7 @@ export default function Pagination({ searchParams, totalBlogs, totalPages }: Pag
                             <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
-                            {[1, 2, 30, 50].map((value) => (
+                            {[10, 20, 30, 50].map((value) => (
                                 <SelectItem key={value} value={value.toString()}>
                                     {value} rows
                                 </SelectItem>

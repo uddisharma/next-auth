@@ -35,9 +35,11 @@ export default async function EditBlogPage({ params }: PageProps) {
   }
 
   return (
-    <div>
+    <main className="p-4 sm:p-6 ">
       <h1 className="text-2xl font-semibold mb-6">Edit Blog</h1>
-      <BlogForm blog={{ ...blog, image: blog.image ?? undefined }} />
-    </div>
+      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
+        <BlogForm blog={blog} />
+      </div>
+    </main>
   );
 }
