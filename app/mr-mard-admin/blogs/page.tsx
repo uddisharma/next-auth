@@ -11,6 +11,7 @@ import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/others/form-error";
 import Pagination from '@/components/admin/pagination'
 import ExportButton from '@/components/admin/export';
+import Link from 'next/link';
 
 interface PageProps {
     searchParams: { [key: string]: string | string[] | undefined };
@@ -83,9 +84,11 @@ export default async function BlogsPage({ searchParams }: PageProps) {
 
                     <div className="flex items-center gap-4 ml-auto">
                         <ExportButton type="blog" />
-                        <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
-                            + New Blog
-                        </Button>
+                        <Link href={"/mr-mard-admin/blogs/new"}>
+                            <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
+                                + New Blog
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 

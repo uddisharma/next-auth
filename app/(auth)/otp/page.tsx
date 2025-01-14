@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
-import Link from 'next/link'
 
 export default function VerificationPage() {
   const [timeLeft, setTimeLeft] = useState(30)

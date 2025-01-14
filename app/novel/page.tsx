@@ -1,35 +1,19 @@
+"use client";
+import React, { useState } from "react";
+import { FileUpload } from "@/components/ui/file-upload";
 
-'use client'
+ function FileUploadDemo() {
+  const [files, setFiles] = useState<File[]>([]);
+  const handleFileUpload = (files: File[]) => {
+    setFiles(files);
+    console.log(files);
+  };
 
-import { useState } from 'react'
-
-import Editor from '@/components/editor/editor'
-import { Button } from '@/components/ui/button'
-import { defaultValue } from '@/lib/defaultValue'
-
-export default function Home() {
-    return (
-        <div className='container'>
-            {/* <h1 className='text-3xl font-bold'>Write a blog</h1> */}
-            <ContentForm />
-        </div>
-    )
+  return (
+    <div className="w-full max-w-4xl mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
+      <FileUpload onChange={handleFileUpload} />
+    </div>
+  );
 }
 
-function ContentForm() {
-    const [content, setContent] = useState<string>('')
-    const [pending, setPending] = useState(false)
-
-    async function handleSubmit() {
-        console.log(content)
-    }
-
-    return (
-        <div className=' flex flex-col gap-4 p-6 text-black'>
-            <Editor initialValue={defaultValue} onChange={setContent} />
-            <Button onClick={handleSubmit} disabled={pending}>
-                {pending ? 'Submitting...' : 'Create'}
-            </Button>
-        </div>
-    )
-}
+export default FileUploadDemo

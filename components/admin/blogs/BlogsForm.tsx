@@ -38,7 +38,6 @@ export default function BlogForm({ blog }: BlogFormProps) {
     const [content, setContent] = useState(blog?.content || "");
     const router = useRouter();
 
-
     const form = useForm<BlogFormData>({
         resolver: zodResolver(BlogSchema),
         defaultValues: {
