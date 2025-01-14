@@ -1,7 +1,5 @@
 
 "use client"
-
-import { Button } from "@/components/ui/button"
 import BlogsForm from '@/components/admin/blogs/BlogsForm'
 
 export default function SettingsPage() {

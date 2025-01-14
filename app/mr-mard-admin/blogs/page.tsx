@@ -9,8 +9,8 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/form-error";
-import Pagination from './pagination'
-import ExportButton from './export';
+import Pagination from '@/components/admin/pagination'
+import ExportButton from '@/components/admin/export';
 
 interface PageProps {
     searchParams: { [key: string]: string | string[] | undefined };
