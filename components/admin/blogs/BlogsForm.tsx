@@ -20,16 +20,22 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { BlogSchema, BlogFormData } from "@/schemas";
 import Editor from "@/components/editor/editor";
 import { defaultValue } from "@/lib/defaultValue";
+import { generateJSON } from '@tiptap/html';
+import StarterKit from '@tiptap/starter-kit';
 
 interface BlogFormProps {
     blog?: {
-        id: bigint;
+        id: number;
         title: string;
         content: string;
         category: string;
         subCategory: string | null;
         published: boolean;
-        image?: string;
+        image?: string | null;
+        authorId: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
     };
 }
 
@@ -37,6 +43,9 @@ export default function BlogForm({ blog }: BlogFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [content, setContent] = useState(blog?.content || "");
     const router = useRouter();
+    const json = generateJSON(blog?.content ?? "", [
+        StarterKit
+    ]);
 
     const form = useForm<BlogFormData>({
         resolver: zodResolver(BlogSchema),
@@ -96,15 +105,8 @@ export default function BlogForm({ blog }: BlogFormProps) {
                 <FormItem>
                     <FormLabel>Content</FormLabel>
                     <Editor
-                        initialValue={content ? {
-                            type: 'doc',
-                            content: [
-                                {
-                                    type: 'paragraph',
-                                    text: content
-                                }
-                            ]
-                        } : defaultValue}
+                        //@ts-ignore
+                        initialValue={json ?? defaultValue}
                         onChange={setContent}
                     />
                 </FormItem>

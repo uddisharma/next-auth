@@ -22,7 +22,7 @@ import { BlogSchema, BlogFormData } from "@/schemas";
 
 interface BlogFormProps {
   blog?: {
-    id: bigint;
+    id: number;
     title: string;
     content: string;
     category: string;

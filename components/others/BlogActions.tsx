@@ -71,7 +71,7 @@ export default function BlogActions({ blog }: BlogActionsProps) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/admin/blogs/${blog.id}/edit`}>
+          <Link href={`/mr-mard-admin/blogs/${blog.id}/edit`}>
             <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
             Edit
           </Link>

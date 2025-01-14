@@ -35,7 +35,7 @@ export async function addBlog(blogData: BlogFormData) {
     return blog;
 }
 
-export async function updateBlog(id: bigint, blogData: BlogFormData) {
+export async function updateBlog(id: number, blogData: BlogFormData) {
     const session = await currentUser();
 
     if (!session) {
