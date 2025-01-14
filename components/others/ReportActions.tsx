@@ -1,9 +1,16 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { MoreHorizontal, Eye, Pencil, Trash2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,7 +26,8 @@ import { toast } from "sonner";
 
 interface ReportActionsProps {
   report: {
-    id: bigint;
+    id: number;
+    name: string;
   };
 }
 
@@ -35,48 +43,64 @@ export default function ReportActions({ report }: ReportActionsProps) {
       });
       if (response.ok) {
         router.refresh();
-      }else if (response.status == 403) {
-        toast.error("You don't have permission to delete a report")
+        toast.success("Report deleted successfully");
+      } else if (response.status == 403) {
+        toast.error("You don't have permission to delete a report.");
       } else {
-        throw new Error("Failed to delete report");
+        toast.error("Report failed to delete");
       }
     } catch (error) {
-      console.error("Error deleting report:", error);
-      alert("Failed to delete report. Please try again.");
+      toast.error("Failed to delete report. Please try again.");
     } finally {
       setIsDeleting(false);
     }
   };
 
   return (
-    <div className="flex space-x-2">
-      <Link href={`/admin/reports/${report.id}`}>
-        <Button variant="outline" size="sm">
-          View
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-8 w-8">
+          <MoreHorizontal className="h-4 w-4" />
         </Button>
-      </Link>
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="sm">
-            Delete
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              report and all its associated data.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
-              {isDeleting ? "Deleting..." : "Delete"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link href={`/admin/questions/${report.id}`}>
+            <Eye className="mr-2 h-4 w-4 cursor-pointer" />
+            View
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`/mr-mard-admin/questions/${report.id}/edit`}>
+            <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
+            Edit
+          </Link>
+        </DropdownMenuItem>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              <Trash2 className="mr-2 h-4 w-4 cursor-pointer" />
+              Delete
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the
+                "{report.name}'s report" and remove it from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                {isDeleting ? "Deleting..." : "Delete"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
+

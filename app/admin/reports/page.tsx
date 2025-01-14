@@ -109,7 +109,7 @@ export default async function ReportsPage({ searchParams }: PageProps) {
                 {new Date(report.createdAt).toLocaleString()}
               </TableCell>
               <TableCell>
-                <ReportActions report={{ id: BigInt(report.id) }} />
+                <ReportActions report={{ id: report.id, name: report.user.firstName ?? '' }} />
               </TableCell>
             </TableRow>
           ))}

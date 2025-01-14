@@ -1,9 +1,16 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { MoreHorizontal, Eye, Pencil, Trash2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,11 +43,11 @@ export default function QuestionActions({ question }: QuestionActionsProps) {
       });
       if (response.ok) {
         router.refresh();
-        toast.success("Question deleted successfully")
+        toast.success("Question deleted successfully");
       } else if (response.status == 403) {
-        toast.error("You don't have permission to delete a question")
+        toast.error("You don't have permission to delete a question");
       } else {
-        toast.error("Failed to delete question");
+        toast.error("Question failed to delete");
       }
     } catch (error) {
       toast.error("Failed to delete question. Please try again.");
@@ -50,35 +57,50 @@ export default function QuestionActions({ question }: QuestionActionsProps) {
   };
 
   return (
-    <div className="flex space-x-2">
-      <Link href={`/admin/questions/${question.id}/edit`}>
-        <Button variant="outline" size="sm">
-          Edit
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-8 w-8">
+          <MoreHorizontal className="h-4 w-4" />
         </Button>
-      </Link>
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="sm">
-            Delete
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              question
-              {question.text} and all its associated options.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
-              {isDeleting ? "Deleting..." : "Delete"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link href={`/admin/questions/${question.id}`}>
+            <Eye className="mr-2 h-4 w-4 cursor-pointer" />
+            View
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`/mr-mard-admin/questions/${question.id}/edit`}>
+            <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
+            Edit
+          </Link>
+        </DropdownMenuItem>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              <Trash2 className="mr-2 h-4 w-4 cursor-pointer" />
+              Delete
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the
+                question with text "{question.text}" and remove it from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                {isDeleting ? "Deleting..." : "Delete"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
+

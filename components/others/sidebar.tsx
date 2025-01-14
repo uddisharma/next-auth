@@ -13,10 +13,10 @@ import {
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-    { icon: Home, label: 'Dashboard', href: '/admin' },
+    { icon: Home, label: 'Dashboard', href: '/mr-mard-admin/dashboard' },
     { icon: FileText, label: 'Blogs', href: '/mr-mard-admin/blogs' },
-    { icon: HelpCircle, label: 'Questions', href: '/admin/questions' },
-    { icon: FileBarChart, label: 'Reports', href: '/admin/reports' },
+    { icon: HelpCircle, label: 'Questions', href: '/mr-mard-admin/questions' },
+    { icon: FileBarChart, label: 'Reports', href: '/mr-mard-admin/reports' },
     { icon: Users, label: 'Users', href: '/admin/users' },
     { icon: Users, label: 'Contact Submissions', href: '/admin/contact-submissions' },
     { icon: ScanFace, label: 'Permissions', href: '/admin/permissions' },
