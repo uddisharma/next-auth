@@ -5,9 +5,9 @@ import { auth } from "@/auth";
 import "./globals.css";
 import "./prosemirror.css"
 import { Toaster } from "@/components/ui/sonner";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import OpenHeader from "@/components/openHeader";
+import Header from "@/components/others/header";
+import Footer from "@/components/others/footer";
+import OpenHeader from "@/components/others/openHeader";
 
 const inter = Inter({ subsets: ["latin"] });
 

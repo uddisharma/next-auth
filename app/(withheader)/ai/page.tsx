@@ -1,7 +1,7 @@
 "use client"    
-import ProcessCard from '@/components/process-card'
-import WhyChooseUs from '@/components/why-choose-us'
-import FAQ from '@/components/faq'
+import ProcessCard from '@/components/others/process-card'
+import WhyChooseUs from '@/components/others/why-choose-us'
+import FAQ from '@/components/others/faq'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {

@@ -1,7 +1,7 @@
 'use client'
-import MealPlan from "@/components/dietPlan"
-import FAQ from "@/components/faq"
-import ReportBanner from "@/components/reportBanner"
+import MealPlan from "@/components/others/dietPlan"
+import FAQ from "@/components/others/faq"
+import ReportBanner from "@/components/others/reportBanner"
 
 export default function HairAnalysis() {
   return (

@@ -9,13 +9,13 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Prisma } from '@prisma/client'
-import SearchInput from "@/components/SearchInput";
+import SearchInput from "@/components/others/SearchInput";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
-import { FormError } from "@/components/form-error";
+import { FormError } from "@/components/others/form-error";
 import { db } from "@/lib/db";
-import ContactActions from "@/components/ContactActions";
+import ContactActions from "@/components/others/ContactActions";
 
 interface PageProps {
     searchParams: { [key: string]: string | string[] | undefined };

@@ -1,4 +1,4 @@
-import ReportForm from "@/components/ReportForm";
+import ReportForm from "@/components/others/ReportForm";
 import { db } from "@/lib/db";
 
 export default async function SubmitReportPage() {

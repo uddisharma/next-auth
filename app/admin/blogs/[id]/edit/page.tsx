@@ -1,10 +1,10 @@
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import BlogForm from "@/components/BlogForm";
+import BlogForm from "@/components/others/BlogForm";
 import { currentUser } from "@/lib/auth";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
-import { FormError } from "@/components/form-error";
+import { FormError } from "@/components/others/form-error";
 
 interface PageProps {
   params: { id: string };

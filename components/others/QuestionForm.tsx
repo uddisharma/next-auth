@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/form";
 import { addQuestion, updateQuestion } from "@/actions/questions";
 import { toast } from "sonner";
-import { Checkbox } from "./ui/checkbox";
+import { Checkbox } from "../ui/checkbox";
 import { QuestionFormValues, QuestionSchema } from "@/schemas";
 
 interface QuestionFormProps {

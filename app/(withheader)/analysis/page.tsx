@@ -1,7 +1,7 @@
 "use client"
-import ProgressDots from "@/components/progress-dots"
-import AnalyticsIllustration from "@/components/analytics-illustrations"
-import GenderSelection from "@/components/gender-selection"
+import ProgressDots from "@/components/others/progress-dots"
+import AnalyticsIllustration from "@/components/others/analytics-illustrations"
+import GenderSelection from "@/components/others/gender-selection"
 
 export default function OnboardingPage() {
     const handleNext = (gender: string) => {

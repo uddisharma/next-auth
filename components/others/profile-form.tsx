@@ -8,7 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Input } from "./ui/input"
+import { Input } from "../ui/input"
 
 export default function ProfileForm() {
     return (

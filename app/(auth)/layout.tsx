@@ -1,4 +1,4 @@
-import AuthHeader from '@/components/authHeader'
+import AuthHeader from '@/components/others/authHeader'
 import React from 'react'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

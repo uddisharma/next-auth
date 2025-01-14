@@ -2,7 +2,7 @@
 
 import { admin } from "@/actions/admin";
 import { RoleGate } from "@/components/auth/role-gate";
-import { FormSucess } from "@/components/form-sucess";
+import { FormSucess } from "@/components/others/form-sucess";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { UserRole } from "@prisma/client";

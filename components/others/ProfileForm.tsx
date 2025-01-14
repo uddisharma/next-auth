@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteProfile, updateProfile } from "@/actions/my-profile";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { Switch } from "./ui/switch";
+import { Switch } from "../ui/switch";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { toast } from "sonner";

@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import ProfileForm from "@/components/ProfileForm";
+import ProfileForm from "@/components/others/ProfileForm";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 

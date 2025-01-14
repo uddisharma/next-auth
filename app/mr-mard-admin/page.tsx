@@ -1,8 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import ProfileCard from "@/components/profile-card"
-import ProfileForm from "@/components/profile-form"
+import ProfileCard from "@/components/others/profile-card"
+import ProfileForm from "@/components/others/profile-form"
 
 export default function SettingsPage() {
     return (

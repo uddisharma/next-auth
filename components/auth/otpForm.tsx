@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useSearchParams } from 'next/navigation'
-import { FormError } from '../form-error'
-import { FormSucess } from '../form-sucess'
+import { FormError } from '../others/form-error'
+import { FormSucess } from '../others/form-sucess'
 import { loginOTP } from '@/actions/loginotp'
 
 interface OtpFormProps {

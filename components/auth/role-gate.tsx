@@ -1,5 +1,5 @@
 "use client";
-import { FormError } from "@/components/form-error";
+import { FormError } from "@/components/others/form-error";
 
 interface RoleGateProps {
   children: React.ReactNode;

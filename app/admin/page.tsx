@@ -3,11 +3,11 @@ import { getUsers } from "@/actions/users";
 import { getBlogs } from "@/actions/blogs";
 import { getReports } from "@/actions/submit-report";
 import { getQuestions } from "@/actions/questions";
-import { StatCard } from "@/components/StatCard";
-import { UserChart } from "@/components/UserChart";
-import { ReportChart } from "@/components/ReportChart";
-import { BlogChart } from "@/components/BlogChart";
-import { FormError } from "@/components/form-error";
+import { StatCard } from "@/components/others/StatCard";
+import { UserChart } from "@/components/others/UserChart";
+import { ReportChart } from "@/components/others/ReportChart";
+import { BlogChart } from "@/components/others/BlogChart";
+import { FormError } from "@/components/others/form-error";
 
 export default async function AdminDashboard() {
 

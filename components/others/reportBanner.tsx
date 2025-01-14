@@ -1,7 +1,7 @@
 import React from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
-import { Card } from './ui/card'
-import { Progress } from './ui/progress'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
+import { Card } from '../ui/card'
+import { Progress } from '../ui/progress'
 import Image from 'next/image'
 
 const ReportBanner = () => {

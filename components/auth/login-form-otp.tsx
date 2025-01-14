@@ -7,8 +7,8 @@ import { Button } from '../ui/button';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormError } from '../form-error';
-import { FormSucess } from '../form-sucess';
+import { FormError } from '../others/form-error';
+import { FormSucess } from '../others/form-sucess';
 import { sendOtpRequest, loginOTP } from '@/actions/loginotp';
 import { OtpSchema, PhoneSchema } from '@/schemas';
 

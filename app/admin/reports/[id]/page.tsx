@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { currentUser } from "@/lib/auth";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
-import { FormError } from "@/components/form-error";
+import { FormError } from "@/components/others/form-error";
 
 interface PageProps {
   params: { id: string };

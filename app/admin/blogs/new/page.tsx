@@ -1,4 +1,4 @@
-import BlogForm from "@/components/BlogForm";
+import BlogForm from "@/components/others/BlogForm";
 
 export default function NewBlogPage() {
   return (

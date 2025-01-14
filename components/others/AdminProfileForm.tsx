@@ -18,8 +18,8 @@ import { updateAdminProfile } from "@/actions/profile";
 import { toast } from "sonner";
 import { AdminProfileSchema, AdminFormData } from "@/schemas";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { Switch } from "./ui/switch";
-import { Label } from "./ui/label";
+import { Switch } from "../ui/switch";
+import { Label } from "../ui/label";
 interface AdminProfileFormProps {
   user: {
     id: string;

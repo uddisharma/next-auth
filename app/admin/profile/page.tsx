@@ -1,10 +1,10 @@
 import { db } from "@/lib/db";
-import AdminProfileForm from "@/components/AdminProfileForm";
+import AdminProfileForm from "@/components/others/AdminProfileForm";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Resource } from "@prisma/client";
 import { checkPermission } from "@/lib/checkPermission";
-import { FormError } from "@/components/form-error";
+import { FormError } from "@/components/others/form-error";
 
 export default async function AdminProfilePage() {
   const session = await currentUser();

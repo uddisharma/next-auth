@@ -6,8 +6,8 @@ import { useCallback, useEffect, useState } from "react";
 
 import { newVerification } from "@/actions/new-verification";
 import CardWrapper from "@/components/auth/card-wrapper";
-import { FormError } from "@/components/form-error";
-import { FormSucess } from "@/components/form-sucess";
+import { FormError } from "@/components/others/form-error";
+import { FormSucess } from "@/components/others/form-sucess";
 
 const NewVerificationForm = () => {
   const [error, setError] = useState<string | undefined>();
