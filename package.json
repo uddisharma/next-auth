@@ -37,6 +37,7 @@
     "@tabler/icons-react": "^3.26.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/date-fns": "^2.5.3",
+    "@vercel/blob": "^0.27.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.7",
