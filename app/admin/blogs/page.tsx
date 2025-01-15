@@ -1,13 +1,6 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import * as React from 'react'
+import { format } from 'date-fns'
+import { Button } from '@/components/ui/button'
 import { db } from "@/lib/db";
 import BlogActions from "@/components/others/BlogActions";
 import SearchInput from "@/components/others/SearchInput";
@@ -16,149 +9,127 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/others/form-error";
+import Pagination from '@/components/admin/pagination'
+import ExportButton from '@/components/admin/export';
+import Link from 'next/link';
 
 interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default async function BlogsPage({ searchParams }: PageProps) {
-  const page = Number(searchParams.page) || 1;
-  const limit = 1;
-  const search =
-    typeof searchParams.search === "string" ? searchParams.search : undefined;
-  const category =
-    typeof searchParams.category === "string"
-      ? searchParams.category
-      : undefined;
+    const page = Number(searchParams.page) || 1;
+    const limit = Number(searchParams.limit) || 10;
+    const search =
+        typeof searchParams.search === "string" ? searchParams.search : undefined;
+    const category =
+        typeof searchParams.category === "string"
+            ? searchParams.category
+            : undefined;
 
-  const where: Prisma.BlogWhereInput = {
-    ...(search && {
-      OR: [
-        {
-          title: { contains: search, mode: "insensitive" as Prisma.QueryMode },
-        },
-        {
-          content: {
-            contains: search,
-            mode: "insensitive" as Prisma.QueryMode,
-          },
-        },
-      ],
-    }),
-    ...(category && { category }),
-  };
 
-  const session = await currentUser();
+    const where: Prisma.BlogWhereInput = {
+        ...(search && {
+            OR: [
+                {
+                    title: { contains: search, mode: "insensitive" as Prisma.QueryMode },
+                },
+                {
+                    content: {
+                        contains: search,
+                        mode: "insensitive" as Prisma.QueryMode,
+                    },
+                },
+            ],
+        }),
+        ...(category && { category }),
+    };
 
-  if (!session) {
-    return redirect("/auth/login")
-  }
+    const session = await currentUser();
 
-  const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'read');
+    if (!session) {
+        return redirect("/auth/login")
+    }
 
-  if (!hasPermission) {
-    return <FormError message="You do not have permission to view this content!" />
-  }
+    const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'read');
 
-  const blogs = await db.blog.findMany({
-    where,
-    skip: (page - 1) * limit,
-    take: limit,
-    orderBy: { createdAt: "desc" },
-    include: { author: true },
-  });
+    if (!hasPermission) {
+        return <FormError message="You do not have permission to view this content!" />
+    }
 
-  const totalBlogs = await db.blog.count({ where });
-  const totalPages = Math.ceil(totalBlogs / limit);
+    const blogs = await db.blog.findMany({
+        where,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: { createdAt: "desc" },
+        include: { author: true },
+    });
 
-  // const categories = await prisma.blog.groupBy({
-  //   by: ["category"],
-  //   _count: true,
-  //   orderBy: {
-  //     _count: {
-  //       category: "desc",
-  //     },
-  //   },
-  // });
+    const totalBlogs = await db.blog.count({ where });
+    const totalPages = Math.ceil(totalBlogs / limit);
 
-  return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold">Blogs</h1>
-        <Link href="/admin/blogs/new">
-          <Button>Add New Blog</Button>
-        </Link>
-      </div>
+    return (
+        <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
 
-      <div className="mb-4 flex gap-4">
-        <SearchInput defaultValue={search} />
-        {/* <select
-          className="border rounded p-2"
-          defaultValue={category}
-          onChange={(e) => {
-            const searchParams = new URLSearchParams(window.location.search);
-            searchParams.set("category", e.target.value);
-            searchParams.set("page", "1");
-            window.location.search = searchParams.toString();
-          }}
-        >
-          <option value="">All Categories</option>
-          {categories.map((cat) => (
-            <option key={cat.category} value={cat.category}>
-              {cat.category} ({cat._count})
-            </option>
-          ))}
-        </select> */}
-      </div>
+            <main className="container mx-auto py-8">
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Author</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Published</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {blogs.map((blog) => (
-            <TableRow key={blog.id}>
-              <TableCell>{blog.title}</TableCell>
-              <TableCell>
-                {blog.author.name}
-              </TableCell>
-              <TableCell>{blog.category}</TableCell>
-              <TableCell>{blog.published ? "Yes" : "No"}</TableCell>
-              <TableCell>
-                <BlogActions
-                  blog={{ id: blog.id, title: blog?.title }}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+                    <h2 className="text-2xl font-bold">Blogs</h2>
+                </div>
 
-      <div className="mt-4 flex justify-between items-center">
-        <div>
-          Page {page} of {totalPages}
+                <div className="flex flex-wrap gap-4 mb-6">
+                    <div className="flex items-center gap-4">
+                        <SearchInput defaultValue={search} />
+                    </div>
+
+                    <div className="flex items-center gap-4 ml-auto">
+                        <ExportButton type="blog" />
+                        <Link href={"/mr-mard-admin/blogs/new"}>
+                            <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
+                                + New Blog
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-lg border overflow-x-auto">
+                    <div className="min-w-[600px]">
+                        <div className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+                            <div>Title</div>
+                            <div>Content</div>
+                            <div>Author</div>
+                            <div>Category</div>
+                            <div>Published</div>
+                            <div>Actions</div>
+                        </div>
+
+                        <div className="divide-y">
+                            {blogs.map((blog) => (
+                                <div
+                                    key={blog.id}
+                                    className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                                >
+                                    <div>{blog.title?.slice(0, 20)}</div>
+
+                                    <div className='text-left' dangerouslySetInnerHTML={{ __html: blog.content?.slice(0, 20) || '' }} />
+
+                                    <div>{blog.author?.name}</div>
+
+                                    <div>{blog.category}</div>
+
+                                    <div>{format(new Date(blog.createdAt), 'dd/MM/yyyy')}</div>
+
+                                    <div className="flex items-left justify-left ">
+                                        <BlogActions blog={{ id: blog.id, title: blog.title }} />
+                                    </div>
+
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <Pagination searchParams={searchParams} totalBlogs={totalBlogs} totalPages={totalPages} />
+            </main>
         </div>
-        <div>
-          {page > 1 && (
-            <Link href={`/admin/blogs?page=${page - 1}`}>
-              <Button variant="outline" className="mr-2">
-                Previous
-              </Button>
-            </Link>
-          )}
-          {page < totalPages && (
-            <Link href={`/admin/blogs?page=${page + 1}`}>
-              <Button variant="outline">Next</Button>
-            </Link>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+    )
 }

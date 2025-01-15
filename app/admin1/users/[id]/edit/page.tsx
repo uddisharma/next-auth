@@ -32,12 +32,10 @@ export default async function EditUserPage({ params }: PageProps) {
     notFound();
   }
 
-  return (  
-     <main className="p-4 sm:p-6 ">
-     <h1 className="text-2xl font-semibold mb-6">Edit User</h1>
-     <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
-     <UserForm user={{ ...user, id: user.id, name: user.name || "", email: user.email || "" }} />
-     </div>
-   </main>
+  return (
+    <div>
+      <h1 className="text-2xl font-semibold mb-6">Edit User</h1>
+      <UserForm user={{ ...user, id: user.id, name: user.name || "", email: user.email || "" }} />
+    </div>
   );
 }

@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Prisma } from '@prisma/client'
 import SearchInput from "@/components/others/SearchInput";
 import { currentUser } from "@/lib/auth";
@@ -7,10 +5,11 @@ import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/others/form-error";
 import { db } from "@/lib/db";
-import ContactActions from "@/components/others/ContactActions";
 import ExportButton from "@/components/admin/export";
 import { format } from "date-fns";
 import Pagination from "@/components/admin/pagination";
+import NewsLetterActions from '@/components/admin/actions/newsletter';
+import LeadActions from '@/components/admin/actions/leads';
 
 interface PageProps {
     searchParams: { [key: string]: string | string[] | undefined };
@@ -22,11 +21,11 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
     const search =
         typeof searchParams.search === "string" ? searchParams.search : undefined;
 
-    const where: Prisma.ContactSubmissionWhereInput = search
+    const where: Prisma.LeadsWhereInput = search
         ? {
             OR: [
                 { name: { contains: search, mode: "insensitive" } },
-                { email: { contains: search, mode: "insensitive" } },
+                { phone: { contains: search, mode: "insensitive" } },
             ],
         }
         : {};
@@ -37,21 +36,21 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
         return redirect("/auth/login")
     }
 
-    const hasPermission = await checkPermission(session?.role, 'CONTACT_SUBMISSIONS', 'read');
+    const hasPermission = await checkPermission(session?.role, 'LEADS', 'read');
 
     if (!hasPermission) {
         return <FormError message="You do not have permission to view this content!" />
     }
 
-    const submissions = await db.contactSubmission.findMany({
+    const leads = await db.leads.findMany({
         where,
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { createdAt: "desc" },
     });
 
-    const totalSubmissions = await db.contactSubmission.count({ where });
-    const totalPages = Math.ceil(totalSubmissions / limit);
+    const totalleads = await db.leads.count({ where });
+    const totalPages = Math.ceil(totalleads / limit);
 
     return (
         <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -59,7 +58,7 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
             <main className="container mx-auto py-8">
 
                 <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-                    <h2 className="text-2xl font-bold">Questions</h2>
+                    <h2 className="text-2xl font-bold">Leads</h2>
                 </div>
 
                 <div className="flex flex-wrap gap-4 mb-6">
@@ -68,48 +67,41 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
                     </div>
 
                     <div className="flex items-center gap-4 ml-auto">
-                        <ExportButton type="contact" />
-                        <Link href={"/mr-mard-admin/questions/new"}>
-                            <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
-                                + New Question
-                            </Button>
-                        </Link>
+                        <ExportButton type="leads" />
                     </div>
                 </div>
 
                 <div className="bg-white rounded-lg border overflow-x-auto">
                     <div className="min-w-[600px]">
-                        <div className="grid grid-cols-[0.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+                        <div className="grid grid-cols-[1.5fr_1.5fr_1.5fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
                             <div>Name</div>
-                            <div>Email</div>
-                            <div>Message</div>
+                            <div>Phone</div>
                             <div>Created At</div>
                             <div>Actions</div>
                         </div>
 
                         <div className="divide-y">
-                            {submissions.map((submission) => (
+                            {leads.map((lead) => (
                                 <div
-                                    key={submission.id}
-                                    className="grid grid-cols-[0.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                                    key={lead.id}
+                                    className="grid grid-cols-[1.5fr_1.5fr_1.5fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
                                 >
-                                    <div className="text-center">{submission.name}</div>
 
-                                    <div>{submission.email}</div>
+                                    <div>{lead?.name}</div>
+                                    <div>{lead?.phone}</div>
 
-                                    <div>{submission.message}</div>
 
-                                    <div>{format(new Date(submission.createdAt), 'dd/MM/yyyy')}</div>
+                                    <div>{format(new Date(lead.createdAt), 'dd/MM/yyyy')}</div>
 
                                     <div className="flex items-left justify-left ">
-                                        <ContactActions contact={{ id: submission.id, name: submission.name }} />
+                                        <LeadActions lead={{ id: lead.id, name: lead.name }} />
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
-                <Pagination searchParams={searchParams} totalBlogs={totalSubmissions} totalPages={totalPages} />
+                <Pagination searchParams={searchParams} totalBlogs={totalleads} totalPages={totalPages} />
             </main>
         </div>
 

@@ -11,6 +11,7 @@ import { FormError } from '../others/form-error';
 import { FormSucess } from '../others/form-sucess';
 import { sendOtpRequest, loginOTP } from '@/actions/loginotp';
 import { OtpSchema, PhoneSchema } from '@/schemas';
+import { useSearchParams } from 'next/navigation';
 
 const LoginOtpForm = () => {
     const [error, setError] = useState<string | undefined>('');
@@ -18,6 +19,8 @@ const LoginOtpForm = () => {
     const [isPending, startTransition] = useTransition();
     const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
     const [phoneNumber, setPhoneNumber] = useState<string>('');
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl");
 
     const phoneForm = useForm<z.infer<typeof PhoneSchema>>({
         resolver: zodResolver(PhoneSchema),
@@ -36,7 +39,7 @@ const LoginOtpForm = () => {
     const sendOtp = (values: z.infer<typeof PhoneSchema>) => {
         setError('');
         setSuccess('');
-        setPhoneNumber(values.phone); 
+        setPhoneNumber(values.phone);
 
         startTransition(() => {
             sendOtpRequest({ phone: values.phone })
@@ -46,7 +49,7 @@ const LoginOtpForm = () => {
                     } else if (data?.success) {
                         setSuccess(data.success);
 
-                        setIsOtpSent(true); 
+                        setIsOtpSent(true);
                     }
                 })
                 .catch(() => setError('Failed to send OTP. Please try again.'));
@@ -58,7 +61,7 @@ const LoginOtpForm = () => {
         setSuccess('');
 
         startTransition(() => {
-            loginOTP({ email: "", phone: phoneNumber, otp: values.otp, })
+            loginOTP({ email: "", phone: phoneNumber, otp: values.otp, }, callbackUrl)
                 .then((data) => {
                     if (data?.error) {
                         otpForm.reset();

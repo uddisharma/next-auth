@@ -23,9 +23,11 @@ const Header = () => {
           <Link href="/pricing">Pricing</Link>
         </nav>
         <div className="flex items-center gap-4">
-          <Button variant="default" className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px]">
-            Sign up / Log in
-          </Button>
+          <Link href="/auth/login">
+            <Button variant="default" className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px]">
+              Sign up / Log in
+            </Button>
+          </Link>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">

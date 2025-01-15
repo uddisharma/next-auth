@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import QuestionForm from "@/components/others/QuestionForm";
+import BlogForm from "@/components/others/BlogForm";
 import { currentUser } from "@/lib/auth";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
@@ -10,7 +10,7 @@ interface PageProps {
   params: { id: string };
 }
 
-export default async function EditQuestionPage({ params }: PageProps) {
+export default async function EditBlogPage({ params }: PageProps) {
 
   const session = await currentUser();
 
@@ -18,27 +18,24 @@ export default async function EditQuestionPage({ params }: PageProps) {
     return redirect("/auth/login")
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'read');
+  const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'read');
 
   if (!hasPermission) {
     return <FormError message="You do not have permission to view this content!" />
   }
 
-  const question = await db.question.findUnique({
-    where: { id: parseInt(params.id) },
-    include: { options: true },
+  const blog = await db.blog.findUnique({
+    where: { id: Number(params.id) },
   });
 
-  if (!question) {
+  if (!blog) {
     notFound();
   }
 
   return (
-    <main className="p-4 sm:p-6 ">
+    <div>
       <h1 className="text-2xl font-semibold mb-6">Edit Blog</h1>
-      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
-        <QuestionForm question={question} />
-      </div>
-    </main>
+      <BlogForm blog={{ ...blog, id: blog.id }} />
+    </div>
   );
 }

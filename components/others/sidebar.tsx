@@ -11,20 +11,22 @@ import {
     ScanFace,
     Newspaper,
     Bolt
-  } from "lucide-react";
+} from "lucide-react";
 import { usePathname } from 'next/navigation';
+import { signOut } from "next-auth/react";
 
 const navItems = [
-    { icon: Home, label: 'Dashboard', href: '/mr-mard-admin/dashboard' },
-    { icon: FileText, label: 'Blogs', href: '/mr-mard-admin/blogs' },
-    { icon: HelpCircle, label: 'Questions', href: '/mr-mard-admin/questions' },
-    { icon: FileBarChart, label: 'Reports', href: '/mr-mard-admin/reports' },
-    { icon: Users, label: 'Users', href: '/mr-mard-admin/users' },
-    { icon: Users, label: 'Contact Submissions', href: '/mr-mard-admin/contact-submissions' },
-    { icon: ScanFace, label: 'Permissions', href: '/mr-mard-admin/permissions' },
-    { icon: Newspaper, label: 'NewsLetter', href: '/mr-mard-admin/newsletter' },
-    { icon: Bolt, label: 'Leads', href: '/mr-mard-admin/leads' },
-    { icon: User, label: 'Profile', href: '/mr-mard-admin/profile' },
+    { icon: Home, label: 'Dashboard', href: '/admin/dashboard' },
+    { icon: FileText, label: 'Blogs', href: '/admin/blogs' },
+    { icon: HelpCircle, label: 'Questions', href: '/admin/questions' },
+    { icon: FileBarChart, label: 'Reports', href: '/admin/reports' },
+    { icon: Users, label: 'Users', href: '/admin/users' },
+    { icon: Users, label: 'Contact Submissions', href: '/admin/contact-submissions' },
+    { icon: ScanFace, label: 'Permissions', href: '/admin/permissions' },
+    { icon: Newspaper, label: 'NewsLetter', href: '/admin/newsletter' },
+    { icon: Bolt, label: 'Leads', href: '/admin/leads' },
+    { icon: User, label: 'Profile', href: '/admin/profile' },
+    // { icon: LogOut, label: 'Logout', href: '/auth/logout' },
 ]
 
 export default function Sidebar() {
@@ -51,10 +53,19 @@ export default function Sidebar() {
                         <span>{item.label}</span>
                     </Link>
                 ))}
+
+                <button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="block w-full text-left py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
+                >
+                    <LogOut className="inline-block mr-2" size={20} />
+                    Logout
+                </button>
+
             </nav>
 
             <div className="p-6 text-sm text-gray-400">
-                © 2025 Mr Mard. All Rights Reserved. Made With ❤️ In India.
+                © {new Date().getFullYear()} Mr Mard. All Rights Reserved. Made With ❤️ In India.
             </div>
         </div>
     )

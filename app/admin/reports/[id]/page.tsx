@@ -1,17 +1,19 @@
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { currentUser } from "@/lib/auth";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
 import { FormError } from "@/components/others/form-error";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, User, Mail, Calendar } from 'lucide-react';
+import Link from "next/link";
 
 interface PageProps {
   params: { id: string };
 }
 
 export default async function ViewReportPage({ params }: PageProps) {
-
   const session = await currentUser();
 
   if (!session) {
@@ -36,45 +38,64 @@ export default async function ViewReportPage({ params }: PageProps) {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-6">View Report</h1>
-      <Card>
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-6 flex items-center justify-between">
+      <h2 className="text-2xl font-semibold">View Report</h2>
+        <Link href="/mr-mard-admin/reports" passHref>
+          <Button variant="outline">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Reports
+          </Button>
+        </Link>
+      </div>
+
+      <Card className="mb-8">
         <CardHeader>
-          <CardTitle>Report Details</CardTitle>
+          <CardTitle className="text-xl">Report Details</CardTitle>
+          <CardDescription>Information about the report and its creator</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p>
-            <strong>User:</strong> {report.user.firstName}{" "}
-            {report.user.lastName}
-          </p>
-          <p>
-            <strong>Email:</strong> {report.user.email}
-          </p>
-          <p>
-            <strong>Created At:</strong>{" "}
+        <CardContent className="grid gap-4">
+          <div className="flex items-center">
+            <User className="mr-2 h-4 w-4 opacity-70" />
+            <span className="font-semibold mr-2">User:</span>
+            {report.user.firstName} {report.user.lastName}
+          </div>
+          <div className="flex items-center">
+            <Mail className="mr-2 h-4 w-4 opacity-70" />
+            <span className="font-semibold mr-2">Email:</span>
+            {report.user.email}
+          </div>
+          <div className="flex items-center">
+            <Calendar className="mr-2 h-4 w-4 opacity-70" />
+            <span className="font-semibold mr-2">Created At:</span>
             {new Date(report.createdAt).toLocaleString()}
-          </p>
+          </div>
         </CardContent>
       </Card>
-      <h2 className="text-xl font-semibold mt-6 mb-4">Questions and Answers</h2>
-      {report.questions.map((question: any, index: number) => (
-        <Card key={index} className="mb-4">
-          <CardHeader>
-            <CardTitle>{question.question}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {Array.isArray(question.answer) ? (
-              <ul>
-                {question.answer.map((answer: string, i: number) => (
-                  <li key={i}>{answer}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>{question.answer}</p>
-            )}
-          </CardContent>
-        </Card>
-      ))}
+
+      <h2 className="text-2xl font-semibold mb-5">Question Answers</h2>
+      <div className="grid gap-6">
+        {report.questions.map((question: any, index: number) => (
+          <Card key={index}>
+            <CardHeader>
+              <CardTitle className="text-xl">
+                Question {index + 1}: {question.question}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {Array.isArray(question.answer) ? (
+                <ul className="list-disc list-inside space-y-2">
+                  {question.answer.map((answer: string, i: number) => (
+                    <li key={i}>{answer}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>{question.answer}</p>
+              )}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
+

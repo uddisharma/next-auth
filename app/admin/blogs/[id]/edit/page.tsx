@@ -1,10 +1,10 @@
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import BlogForm from "@/components/others/BlogForm";
 import { currentUser } from "@/lib/auth";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
 import { FormError } from "@/components/others/form-error";
+import BlogForm from "@/components/admin/blogs/BlogsForm";
 
 interface PageProps {
   params: { id: string };
@@ -28,14 +28,18 @@ export default async function EditBlogPage({ params }: PageProps) {
     where: { id: Number(params.id) },
   });
 
+  console.log("content", blog?.content)
+
   if (!blog) {
     notFound();
   }
 
   return (
-    <div>
+    <main className="p-4 sm:p-6 ">
       <h1 className="text-2xl font-semibold mb-6">Edit Blog</h1>
-      <BlogForm blog={{ ...blog, id: blog.id }} />
-    </div>
+      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
+        <BlogForm blog={blog} />
+      </div>
+    </main>
   );
 }

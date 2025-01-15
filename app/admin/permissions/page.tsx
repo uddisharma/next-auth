@@ -78,62 +78,64 @@ export default function PermissionsManager() {
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">Permissions Manager</CardTitle>
-        <CardDescription>Manage user roles and resource permissions</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-[calc(100vh-250px)] w-full">
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted">
-                  <TableHead className="w-[150px] font-semibold">Role</TableHead>
-                  <TableHead className="w-[150px] font-semibold">Resource</TableHead>
-                  <TableHead className="text-center font-semibold">Create</TableHead>
-                  <TableHead className="text-center font-semibold">Read</TableHead>
-                  <TableHead className="text-center font-semibold">Update</TableHead>
-                  <TableHead className="text-center font-semibold">Delete</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {Object.values(UserRole).map(role =>
-                  Object.values(Resource).map(resource => (
-                    <TableRow key={`${role}-${resource}`} className="hover:bg-muted/50 border-b last:border-b-0">
-                      <TableCell className="font-medium border-r">
-                        <Badge variant="outline" className="text-xs font-semibold">
-                          {role.replace('_', ' ')}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="border-r">
-                        <Badge variant="secondary" className="text-xs">
-                          {resource}
-                        </Badge>
-                      </TableCell>
-                      {(['canCreate', 'canRead', 'canUpdate', 'canDelete'] as const).map((permission, index) => (
-                        <TableCell key={permission} className={`text-center ${index < 3 ? 'border-r' : ''}`}>
-                          <Checkbox
-                            checked={permissions[`${role}-${resource}`]?.[permission] || false}
-                            onCheckedChange={() => handlePermissionChange(role, resource, permission)}
-                            className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-                          />
+    <div className='min-h-screen bg-white px-4 sm:px-6 lg:px-8 pt-5'>
+      <Card className="w-full mx-auto">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Permissions Manager</CardTitle>
+          <CardDescription>Manage user roles and resource permissions</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ScrollArea className="h-[calc(100vh-250px)] w-full">
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted">
+                    <TableHead className="w-[150px] font-semibold">Role</TableHead>
+                    <TableHead className="w-[150px] font-semibold">Resource</TableHead>
+                    <TableHead className="text-center font-semibold">Create</TableHead>
+                    <TableHead className="text-center font-semibold">Read</TableHead>
+                    <TableHead className="text-center font-semibold">Update</TableHead>
+                    <TableHead className="text-center font-semibold">Delete</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {Object.values(UserRole).map(role =>
+                    Object.values(Resource).map(resource => (
+                      <TableRow key={`${role}-${resource}`} className="hover:bg-muted/50 border-b last:border-b-0">
+                        <TableCell className="font-medium border-r">
+                          <Badge variant="outline" className="text-xs font-semibold">
+                            {role.replace('_', ' ')}
+                          </Badge>
                         </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </ScrollArea>
-      </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button onClick={handleSave} disabled={isSaving}>
-          {isSaving ? 'Saving...' : 'Save Changes'}
-        </Button>
-      </CardFooter>
-    </Card>
+                        <TableCell className="border-r">
+                          <Badge variant="secondary" className="text-xs">
+                            {resource}
+                          </Badge>
+                        </TableCell>
+                        {(['canCreate', 'canRead', 'canUpdate', 'canDelete'] as const).map((permission, index) => (
+                          <TableCell key={permission} className={`text-center ${index < 3 ? 'border-r' : ''}`}>
+                            <Checkbox
+                              checked={permissions[`${role}-${resource}`]?.[permission] || false}
+                              onCheckedChange={() => handlePermissionChange(role, resource, permission)}
+                              className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                            />
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </ScrollArea>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button onClick={handleSave} disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save Changes'}
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
   )
 }
 

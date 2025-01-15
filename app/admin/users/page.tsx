@@ -1,13 +1,3 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { db } from "@/lib/db";
 import UserActions from "@/components/others/UserActions";
 import { Prisma, Resource } from "@prisma/client";
@@ -16,6 +6,11 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/others/form-error";
+import Pagination from "@/components/admin/pagination";
+import { format } from "date-fns";
+import ExportButton from "@/components/admin/export";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -23,7 +18,7 @@ interface PageProps {
 
 export default async function UsersPage({ searchParams }: PageProps) {
   const page = Number(searchParams.page) || 1;
-  const limit = 10;
+  const limit = Number(searchParams.limit) || 10;
   const search =
     typeof searchParams.search === "string" ? searchParams.search : undefined;
 
@@ -75,67 +70,69 @@ export default async function UsersPage({ searchParams }: PageProps) {
   const totalPages = Math.ceil(totalUsers / limit);
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold">Users</h1>
-        <Link href="/admin/users/new">
-          <Button>Add New User</Button>
-        </Link>
-      </div>
+    <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
 
-      <div className="mb-4">
-        <SearchInput />
-      </div>
+      <main className="container mx-auto py-8">
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id.toString()}>
-              <TableCell>
-                {user.name ?? `${user.firstName} ${user.lastName}`}
-              </TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.role}</TableCell>
-              <TableCell>
-                <UserActions
-                  user={{
-                    id: user.id,
-                    name: user.name || "",
-                  }}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      <div className="mt-4 flex justify-between items-center">
-        <div>
-          Page {page} of {totalPages}
+        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+          <h2 className="text-2xl font-bold">Reports</h2>
         </div>
-        <div>
-          {page > 1 && (
-            <Link href={`/admin/users?page=${page - 1}`}>
-              <Button variant="outline" className="mr-2">
-                Previous
+
+        <div className="flex flex-wrap gap-4 mb-6">
+
+          <div className="flex items-center gap-4">
+            <SearchInput defaultValue={search} />
+          </div>
+
+          <div className="flex items-center gap-4 ml-auto">
+            <ExportButton type="user" />
+            <Link href={"/mr-mard-admin/users/new"}>
+              <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
+                + New User
               </Button>
             </Link>
-          )}
-          {page < totalPages && (
-            <Link href={`/admin/users?page=${page + 1}`}>
-              <Button variant="outline">Next</Button>
-            </Link>
-          )}
+          </div>
         </div>
-      </div>
+
+        <div className="bg-white rounded-lg border overflow-x-auto">
+          <div className="min-w-[600px]">
+            <div className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+              <div>Name</div>
+              <div>Email</div>
+              <div>Role</div>
+              <div>Created At</div>
+              <div>Actions</div>
+            </div>
+
+            <div className="divide-y">
+              {users.map((user) => (
+                <div
+                  key={user.id}
+                  className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                >
+                  <div>
+                    {user?.name}
+                  </div>
+
+                  <div>
+                    {user.email}
+                  </div>
+                  <div>
+                    {user.role}
+                  </div>
+
+                  <div>{format(new Date(user.createdAt), 'dd/MM/yyyy')}</div>
+
+                  <div className="flex items-left justify-left ">
+                    <UserActions user={{ id: user.id, name: user?.name??"" }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <Pagination searchParams={searchParams} totalBlogs={totalUsers} totalPages={totalPages} />
+      </main>
     </div>
   );
 }
