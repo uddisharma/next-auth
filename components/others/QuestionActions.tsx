@@ -80,7 +80,7 @@ export default function QuestionActions({ question }: QuestionActionsProps) {
           <AlertDialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
               <Trash2 className="mr-2 h-4 w-4 cursor-pointer" />
-              Delete
+              {isDeleting ? "Deleting..." : "Delete"}
             </DropdownMenuItem>
           </AlertDialogTrigger>
           <AlertDialogContent>

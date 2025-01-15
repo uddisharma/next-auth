@@ -18,7 +18,7 @@ interface PageProps {
 
 export default async function UsersPage({ searchParams }: PageProps) {
   const page = Number(searchParams.page) || 1;
-  const limit = 10;
+  const limit = Number(searchParams.limit) || 10;
   const search =
     typeof searchParams.search === "string" ? searchParams.search : undefined;
 

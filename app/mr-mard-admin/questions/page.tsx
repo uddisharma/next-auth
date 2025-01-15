@@ -18,7 +18,7 @@ interface PageProps {
 
 export default async function QuestionsPage({ searchParams }: PageProps) {
   const page = Number(searchParams.page) || 1;
-  const limit = 10;
+  const limit = Number(searchParams.limit) || 10;
   const search =
     typeof searchParams.search === "string" ? searchParams.search : undefined;
 
@@ -60,7 +60,7 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
       <main className="container mx-auto py-8">
 
         <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-          <h2 className="text-2xl font-bold">Blogs</h2>
+          <h2 className="text-2xl font-bold">Questions</h2>
         </div>
 
         <div className="flex flex-wrap gap-4 mb-6">

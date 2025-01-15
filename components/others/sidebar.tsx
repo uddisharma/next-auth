@@ -18,7 +18,7 @@ const navItems = [
     { icon: HelpCircle, label: 'Questions', href: '/mr-mard-admin/questions' },
     { icon: FileBarChart, label: 'Reports', href: '/mr-mard-admin/reports' },
     { icon: Users, label: 'Users', href: '/mr-mard-admin/users' },
-    { icon: Users, label: 'Contact Submissions', href: '/admin/contact-submissions' },
+    { icon: Users, label: 'Contact Submissions', href: '/mr-mard-admin/contact-submissions' },
     { icon: ScanFace, label: 'Permissions', href: '/admin/permissions' },
     { icon: User, label: 'Profile', href: '/admin/profile' },
 ]

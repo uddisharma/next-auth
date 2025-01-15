@@ -1,78 +1,106 @@
-"use client";
+'use client';
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { MoreHorizontal, Eye, Pencil, Trash2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
 interface ContactActionsProps {
-    contact: {
-        id: string;
-        subject: string;
-    };
+  contact: {
+    id: string;
+    name: string;
+  };
 }
 
-export default function ContactActions({ contact }: ContactActionsProps) {
-    const [isDeleting, setIsDeleting] = useState(false);
-    const router = useRouter();
+export default function QuestionActions({ contact }: ContactActionsProps) {
+  const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
 
-    const handleDelete = async () => {
-        setIsDeleting(true);
-        try {
-            const response = await fetch(`/api/contacts/${contact.id}`, {
-                method: "DELETE",
-            });
-            if (response.ok) {
-                router.refresh();
-                toast.success("Contact submission deleted successfully");
-            } else if (response.status == 403) {
-                toast.error("You don't have permission to delete a contact submission");
-            } else {
-                toast.error("Contact submission failed to delete");
-            }
-        } catch (error) {
-            toast.error("Failed to delete contact submission. Please try again.");
-        } finally {
-            setIsDeleting(false);
-        }
-    };
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      const response = await fetch(`/api/contacts/${contact.id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        router.refresh();
+        toast.success("Contact deleted successfully");
+      } else if (response.status == 403) {
+        toast.error("You don't have permission to delete a contact");
+      } else {
+        toast.error("Contact failed to delete");
+      }
+    } catch (error) {
+      toast.error("Failed to delete contact. Please try again.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
-    return (
-        <div className="flex space-x-2">
-            <AlertDialog>
-                <AlertDialogTrigger asChild>
-                    <Button variant="destructive" size="sm">
-                        Delete
-                    </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete the
-                            blog
-                            {contact.subject}'s contact submission and remove it from our servers.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
-                            {isDeleting ? "Deleting..." : "Delete"}
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
-        </div>
-    );
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-8 w-8">
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link href={`/admin/questions/${contact.id}`}>
+            <Eye className="mr-2 h-4 w-4 cursor-pointer" />
+            View
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`/mr-mard-admin/questions/${contact.id}/edit`}>
+            <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
+            Edit
+          </Link>
+        </DropdownMenuItem>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              <Trash2 className="mr-2 h-4 w-4 cursor-pointer" />
+              {isDeleting ? "Deleting..." : "Delete"}
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the
+                contact of "{contact.name}" and remove it from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                {isDeleting ? "Deleting..." : "Delete"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }
+
