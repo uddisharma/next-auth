@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,41 +19,65 @@ import { addUser } from "@/actions/users";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserByEmailorPhone } from "@/data/user";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LoginType } from "@prisma/client";
+
+const userSchema = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Invalid email address"),
+    phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number"),
+    role: z.enum(["USER", "ADMIN", "SUPER_ADMIN", "EDITOR"]),
+    password: z.string().min(6, "Password must be at least 6 characters").optional(),
+    loginType: z.enum(["EMAIL", "PHONE", "GOOGLE"]),
+});
+
+type UserFormValues = z.infer<typeof userSchema>;
 
 export default function UserForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
+    const [activeTab, setActiveTab] = useState<"email" | "phone">("email");
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const form = useForm<UserFormValues>({
+        resolver: zodResolver(userSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+            phone: "",
+            role: "USER",
+            loginType: "EMAIL",
+        },
+    });
+
+    const onSubmit: SubmitHandler<UserFormValues> = async (data) => {
         setIsSubmitting(true);
 
-        const formData = new FormData(e.currentTarget);
-        const name = formData.get("name") as string;
-        const password = formData.get("password") as string | null
         const userData = {
-            name: name as string,
-            firstName: name?.split(" ")[0] ?? "" as string,
-            lastName: name?.split(" ")[1] ?? "" as string,
-            email: formData.get("email") as string,
-            phone: formData.get("phone") as string,
-            role: formData.get("role") as "USER" | "ADMIN" | "SUPER_ADMIN" | "EDITOR",
-            loginType: password ? "EMAIL" : ("PHONE" as "EMAIL" | "PHONE" | "GOOGLE"),
-            password: password ?? undefined as string | undefined
+            ...data,
+            firstName: data.name.split(" ")[0] ?? "",
+            lastName: data.name.split(" ")[1] ?? "",
+            loginType: data.password ? "EMAIL" : "PHONE" ?? "GOOGLE" as LoginType,
         };
 
-        const existingUser = await getUserByEmailorPhone(userData.email, userData.phone);
-
-        if (existingUser) {
-            setIsSubmitting(false);
-            toast.error("Email or Phone already in use!");
-            return;
-        }
-
         try {
-            const data = await addUser(userData);
-            if (data && 'message' in data) {
-                toast.error(data.message as string);
+            const existingUser = await getUserByEmailorPhone(userData.email, userData.phone);
+
+            if (existingUser) {
+                toast.error("Email or Phone already in use!");
+                return;
+            }
+            //@ts-ignore
+            const result = await addUser(userData);
+            if (result && 'message' in result) {
+                toast.error(result.message as string);
                 return;
             }
 
@@ -66,119 +93,100 @@ export default function UserForm() {
     };
 
     return (
-        <Tabs defaultValue="email" className="w-full max-w-md mx-auto">
-            <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="email">Email Registration</TabsTrigger>
-                <TabsTrigger value="phone">Phone Registration</TabsTrigger>
-            </TabsList>
-            <TabsContent value="email">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <Label htmlFor="name">Full Name</Label>
-                        <Input
-                            id="name"
-                            name="name"
-                            defaultValue=""
-                            required
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            defaultValue=""
-                            required
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            required
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="phone">Phone</Label>
-                        <Input
-                            id="phone"
-                            name="phone"
-                            type="tel"
-                            defaultValue=""
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="role">Role</Label>
-                        <Select name="role" defaultValue="USER">
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select role" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="USER">User</SelectItem>
-                                <SelectItem value="ADMIN">Admin</SelectItem>
-                                <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <Button type="submit" disabled={isSubmitting} className="w-full">
-                        {isSubmitting ? "Submitting..." : "Add User"}
-                    </Button>
-                </form>
-            </TabsContent>
-            <TabsContent value="phone">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <Label htmlFor="name-phone">Full Name</Label>
-                        <Input
-                            id="name-phone"
-                            name="name"
-                            defaultValue=""
-                            required
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="phone-reg">Phone</Label>
-                        <Input
-                            id="phone-reg"
-                            name="phone"
-                            type="tel"
-                            defaultValue=""
-                            required
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="email-phone">Email</Label>
-                        <Input
-                            id="email-phone"
-                            name="email"
-                            type="email"
-                            defaultValue=""
-                            required
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="role-phone">Role</Label>
-                        <Select name="role" defaultValue="USER">
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select role" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="USER">User</SelectItem>
-                                <SelectItem value="ADMIN">Admin</SelectItem>
-                                <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
-                                <SelectItem value="EDITOR">Editor</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <Button type="submit" disabled={isSubmitting} className="w-full">
-                        {isSubmitting ? "Submitting..." : "Add User"}
-                    </Button>
-                </form>
-            </TabsContent>
-        </Tabs >
+        <Card className="w-full max-w-md mx-auto">
+            <CardContent>
+                <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "email" | "phone")}>
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="email">Email Registration</TabsTrigger>
+                        <TabsTrigger value="phone">Phone Registration</TabsTrigger>
+                    </TabsList>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Full Name</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                            <Input type="email" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="phone"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Phone</FormLabel>
+                                        <FormControl>
+                                            <Input type="tel" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            {activeTab === "email" && (
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Password</FormLabel>
+                                            <FormControl>
+                                                <Input type="password" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            )}
+                            <FormField
+                                control={form.control}
+                                name="role"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Role</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select role" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="USER">User</SelectItem>
+                                                <SelectItem value="ADMIN">Admin</SelectItem>
+                                                <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
+                                                <SelectItem value="EDITOR">Editor</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" disabled={isSubmitting} className="w-full">
+                                {isSubmitting ? "Submitting..." : "Add User"}
+                            </Button>
+                        </form>
+                    </Form>
+                </Tabs>
+            </CardContent>
+        </Card>
     );
 }
 

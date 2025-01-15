@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import ReportActions from "@/components/others/ReportActions";
+import UserActions from "@/components/others/UserActions";
 import { Prisma, Resource } from "@prisma/client";
 import SearchInput from "@/components/others/SearchInput";
 import { currentUser } from "@/lib/auth";
@@ -9,42 +9,38 @@ import { FormError } from "@/components/others/form-error";
 import Pagination from "@/components/admin/pagination";
 import { format } from "date-fns";
 import ExportButton from "@/components/admin/export";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function ReportsPage({ searchParams }: PageProps) {
+export default async function UsersPage({ searchParams }: PageProps) {
   const page = Number(searchParams.page) || 1;
   const limit = 10;
   const search =
     typeof searchParams.search === "string" ? searchParams.search : undefined;
 
-  const where: Prisma.ReportWhereInput = search
+  const where: Prisma.UserWhereInput = search
     ? {
       OR: [
         {
-          user: {
-            firstName: {
-              contains: search,
-              mode: "insensitive" as Prisma.QueryMode,
-            },
+          firstName: {
+            contains: search,
+            mode: "insensitive" as Prisma.QueryMode,
           },
         },
         {
-          user: {
-            lastName: {
-              contains: search,
-              mode: "insensitive" as Prisma.QueryMode,
-            },
+          lastName: {
+            contains: search,
+            mode: "insensitive" as Prisma.QueryMode,
           },
         },
         {
-          user: {
-            email: {
-              contains: search,
-              mode: "insensitive" as Prisma.QueryMode,
-            },
+          email: {
+            contains: search,
+            mode: "insensitive" as Prisma.QueryMode,
           },
         },
       ],
@@ -57,22 +53,21 @@ export default async function ReportsPage({ searchParams }: PageProps) {
     return redirect("/auth/login")
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.REPORTS, 'read');
+  const hasPermission = await checkPermission(session?.role, Resource.USERS, 'read');
 
   if (!hasPermission) {
     return <FormError message="You do not have permission to view this content!" />
   }
 
-  const reports = await db.report.findMany({
+  const users = await db.user.findMany({
     where,
     skip: (page - 1) * limit,
     take: limit,
     orderBy: { createdAt: "desc" },
-    include: { user: true },
   });
 
-  const totalReports = await db.report.count({ where });
-  const totalPages = Math.ceil(totalReports / limit);
+  const totalUsers = await db.user.count({ where });
+  const totalPages = Math.ceil(totalUsers / limit);
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -90,44 +85,53 @@ export default async function ReportsPage({ searchParams }: PageProps) {
           </div>
 
           <div className="flex items-center gap-4 ml-auto">
-            <ExportButton type="report" />
+            <ExportButton type="user" />
+            <Link href={"/mr-mard-admin/users/new"}>
+              <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
+                + New User
+              </Button>
+            </Link>
           </div>
         </div>
 
         <div className="bg-white rounded-lg border overflow-x-auto">
           <div className="min-w-[600px]">
             <div className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
-              <div>User</div>
-              <div>Questions</div>
+              <div>Name</div>
+              <div>Email</div>
+              <div>Role</div>
               <div>Created At</div>
               <div>Actions</div>
             </div>
 
             <div className="divide-y">
-              {reports.map((report) => (
+              {users.map((user) => (
                 <div
-                  key={report.id}
+                  key={user.id}
                   className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
                 >
                   <div>
-                    {report.user.firstName} {report.user.lastName}
+                    {user?.name}
                   </div>
 
                   <div>
-                    {report?.questions?.length} questions
+                    {user.email}
+                  </div>
+                  <div>
+                    {user.role}
                   </div>
 
-                  <div>{format(new Date(report.createdAt), 'dd/MM/yyyy')}</div>
+                  <div>{format(new Date(user.createdAt), 'dd/MM/yyyy')}</div>
 
                   <div className="flex items-left justify-left ">
-                    <ReportActions report={{ id: report.id, name: report?.user?.firstName ?? "" }} />
+                    <UserActions user={{ id: user.id, name: user?.name??"" }} />
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <Pagination searchParams={searchParams} totalBlogs={totalReports} totalPages={totalPages} />
+        <Pagination searchParams={searchParams} totalBlogs={totalUsers} totalPages={totalPages} />
       </main>
     </div>
   );
