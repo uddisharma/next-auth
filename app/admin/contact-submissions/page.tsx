@@ -87,7 +87,7 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
                                 {new Date(submission.createdAt).toLocaleString()}
                             </TableCell>
                             <TableCell>
-                                <ContactActions contact={{ id: submission.id, subject: submission.name }} />
+                                <ContactActions contact={{ id: submission.id, name: submission.name }} />
                             </TableCell>
                         </TableRow>
                     ))}

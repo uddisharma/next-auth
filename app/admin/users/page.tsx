@@ -108,7 +108,7 @@ export default async function UsersPage({ searchParams }: PageProps) {
                 <UserActions
                   user={{
                     id: user.id,
-                    email: user.email || "",
+                    name: user.name || "",
                   }}
                 />
               </TableCell>
