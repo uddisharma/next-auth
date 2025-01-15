@@ -65,13 +65,13 @@ export default function ReportActions({ report }: ReportActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/admin/questions/${report.id}`}>
+          <Link href={`/mr-mard-admin/reports/${report.id}`}>
             <Eye className="mr-2 h-4 w-4 cursor-pointer" />
             View
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/mr-mard-admin/questions/${report.id}/edit`}>
+          <Link href={`/mr-mard-admin/reports/${report.id}/edit`}>
             <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
             Edit
           </Link>
