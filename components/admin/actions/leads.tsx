@@ -23,33 +23,33 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-interface NewsLetterActionsProps {
-  newsletter: {
+interface LeadActionsProps {
+  lead: {
     id: number;
-    email: string;
+    name: string;
   };
 }
 
-export default function NewsLetterActions({ newsletter }: NewsLetterActionsProps) {
+export default function LeadActions({ lead }: LeadActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(`/api/newsletters/${newsletter.id}`, {
+      const response = await fetch(`/api/leads/${lead.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
         router.refresh();
-        toast.success("Newsletter deleted successfully");
+        toast.success("Lead deleted successfully");
       } else if (response.status == 403) {
-        toast.error("You don't have permission to delete a newsletter");
+        toast.error("You don't have permission to delete a lead");
       } else {
-        toast.error("Newsletter failed to delete");
+        toast.error("Lead failed to delete");
       }
     } catch (error) {
-      toast.error("Failed to delete newsletter. Please try again.");
+      toast.error("Failed to delete contact. Please try again.");
     } finally {
       setIsDeleting(false);
     }
@@ -75,7 +75,7 @@ export default function NewsLetterActions({ newsletter }: NewsLetterActionsProps
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete the
-                 "{newsletter.email}" and remove it from our servers.
+                 "{lead.name}" and remove it from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
