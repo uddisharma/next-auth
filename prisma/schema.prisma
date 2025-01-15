@@ -192,17 +192,17 @@ model Permission {
 }
 
 model NewsLetter {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-    createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Leads {
-  id    Int    @id @default(autoincrement())
-  name  String
-  phone String @unique
-    createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String   @unique
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
