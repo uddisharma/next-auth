@@ -19,8 +19,8 @@ const navItems = [
     { icon: FileBarChart, label: 'Reports', href: '/mr-mard-admin/reports' },
     { icon: Users, label: 'Users', href: '/mr-mard-admin/users' },
     { icon: Users, label: 'Contact Submissions', href: '/mr-mard-admin/contact-submissions' },
-    { icon: ScanFace, label: 'Permissions', href: '/admin/permissions' },
-    { icon: User, label: 'Profile', href: '/admin/profile' },
+    { icon: ScanFace, label: 'Permissions', href: '/mr-mard-admin/permissions' },
+    { icon: User, label: 'Profile', href: '/mr-mard-admin/profile' },
 ]
 
 export default function Sidebar() {
