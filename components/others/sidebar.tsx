@@ -8,7 +8,9 @@ import {
     User,
     Users,
     LogOut,
-    ScanFace
+    ScanFace,
+    Newspaper,
+    Bolt
   } from "lucide-react";
 import { usePathname } from 'next/navigation';
 
@@ -20,6 +22,8 @@ const navItems = [
     { icon: Users, label: 'Users', href: '/mr-mard-admin/users' },
     { icon: Users, label: 'Contact Submissions', href: '/mr-mard-admin/contact-submissions' },
     { icon: ScanFace, label: 'Permissions', href: '/mr-mard-admin/permissions' },
+    { icon: Newspaper, label: 'NewsLetter', href: '/mr-mard-admin/newsletter' },
+    { icon: Bolt, label: 'Leads', href: '/mr-mard-admin/leads' },
     { icon: User, label: 'Profile', href: '/mr-mard-admin/profile' },
 ]
 

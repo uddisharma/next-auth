@@ -1,6 +1,6 @@
 export type UserRole = 'Admin' | 'Contributor' | 'Viewer'
 
-export type ExportType = "blog" | "question" | "contact" | "report" | "user"
+export type ExportType = "blog" | "question" | "contact" | "report" | "user" | "newsletter" | "leads"
 
 export interface User {
     id: string
