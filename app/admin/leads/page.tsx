@@ -8,7 +8,6 @@ import { db } from "@/lib/db";
 import ExportButton from "@/components/admin/export";
 import { format } from "date-fns";
 import Pagination from "@/components/admin/pagination";
-import NewsLetterActions from '@/components/admin/actions/newsletter';
 import LeadActions from '@/components/admin/actions/leads';
 
 interface PageProps {
