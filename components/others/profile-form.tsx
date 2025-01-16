@@ -9,14 +9,19 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Input } from "../ui/input"
+import { User } from "@/schemas/types"
 
-export default function ProfileForm() {
+type Props = {
+    admin: Pick<User, "firstName" | "lastName" | "phone" | "email" | "location">| null
+}
+
+export default function ProfileForm({ admin }: Props) {
     return (
         <div className="space-y-6 ">
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                     <label className="text-gray-600">First Name</label>
-                   <Input placeholder="Enter first name" />
+                    <Input placeholder="Enter first name" />
                 </div>
 
                 <div className="space-y-2">
@@ -50,6 +55,11 @@ export default function ProfileForm() {
                         </SelectContent>
                     </Select>
                 </div>
+            </div>
+            <div className="flex justify-end mt-5">
+                <Button className="bg-btnblue text-white">
+                    Save
+                </Button>
             </div>
         </div>
     )

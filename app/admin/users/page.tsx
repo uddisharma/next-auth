@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import UserActions from "@/components/admin/actions/users";
+import UserActions from "@/components/admin/actions/UserActions";
 import { Prisma, Resource } from "@prisma/client";
 import SearchInput from "@/components/others/SearchInput";
 import { currentUser } from "@/lib/auth";
