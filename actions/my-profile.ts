@@ -6,6 +6,7 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
+import { ProfileFormData, ProfileSchema, UserFormData } from "@/schemas";
 
 type UserData = {
     firstName: string | null;
@@ -56,4 +57,27 @@ export async function deleteProfile() {
     });
 
     revalidatePath("/profile");
+}
+
+export async function updateAdminProfile(data: ProfileFormData) {
+    const validatedData = ProfileSchema.parse(data);
+
+    const session = await currentUser();
+
+    if (!session) {
+        return redirect("/auth/login")
+    }
+
+    try {
+        await db.user.update({
+            where: { id: session.id },
+            data: validatedData,
+        });
+
+        revalidatePath('/admin/profile');
+        return { success: true };
+    } catch (error) {
+        console.error('Failed to update user:', error);
+        return { success: false, error: 'Failed to update user' };
+    }
 }

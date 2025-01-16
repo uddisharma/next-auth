@@ -194,6 +194,14 @@ export const QuestionSchema = z.object({
   // }, "Options are required for non-text questions."),
 });
 
+export const ProfileSchema = z.object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    phone: z.string().nonempty("Phone number is required"),
+    email: z.string().email("Invalid email format"),
+    location: z.string().min(1, "Location is required"),
+});
+
 export const contactSubmissionSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters long"),
   email: z.string().email("Invalid email address"),
@@ -208,3 +216,4 @@ export type ReportFormData = z.infer<typeof reportSchema>;
 export type AdminFormData = z.infer<typeof AdminProfileSchema>;
 export type QuestionFormValues = z.infer<typeof QuestionSchema>;
 export type ContactSubmissionFormData = z.infer<typeof contactSubmissionSchema>;
+export type ProfileFormData = z.infer<typeof ProfileSchema>;
