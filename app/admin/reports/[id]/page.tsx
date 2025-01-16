@@ -40,7 +40,7 @@ export default async function ViewReportPage({ params }: PageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
-      <h2 className="text-2xl font-semibold">View Report</h2>
+      <h2 className="text-xl font-semibold">View Report</h2>
         <Link href="/admin/reports" passHref>
           <Button variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Reports
@@ -72,12 +72,12 @@ export default async function ViewReportPage({ params }: PageProps) {
         </CardContent>
       </Card>
 
-      <h2 className="text-2xl font-semibold mb-5">Question Answers</h2>
+      <h2 className="text-xl font-semibold mb-5">Question Answers</h2>
       <div className="grid gap-6">
         {report.questions.map((question: any, index: number) => (
           <Card key={index}>
             <CardHeader>
-              <CardTitle className="text-xl">
+              <CardTitle className="text-md font-normal">
                 Question {index + 1}: {question.question}
               </CardTitle>
             </CardHeader>

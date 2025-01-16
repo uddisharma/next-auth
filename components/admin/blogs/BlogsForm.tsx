@@ -129,7 +129,7 @@ export default function BlogForm({ blog }: BlogFormProps) {
     };
 
     return (
-        <Card className="w-full mx-auto">
+        <Card className="w-full mx-auto pt-5">
             <CardContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

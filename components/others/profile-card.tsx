@@ -24,7 +24,7 @@ export default function ProfileCard({ admin, stats }: Props) {
     const searchParams = useSearchParams()
 
     const handleTimeRangeChange = (range: string) => {
-        const params = new URLSearchParams(searchParams)
+        const params = new URLSearchParams(searchParams.toString())
         if (range === 'ALL TIME') {
             params.delete('timeRange')
         } else {
