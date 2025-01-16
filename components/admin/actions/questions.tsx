@@ -71,7 +71,7 @@ export default function QuestionActions({ question }: QuestionActionsProps) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/mr-mard-admin/questions/${question.id}/edit`}>
+          <Link href={`/admin/questions/${question.id}/edit`}>
             <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
             Edit
           </Link>

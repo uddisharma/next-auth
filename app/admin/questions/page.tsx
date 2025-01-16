@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import QuestionActions from "@/components/others/QuestionActions";
+import QuestionActions from "@/components/admin/actions/questions";
 import SearchInput from "@/components/others/SearchInput";
 import { Prisma, Resource } from "@prisma/client";
 import { currentUser } from "@/lib/auth";
@@ -70,7 +70,7 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
 
           <div className="flex items-center gap-4 ml-auto">
             <ExportButton type="question" />
-            <Link href={"/mr-mard-admin/questions/new"}>
+            <Link href={"/admin/questions/new"}>
               <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
                 + New Question
               </Button>

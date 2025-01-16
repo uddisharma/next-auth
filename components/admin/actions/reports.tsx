@@ -24,33 +24,33 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-interface ContactActionsProps {
-  contact: {
-    id: string;
+interface ReportActionsProps {
+  report: {
+    id: number;
     name: string;
   };
 }
 
-export default function QuestionActions({ contact }: ContactActionsProps) {
+export default function ReportActions({ report }: ReportActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(`/api/contacts/${contact.id}`, {
+      const response = await fetch(`/api/reports/${report.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
         router.refresh();
-        toast.success("Contact deleted successfully");
+        toast.success("Report deleted successfully");
       } else if (response.status == 403) {
-        toast.error("You don't have permission to delete a contact");
+        toast.error("You don't have permission to delete a report.");
       } else {
-        toast.error("Contact failed to delete");
+        toast.error("Report failed to delete");
       }
     } catch (error) {
-      toast.error("Failed to delete contact. Please try again.");
+      toast.error("Failed to delete report. Please try again.");
     } finally {
       setIsDeleting(false);
     }
@@ -65,13 +65,13 @@ export default function QuestionActions({ contact }: ContactActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/admin/questions/${contact.id}`}>
+          <Link href={`/admin/reports/${report.id}`}>
             <Eye className="mr-2 h-4 w-4 cursor-pointer" />
             View
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/mr-mard-admin/questions/${contact.id}/edit`}>
+          <Link href={`/admin/reports/${report.id}/edit`}>
             <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
             Edit
           </Link>
@@ -88,7 +88,7 @@ export default function QuestionActions({ contact }: ContactActionsProps) {
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete the
-                contact of "{contact.name}" and remove it from our servers.
+                "{report.name}'s report" and remove it from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

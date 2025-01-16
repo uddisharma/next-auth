@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/others/form-error";
 import { db } from "@/lib/db";
-import ContactActions from "@/components/others/ContactActions";
+import ContactActions from "@/components/admin/actions/contacts";
 import ExportButton from "@/components/admin/export";
 import { format } from "date-fns";
 import Pagination from "@/components/admin/pagination";
@@ -69,7 +69,7 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
 
                     <div className="flex items-center gap-4 ml-auto">
                         <ExportButton type="contact" />
-                        <Link href={"/mr-mard-admin/questions/new"}>
+                        <Link href={"/admin/questions/new"}>
                             <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
                                 + New Question
                             </Button>

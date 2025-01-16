@@ -24,33 +24,33 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-interface UserActionsProps {
-  user: {
+interface ContactActionsProps {
+  contact: {
     id: string;
     name: string;
   };
 }
 
-export default function UserActions({ user }: UserActionsProps) {
+export default function QuestionActions({ contact }: ContactActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(`/api/users/${user.id}`, {
+      const response = await fetch(`/api/contacts/${contact.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
         router.refresh();
-        toast.success("User deleted successfully");
+        toast.success("Contact deleted successfully");
       } else if (response.status == 403) {
-        toast.error("You don't have permission to delete a user.");
+        toast.error("You don't have permission to delete a contact");
       } else {
-        toast.error("User failed to delete");
+        toast.error("Contact failed to delete");
       }
     } catch (error) {
-      toast.error("Failed to delete user. Please try again.");
+      toast.error("Failed to delete contact. Please try again.");
     } finally {
       setIsDeleting(false);
     }
@@ -65,13 +65,13 @@ export default function UserActions({ user }: UserActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/admin/questions/${user.id}`}>
+          <Link href={`/admin/questions/${contact.id}`}>
             <Eye className="mr-2 h-4 w-4 cursor-pointer" />
             View
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/mr-mard-admin/users/${user.id}/edit`}>
+          <Link href={`/admin/questions/${contact.id}/edit`}>
             <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
             Edit
           </Link>
@@ -88,7 +88,7 @@ export default function UserActions({ user }: UserActionsProps) {
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete the
-                "{user.name}'s account" and remove it from our servers.
+                contact of "{contact.name}" and remove it from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import UserActions from "@/components/others/UserActions";
+import UserActions from "@/components/admin/actions/users";
 import { Prisma, Resource } from "@prisma/client";
 import SearchInput from "@/components/others/SearchInput";
 import { currentUser } from "@/lib/auth";
@@ -86,7 +86,7 @@ export default async function UsersPage({ searchParams }: PageProps) {
 
           <div className="flex items-center gap-4 ml-auto">
             <ExportButton type="user" />
-            <Link href={"/mr-mard-admin/users/new"}>
+            <Link href={"/admin/users/new"}>
               <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
                 + New User
               </Button>

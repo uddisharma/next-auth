@@ -24,33 +24,33 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-interface ReportActionsProps {
-  report: {
-    id: number;
+interface UserActionsProps {
+  user: {
+    id: string;
     name: string;
   };
 }
 
-export default function ReportActions({ report }: ReportActionsProps) {
+export default function UserActions({ user }: UserActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(`/api/reports/${report.id}`, {
+      const response = await fetch(`/api/users/${user.id}`, {
         method: "DELETE",
       });
       if (response.ok) {
         router.refresh();
-        toast.success("Report deleted successfully");
+        toast.success("User deleted successfully");
       } else if (response.status == 403) {
-        toast.error("You don't have permission to delete a report.");
+        toast.error("You don't have permission to delete a user.");
       } else {
-        toast.error("Report failed to delete");
+        toast.error("User failed to delete");
       }
     } catch (error) {
-      toast.error("Failed to delete report. Please try again.");
+      toast.error("Failed to delete user. Please try again.");
     } finally {
       setIsDeleting(false);
     }
@@ -65,13 +65,13 @@ export default function ReportActions({ report }: ReportActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/mr-mard-admin/reports/${report.id}`}>
+          <Link href={`/admin/questions/${user.id}`}>
             <Eye className="mr-2 h-4 w-4 cursor-pointer" />
             View
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/mr-mard-admin/reports/${report.id}/edit`}>
+          <Link href={`/admin/users/${user.id}/edit`}>
             <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
             Edit
           </Link>
@@ -88,7 +88,7 @@ export default function ReportActions({ report }: ReportActionsProps) {
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete the
-                "{report.name}'s report" and remove it from our servers.
+                "{user.name}'s account" and remove it from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

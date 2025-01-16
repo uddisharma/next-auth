@@ -10,7 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div>
             <div className="bg-gray-50 flex pb-[550px]">
                 <div className="hidden lg:block w-64">
-                    <Sidebar />
+                    {/* <Sidebar /> */}
                 </div>
                 <Sheet>
                     <SheetContent side="left" className="p-0 w-64">

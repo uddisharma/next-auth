@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { db } from "@/lib/db";
-import QuestionActions from "@/components/others/QuestionActions";
+import QuestionActions from "@/components/admin/actions/questions";
 import SearchInput from "@/components/others/SearchInput";
 import { Prisma, Resource } from "@prisma/client";
 import { currentUser } from "@/lib/auth";

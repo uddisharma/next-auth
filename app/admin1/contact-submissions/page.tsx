@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/others/form-error";
 import { db } from "@/lib/db";
-import ContactActions from "@/components/others/ContactActions";
+import ContactActions from "@/components/admin/actions/contacts";
 
 interface PageProps {
     searchParams: { [key: string]: string | string[] | undefined };

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { format } from 'date-fns'
 import { Button } from '@/components/ui/button'
 import { db } from "@/lib/db";
-import BlogActions from "@/components/others/BlogActions";
+import BlogActions from "@/components/admin/actions/blogs";
 import SearchInput from "@/components/others/SearchInput";
 import { Prisma, Resource } from "@prisma/client";
 import { currentUser } from "@/lib/auth";
@@ -84,7 +84,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
 
                     <div className="flex items-center gap-4 ml-auto">
                         <ExportButton type="blog" />
-                        <Link href={"/mr-mard-admin/blogs/new"}>
+                        <Link href={"/admin/blogs/new"}>
                             <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
                                 + New Blog
                             </Button>

@@ -30,11 +30,11 @@ export default function Pagination({ searchParams, totalBlogs, totalPages }: Pag
     const category = typeof searchParams.category === "string" ? searchParams.category : undefined;
 
     const handlePageChange = (newPage: number) => {
-        router.push(`/mr-mard-admin/blogs?page=${newPage}&limit=${limit}${search ? `&search=${search}` : ''}${category ? `&category=${category}` : ''}`);
+        router.push(`/admin/blogs?page=${newPage}&limit=${limit}${search ? `&search=${search}` : ''}${category ? `&category=${category}` : ''}`);
     };
 
     const handleLimitChange = (newLimit: string) => {
-        router.push(`/mr-mard-admin/blogs?page=1&limit=${newLimit}${search ? `&search=${search}` : ''}${category ? `&category=${category}` : ''}`);
+        router.push(`/admin/blogs?page=1&limit=${newLimit}${search ? `&search=${search}` : ''}${category ? `&category=${category}` : ''}`);
     };
 
     const renderPageButtons = () => {
