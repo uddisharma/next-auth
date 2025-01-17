@@ -6,6 +6,7 @@ import "./globals.css";
 import "./prosemirror.css";
 import { Toaster } from "@/components/ui/sonner";
 import NextTopLoader from "nextjs-toploader";
+import { SubscriptionPopup } from "@/components/others/leads/Popup";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +43,7 @@ export default async function RootLayout({
               zIndex={1600}
               showAtBottom={false}
             />
+            <SubscriptionPopup />
             {children}
           </div>
         </body>
