@@ -81,3 +81,29 @@ export async function updateAdminProfile(data: ProfileFormData) {
         return { success: false, error: 'Failed to update user' };
     }
 }
+
+export async function updateProfilePhoto( photoUrl: string): Promise<{ success: boolean; error?: string } | undefined> {
+
+    const session = await currentUser();
+
+    if (!session) {
+        return redirect("/auth/login")
+    }
+
+    try {
+        await db.user.update({
+            where: {
+                id: session.id,
+            },
+            data: {
+                image: photoUrl
+            }
+        })
+
+        revalidatePath('/admin/profile');
+        return { success: true };
+    } catch (error) {
+        console.error('Failed to update user:', error);
+        return { success: false, error: 'Failed to update user' };
+    }
+}

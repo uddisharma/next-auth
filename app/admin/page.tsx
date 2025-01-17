@@ -64,7 +64,7 @@ export default async function Dashboard({ searchParams }: { searchParams: { time
             <h1 className="text-2xl font-semibold mb-6">Profile Settings</h1>
             <div className="bg-yellow h-[270px] w-full border-b rounded-xl">
                 <div className="grid lg:grid-cols-[300px,1fr] gap-6 px-4 sm:px-5 pt-16 md:pt-32">
-                    <ProfileCard admin={admin} stats={stats}/>
+                    <ProfileCard admin={admin} stats={stats} id={session?.id}/>
                     <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
                         <ProfileForm admin={admin} />
                     </div>
