@@ -19,10 +19,9 @@ type Props = {
         reports: number
         questions: number
     }
-    id: string
 }
 
-export default function ProfileCard({ admin, stats, id }: Props) {
+export default function ProfileCard({ admin, stats }: Props) {
     const [timeframe, setTimeframe] = useState<"1M" | "6M" | "1Y" | "ALL">("1M")
     const [isOpen, setIsOpen] = useState(false)
     const [previewImage, setPreviewImage] = useState<string | null>(null)
