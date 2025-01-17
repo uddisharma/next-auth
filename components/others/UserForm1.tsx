@@ -28,28 +28,15 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoginType } from "@prisma/client";
-
-const userSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number"),
-  role: z.enum(["USER", "ADMIN", "SUPER_ADMIN", "EDITOR"]),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .optional(),
-  loginType: z.enum(["EMAIL", "PHONE", "GOOGLE"]),
-});
-
-type UserFormValues = z.infer<typeof userSchema>;
+import { userSchema2, userSchema2Data } from "@/schemas";
 
 export default function UserForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<"email" | "phone">("email");
 
-  const form = useForm<UserFormValues>({
-    resolver: zodResolver(userSchema),
+  const form = useForm<userSchema2Data>({
+    resolver: zodResolver(userSchema2),
     defaultValues: {
       name: "",
       email: "",
@@ -59,7 +46,7 @@ export default function UserForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<UserFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<userSchema2Data> = async (data) => {
     setIsSubmitting(true);
 
     const userData = {

@@ -1,18 +1,12 @@
 "use server";
 import { db } from "@/lib/db";
+import { LeadsSchema, LeadsSchemaData } from "@/schemas";
 import { z } from "zod";
 
-const SubscribeSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number"),
-});
-
-type SubscribeSchema = z.infer<typeof SubscribeSchema>;
-
-export async function subscribe(values: SubscribeSchema) {
+export async function subscribe(values: LeadsSchemaData) {
   try {
     const { name: validatedName, phone: validatedPhone } =
-      SubscribeSchema.parse(values);
+      LeadsSchema.parse(values);
 
     const existingLead = await db.leads.findUnique({
       where: { phone: validatedPhone },

@@ -9,10 +9,9 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { OtpSchema } from "@/schemas";
+import { OtpSchema, OtpSchemaData } from "@/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useSearchParams } from "next/navigation";
 import { FormError } from "../others/form-error";
 import { FormSucess } from "../others/form-sucess";
@@ -35,14 +34,14 @@ const OtpForm = ({ phone_email }: OtpFormProps) => {
       : "";
 
   // OTP form
-  const otpForm = useForm<z.infer<typeof OtpSchema>>({
+  const otpForm = useForm<OtpSchemaData>({
     resolver: zodResolver(OtpSchema),
     defaultValues: {
       otp: "",
     },
   });
 
-  const handleOtpSubmit = (values: z.infer<typeof OtpSchema>) => {
+  const handleOtpSubmit = (values: OtpSchemaData) => {
     setError("");
     setSuccess("");
 

@@ -11,13 +11,17 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormError } from "../others/form-error";
 import { FormSucess } from "../others/form-sucess";
 import { sendOtpRequest, loginOTP } from "@/actions/loginotp";
-import { OtpSchema, PhoneSchema } from "@/schemas";
+import {
+  OtpSchema,
+  OtpSchemaData,
+  PhoneSchema,
+  PhoneSchemaData,
+} from "@/schemas";
 import { useSearchParams } from "next/navigation";
 
 const LoginOtpForm = () => {
@@ -29,21 +33,21 @@ const LoginOtpForm = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
-  const phoneForm = useForm<z.infer<typeof PhoneSchema>>({
+  const phoneForm = useForm<PhoneSchemaData>({
     resolver: zodResolver(PhoneSchema),
     defaultValues: {
       phone: "",
     },
   });
 
-  const otpForm = useForm<z.infer<typeof OtpSchema>>({
+  const otpForm = useForm<OtpSchemaData>({
     resolver: zodResolver(OtpSchema),
     defaultValues: {
       otp: "",
     },
   });
 
-  const sendOtp = (values: z.infer<typeof PhoneSchema>) => {
+  const sendOtp = (values: PhoneSchemaData) => {
     setError("");
     setSuccess("");
     setPhoneNumber(values.phone);
@@ -63,7 +67,7 @@ const LoginOtpForm = () => {
     });
   };
 
-  const handleOtpSubmit = (values: z.infer<typeof OtpSchema>) => {
+  const handleOtpSubmit = (values: OtpSchemaData) => {
     setError("");
     setSuccess("");
 

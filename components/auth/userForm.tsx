@@ -9,8 +9,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { RegisterWithOtpSchema } from "@/schemas";
-import { z } from "zod";
+import { RegisterWithOtpSchema, RegisterWithOtpSchemaData } from "@/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerWithOTP } from "@/actions/register-phone";
@@ -25,7 +24,7 @@ const UserForm: React.FC<UserFormProps> = ({ setIsOtpSent, setData }) => {
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
-  const userForm = useForm<z.infer<typeof RegisterWithOtpSchema>>({
+  const userForm = useForm<RegisterWithOtpSchemaData>({
     resolver: zodResolver(RegisterWithOtpSchema),
     defaultValues: {
       name: "",
@@ -34,7 +33,7 @@ const UserForm: React.FC<UserFormProps> = ({ setIsOtpSent, setData }) => {
     },
   });
 
-  const handleUserSubmit = (values: z.infer<typeof RegisterWithOtpSchema>) => {
+  const handleUserSubmit = (values: RegisterWithOtpSchemaData) => {
     setError("");
     setSuccess("");
     startTransition(() => {

@@ -1,12 +1,11 @@
 "use client";
 
-import * as z from "zod";
 import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { NewPasswordSchema } from "@/schemas";
+import { NewPasswordSchema, NewPasswordSchemaData } from "@/schemas";
 
 import {
   Form,
@@ -32,14 +31,14 @@ const NewPasswordForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
-  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+  const form = useForm<NewPasswordSchemaData>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
+  const onSubmit = (values: NewPasswordSchemaData) => {
     setError("");
     setSuccess("");
 

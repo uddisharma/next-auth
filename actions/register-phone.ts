@@ -1,15 +1,12 @@
 "use server";
 
-import * as z from "zod";
-import { RegisterWithOtpSchema } from "@/schemas";
+import { RegisterWithOtpSchema, RegisterWithOtpSchemaData } from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmailorPhone } from "@/data/user";
 import { generateOtp } from "@/lib/otp";
 import { sendSMS } from "@/lib/sms";
 
-export const registerWithOTP = async (
-  values: z.infer<typeof RegisterWithOtpSchema>,
-) => {
+export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
   const validatedFields = RegisterWithOtpSchema.safeParse(values);
 
   if (!validatedFields.success) {

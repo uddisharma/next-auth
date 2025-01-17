@@ -1,10 +1,9 @@
 "use server";
 
-import * as z from "zod";
 import { AuthError } from "next-auth";
 import bcrypt from "bcryptjs";
 import { signIn } from "@/auth";
-import { LoginSchema } from "@/schemas";
+import { LoginSchema, LoginSchemaData } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";
@@ -22,7 +21,7 @@ const capitalizeFirstLetter = (str: string | null): string => {
 };
 
 export const login = async (
-  values: z.infer<typeof LoginSchema>,
+  values: LoginSchemaData,
   callbackUrl?: string | null,
 ) => {
   const validatedFields = LoginSchema.safeParse(values);

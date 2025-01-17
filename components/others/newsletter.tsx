@@ -1,18 +1,12 @@
 "use client";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Subscribe } from "@/actions/newsletter";
 import { toast } from "sonner";
-
-const schema = z.object({
-  email: z.string().email("Please enter a valid email"),
-});
-
-type FormData = z.infer<typeof schema>;
+import { NewsLetterSchema, NewsLetterSchemaData } from "@/schemas";
 
 const Newsletter = () => {
   const {
@@ -20,14 +14,13 @@ const Newsletter = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  } = useForm<NewsLetterSchemaData>({
+    resolver: zodResolver(NewsLetterSchema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<NewsLetterSchemaData> = async (data) => {
     try {
       const res = await Subscribe(data.email);
-      console.log(res);
       if (res?.success) {
         reset();
         toast.success(res.message);

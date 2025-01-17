@@ -142,22 +142,6 @@ export const reportSchema = z.object({
   ),
 });
 
-// export const questionSchema = z.object({
-//   text: z.string().min(5, "Question text must be at least 5 characters"),
-//   sequence: z.number().int().positive(),
-//   questionType: z.enum(["SINGLE_SELECT", "MULTIPLE_SELECT", "TEXT"]),
-//   required: z.boolean(),
-//   isActive: z.boolean(),
-//   options: z
-//     .array(
-//       z.object({
-//         text: z.string().min(1, "Option text must not be empty"),
-//         sequence: z.number().int().positive(),
-//       }),
-//     )
-//     .optional(),
-// });
-
 export const signupSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
@@ -200,14 +184,6 @@ export const QuestionSchema = z.object({
       }),
     )
     .optional(),
-  //@ts-ignore
-  // .refine((opts, ctx) => {
-  //   const { questionType } = ctx.parent as { questionType: "SINGLE_SELECT" | "MULTIPLE_SELECT" | "TEXT" };
-  //   if (questionType !== "TEXT" && (!opts || opts.length === 0)) {
-  //     return false;
-  //   }
-  //   return true;
-  // }, "Options are required for non-text questions."),
 });
 
 export const ProfileSchema = z.object({
@@ -224,6 +200,47 @@ export const contactSubmissionSchema = z.object({
   message: z.string().min(10, "Message must be at least 10 characters long"),
 });
 
+export const LeadsSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  phone: z
+    .string()
+    .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number")
+    .min(10, "Invalid phone number")
+    .max(10, "Invalid phone number"),
+});
+
+export const NewsLetterSchema = z.object({
+  email: z.string().email("Please enter a valid email"),
+});
+
+export const userSchema1 = z.object({
+  name: z.string().min(2, "Full name must be at least 2 characters"),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z
+    .string()
+    .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number")
+    .optional(),
+  role: z.enum(["USER", "ADMIN", "SUPER_ADMIN", "EDITOR"]),
+});
+
+export const userSchema2 = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number"),
+  role: z.enum(["USER", "ADMIN", "SUPER_ADMIN", "EDITOR"]),
+  password: z
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .optional(),
+  loginType: z.enum(["EMAIL", "PHONE", "GOOGLE"]),
+});
+
+export type userSchema2Data = z.infer<typeof userSchema2>;
+export type userSchema1Data = z.infer<typeof userSchema1>;
+export type NewsLetterSchemaData = z.infer<typeof NewsLetterSchema>;
+export type LeadsSchemaData = z.infer<typeof LeadsSchema>;
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type SigninFormData = z.infer<typeof signinSchema>;
 export type UserFormData = z.infer<typeof userSchema>;
@@ -233,3 +250,12 @@ export type AdminFormData = z.infer<typeof AdminProfileSchema>;
 export type QuestionFormValues = z.infer<typeof QuestionSchema>;
 export type ContactSubmissionFormData = z.infer<typeof contactSubmissionSchema>;
 export type ProfileFormData = z.infer<typeof ProfileSchema>;
+export type LoginSchemaData = z.infer<typeof LoginSchema>;
+export type LoginWithPhoneSchemaData = z.infer<typeof LoginWithPhoneSchema>;
+export type PhoneSchemaData = z.infer<typeof PhoneSchema>;
+export type NewPasswordSchemaData = z.infer<typeof NewPasswordSchema>;
+export type RegisterWithOtpSchemaData = z.infer<typeof RegisterWithOtpSchema>;
+export type RegisterSchemaData = z.infer<typeof RegisterSchema>;
+export type ResetSchemaData = z.infer<typeof ResetSchema>;
+export type SettingsSchemaData = z.infer<typeof SettingsSchema>;
+export type OtpSchemaData = z.infer<typeof OtpSchema>;

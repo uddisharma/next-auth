@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000);
-    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // OTP expires in 10 minutes
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
 
     await db.user.update({
       where: { id: user.id },

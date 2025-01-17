@@ -1,9 +1,13 @@
 "use server";
 
-import * as z from "zod";
 import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
-import { LoginWithPhoneSchema, PhoneSchema } from "@/schemas";
+import {
+  LoginWithPhoneSchema,
+  LoginWithPhoneSchemaData,
+  PhoneSchema,
+  PhoneSchemaData,
+} from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { getUserByEmailorPhone, getUserByPhone } from "@/data/user";
 import { verifyOTP } from "@/data/verifyOtp";
@@ -11,7 +15,7 @@ import { db } from "@/lib/db";
 import { generateOtp } from "@/lib/otp";
 
 export const loginOTP = async (
-  values: z.infer<typeof LoginWithPhoneSchema>,
+  values: LoginWithPhoneSchemaData,
   callbackUrl?: string | null,
 ) => {
   const validatedFields = LoginWithPhoneSchema.safeParse(values);
@@ -65,7 +69,7 @@ export const loginOTP = async (
 };
 
 export const sendOtpRequest = async (
-  values: z.infer<typeof PhoneSchema>,
+  values: PhoneSchemaData,
   callbackUrl?: string | null,
 ) => {
   const validatedFields = PhoneSchema.safeParse(values);

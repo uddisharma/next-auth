@@ -3,12 +3,11 @@
 import { useState, useTransition } from "react";
 import { useSession } from "next-auth/react";
 
-import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { SettingsSchema } from "@/schemas";
+import { SettingsSchema, SettingsSchemaData } from "@/schemas";
 import { UserRole } from "@prisma/client";
 
 import { settings } from "@/actions/settings";
@@ -43,7 +42,7 @@ const SettingsPage = () => {
 
   const user = useCurrentUser();
 
-  const form = useForm<z.infer<typeof SettingsSchema>>({
+  const form = useForm<SettingsSchemaData>({
     resolver: zodResolver(SettingsSchema),
     defaultValues: {
       name: user?.name || undefined,
@@ -55,7 +54,7 @@ const SettingsPage = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
+  const onSubmit = (values: SettingsSchemaData) => {
     startTransition(() => {
       settings(values)
         .then((data) => {

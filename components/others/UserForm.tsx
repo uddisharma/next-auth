@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -25,20 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-const userSchema = z.object({
-  name: z.string().min(2, "Full name must be at least 2 characters"),
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z
-    .string()
-    .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number")
-    .optional(),
-  role: z.enum(["USER", "ADMIN", "SUPER_ADMIN", "EDITOR"]),
-});
-
-type UserFormValues = z.infer<typeof userSchema>;
+import { userSchema1, userSchema1Data } from "@/schemas";
 
 interface UserFormProps {
   user?: {
@@ -56,19 +42,19 @@ export default function UserForm({ user }: UserFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const form = useForm<UserFormValues>({
-    resolver: zodResolver(userSchema),
+  const form = useForm<userSchema1Data>({
+    resolver: zodResolver(userSchema1),
     defaultValues: {
       name: user?.name || "",
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
       email: user?.email || "",
       phone: user?.phone || "",
-      role: (user?.role as UserFormValues["role"]) || "USER",
+      role: (user?.role as userSchema1Data["role"]) || "USER",
     },
   });
 
-  const onSubmit = async (data: UserFormValues) => {
+  const onSubmit = async (data: userSchema1Data) => {
     setIsSubmitting(true);
     try {
       if (user) {

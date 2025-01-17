@@ -35,6 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categories } from "@/data/categories";
+import { BlogFormData, BlogSchema } from "@/schemas";
 
 interface BlogFormProps {
   blog?: {
@@ -51,23 +52,6 @@ interface BlogFormProps {
     updatedAt: Date;
   };
 }
-
-const BlogSchema = z.object({
-  title: z
-    .string()
-    .min(10, "Title must be at least 10 characters long")
-    .max(255, "Title must not exceed 255 characters"),
-  content: z.string().min(10, "Content must be at least 10 characters long"),
-  category: z
-    .string()
-    .min(2, "Category is required")
-    .max(100, "Category must not exceed 100 characters"),
-  subCategory: z.string().optional(),
-  image: z.string().optional(),
-  published: z.boolean(),
-});
-
-type BlogFormData = z.infer<typeof BlogSchema>;
 
 export default function BlogForm({ blog }: BlogFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -178,9 +162,6 @@ export default function BlogForm({ blog }: BlogFormProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category</FormLabel>
-                    {/* <FormControl>
-                                            <Input placeholder="Enter category" {...field} />
-                                        </FormControl> */}
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
