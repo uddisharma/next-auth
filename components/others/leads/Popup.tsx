@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { X } from 'lucide-react'
-import { SubscriptionForm } from './Form'
+import { useState, useEffect } from "react";
+import { X } from "lucide-react";
+import { SubscriptionForm } from "./Form";
 
 export function SubscriptionPopup() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const hasClosedPopup = localStorage.getItem('popupClosed') === 'true'
+    const hasClosedPopup = localStorage.getItem("popupClosed") === "true";
     if (!hasClosedPopup) {
-      const timer = setTimeout(() => setIsOpen(true), 5000)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(() => setIsOpen(true), 5000);
+      return () => clearTimeout(timer);
     }
-  }, [])
+  }, []);
 
   const handleClose = () => {
-    setIsOpen(false)
-    localStorage.setItem('popupClosed', 'true')
-  }
+    setIsOpen(false);
+    localStorage.setItem("popupClosed", "true");
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -33,8 +33,8 @@ export function SubscriptionPopup() {
           <X size={24} />
         </button>
         <h2 className="text-2xl font-bold mb-4">Subscribe to Our Newsletter</h2>
-        <SubscriptionForm setIsOpen={setIsOpen}/>
+        <SubscriptionForm setIsOpen={setIsOpen} />
       </div>
     </div>
-  )
+  );
 }
