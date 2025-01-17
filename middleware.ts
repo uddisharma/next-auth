@@ -22,7 +22,7 @@ export default auth(async (req) => {
 
   const isAdminDashboard = nextUrl.pathname.startsWith("/admin");
   if (isLoggedIn && isAdminDashboard) {
-    const userRole = await currentRole() || "";
+    const userRole = (await currentRole()) || "";
     const allowedRoles = ["SUPER_ADMIN", "ADMIN", "EDITOR"];
     if (!allowedRoles.includes(userRole)) {
       return Response.redirect(new URL("/", nextUrl));
@@ -50,10 +50,9 @@ export default auth(async (req) => {
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
     return Response.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
     );
   }
-
 });
 
 // Optionally, don't invoke Middleware on some paths

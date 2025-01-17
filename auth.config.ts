@@ -17,46 +17,44 @@ export default {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     Credentials({
-
       async authorize(credentials) {
-
         const validatedFields = LoginSchema.safeParse(credentials);
 
         if (credentials.loginType === "EMAIL") {
-
           if (validatedFields.success) {
-
             const { email, password } = validatedFields.data;
 
             const user = await getUserByEmailorPhone(email);
 
             if (!user || !user.password) return null;
 
-            const passwordsMatch = await bcrypt.compare(password, user.password);
+            const passwordsMatch = await bcrypt.compare(
+              password,
+              user.password,
+            );
 
             if (passwordsMatch) return user;
           }
         }
 
         if (credentials.loginType === "PHONE") {
-
-          const validatedPhoneFields = LoginWithPhoneSchema.safeParse(credentials);
+          const validatedPhoneFields =
+            LoginWithPhoneSchema.safeParse(credentials);
 
           if (validatedPhoneFields.success) {
-
             const { email, phone } = validatedPhoneFields.data;
 
             let user = null;
 
             if (email == "") {
-              user = await getUserByPhone(phone)
+              user = await getUserByPhone(phone);
             } else {
               user = await getUserByEmailorPhone(email, phone);
             }
 
             if (!user) return null;
 
-            return user
+            return user;
           }
         }
 

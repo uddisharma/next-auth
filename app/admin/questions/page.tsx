@@ -10,7 +10,7 @@ import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/others/form-error";
 import Pagination from "@/components/admin/pagination";
 import ExportButton from "@/components/admin/export";
-import { format } from 'date-fns'
+import { format } from "date-fns";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -24,23 +24,29 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
 
   const where: Prisma.QuestionWhereInput = search
     ? {
-      text: {
-        contains: search,
-        mode: "insensitive" as Prisma.QueryMode,
-      },
-    }
+        text: {
+          contains: search,
+          mode: "insensitive" as Prisma.QueryMode,
+        },
+      }
     : {};
 
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect("/auth/login");
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'read');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.QUESTIONS,
+    "read",
+  );
 
   if (!hasPermission) {
-    return <FormError message="You do not have permission to view this content!" />
+    return (
+      <FormError message="You do not have permission to view this content!" />
+    );
   }
 
   const questions = await db.question.findMany({
@@ -56,9 +62,7 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
-
       <main className="container mx-auto py-8">
-
         <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
           <h2 className="text-2xl font-bold">Questions</h2>
         </div>
@@ -100,18 +104,25 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
 
                   <div>{question.questionType}</div>
 
-                  <div>{format(new Date(question.createdAt), 'dd/MM/yyyy')}</div>
-
-                  <div className="flex items-left justify-left ">
-                    <QuestionActions question={{ id: question.id, text: question.text }} />
+                  <div>
+                    {format(new Date(question.createdAt), "dd/MM/yyyy")}
                   </div>
 
+                  <div className="flex items-left justify-left ">
+                    <QuestionActions
+                      question={{ id: question.id, text: question.text }}
+                    />
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <Pagination searchParams={searchParams} totalBlogs={totalQuestions} totalPages={totalPages} />
+        <Pagination
+          searchParams={searchParams}
+          totalBlogs={totalQuestions}
+          totalPages={totalPages}
+        />
       </main>
     </div>
   );

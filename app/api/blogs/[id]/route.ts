@@ -14,10 +14,17 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'delete');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.BLOGS,
+    "delete",
+  );
 
   if (!hasPermission) {
-    return NextResponse.json({ error: "You don't have permission to delete a blog" }, { status: 403 });
+    return NextResponse.json(
+      { error: "You don't have permission to delete a blog" },
+      { status: 403 },
+    );
   }
 
   const id = parseInt(params.id);
@@ -27,7 +34,10 @@ export async function DELETE(
       where: { id },
     });
 
-    return NextResponse.json({ message: "Blog deleted successfully" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Blog deleted successfully" },
+      { status: 200 },
+    );
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to delete blog" },

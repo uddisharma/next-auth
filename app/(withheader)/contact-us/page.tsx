@@ -74,13 +74,12 @@
 //   )
 // }
 
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Textarea } from "@/components/ui/textarea"
-import { MapPin, Mail, Phone } from 'lucide-react'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
+import { MapPin, Mail, Phone } from "lucide-react";
 
 export default function ContactPage() {
   return (
@@ -89,14 +88,18 @@ export default function ContactPage() {
       <main className="mx-auto px-4 py-2 md:py-6 mb-20">
         <div className="text-center mb-6">
           <h1 className="text-4xl text-btnblue mb-4">Contact Us</h1>
-          <p className="text-[#717171]">Any question or remarks? Just write us a message !</p>
+          <p className="text-[#717171]">
+            Any question or remarks? Just write us a message !
+          </p>
         </div>
 
-        <div  className="grid md:grid-cols-2 gap-8 bg-white p-5 w-full">
+        <div className="grid md:grid-cols-2 gap-8 bg-white p-5 w-full">
           {/* Contact Information */}
           <div className="bg-[#011C2B] text-white p-8 rounded-lg">
             <h2 className="text-2xl mb-6">Contact Information</h2>
-            <p className="text-gray-300 mb-8">Say something to start a live chat!</p>
+            <p className="text-gray-300 mb-8">
+              Say something to start a live chat!
+            </p>
 
             <div className="space-y-8 md:space-y-12 md:mt-32">
               <div className="flex items-center gap-4">
@@ -114,15 +117,24 @@ export default function ContactPage() {
             </div>
 
             <div className="flex gap-4 mt-10 md:mt-40">
-              <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20">
+              <a
+                href="#"
+                className="bg-white/10 p-2 rounded-full hover:bg-white/20"
+              >
                 <span className="sr-only">Facebook</span>
                 <div className="w-6 h-6 bg-yellow rounded-full" />
               </a>
-              <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20">
+              <a
+                href="#"
+                className="bg-white/10 p-2 rounded-full hover:bg-white/20"
+              >
                 <span className="sr-only">Instagram</span>
                 <div className="w-6 h-6 bg-white rounded-full" />
               </a>
-              <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20">
+              <a
+                href="#"
+                className="bg-white/10 p-2 rounded-full hover:bg-white/20"
+              >
                 <span className="sr-only">Twitter</span>
                 <div className="w-6 h-6 bg-yellow rounded-full" />
               </a>
@@ -134,28 +146,49 @@ export default function ContactPage() {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
-                <Input id="firstName" placeholder="First Name" className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0" />
+                <Input
+                  id="firstName"
+                  placeholder="First Name"
+                  className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
-                <Input id="lastName" placeholder="Last Name" className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0" />
+                <Input
+                  id="lastName"
+                  placeholder="Last Name"
+                  className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-5">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Email" className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                />
               </div>
               <div className="space-y-5">
                 <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" type="tel" placeholder="+1 012 3456 789" className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0" />
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="+1 012 3456 789"
+                  className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                />
               </div>
             </div>
 
             <div className="space-y-5">
               <Label>Select Subject?</Label>
-              <RadioGroup defaultValue="general1" className="flex flex-wrap gap-4">
+              <RadioGroup
+                defaultValue="general1"
+                className="flex flex-wrap gap-4"
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="general1" id="general1" />
                   <Label htmlFor="general1">General Inquiry</Label>
@@ -192,7 +225,5 @@ export default function ContactPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }
-
-

@@ -1,12 +1,7 @@
-import CardWrapper from "@/components/auth/card-wrapper"
-import RegisterForm from "@/components/auth/register-form"
-import RegisterFormPhone from "@/components/auth/register-form-phone"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import CardWrapper from "@/components/auth/card-wrapper";
+import RegisterForm from "@/components/auth/register-form";
+import RegisterFormPhone from "@/components/auth/register-form-phone";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function Register() {
   return (
@@ -29,7 +24,7 @@ function Register() {
         </TabsContent>
       </Tabs>
     </CardWrapper>
-  )
+  );
 }
 
-export default Register
+export default Register;

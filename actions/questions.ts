@@ -10,107 +10,118 @@ import { Resource } from "@prisma/client";
 import { checkPermission } from "@/lib/checkPermission";
 
 export async function addQuestion(questionData: QuestionFormValues) {
-    const session = await currentUser();
+  const session = await currentUser();
 
-    if (!session) {
-        return redirect("/auth/login")
-    }
+  if (!session) {
+    return redirect("/auth/login");
+  }
 
-    const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'create');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.QUESTIONS,
+    "create",
+  );
 
-    if (!hasPermission) {
-        return { message: "You don't have permission to add a question" };
-    }
+  if (!hasPermission) {
+    return { message: "You don't have permission to add a question" };
+  }
 
-    const validatedData = QuestionSchema.parse(questionData);
+  const validatedData = QuestionSchema.parse(questionData);
 
-    const { options, ...questionFields } = validatedData;
+  const { options, ...questionFields } = validatedData;
 
-    const existingQuestion = await db.question.findFirst({
-        where: { sequence: questionFields.sequence },
-    });
+  const existingQuestion = await db.question.findFirst({
+    where: { sequence: questionFields.sequence },
+  });
 
-    if (existingQuestion) {
-        return { message: "Question with this sequence already exists" };
-    }
+  if (existingQuestion) {
+    return { message: "Question with this sequence already exists" };
+  }
 
-    const question = await db.question.create({
-        data: {
-            ...questionFields,
-            options: {
-                create: options,
-            },
-        },
-    });
+  const question = await db.question.create({
+    data: {
+      ...questionFields,
+      options: {
+        create: options,
+      },
+    },
+  });
 
-    revalidatePath("/admin/questions");
-    return question;
+  revalidatePath("/admin/questions");
+  return question;
 }
 
 export async function updateQuestion(
-    id: number,
-    questionData: QuestionFormValues,
+  id: number,
+  questionData: QuestionFormValues,
 ) {
-    const session = await currentUser();
+  const session = await currentUser();
 
-    if (!session) {
-        return redirect("/auth/login")
-    }
+  if (!session) {
+    return redirect("/auth/login");
+  }
 
-    const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'update');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.QUESTIONS,
+    "update",
+  );
 
-    if (!hasPermission) {
-        return { message: "You don't have permission to update this question" };
-    }
+  if (!hasPermission) {
+    return { message: "You don't have permission to update this question" };
+  }
 
-    const validatedData = QuestionSchema.parse(questionData);
+  const validatedData = QuestionSchema.parse(questionData);
 
-    const { options, ...questionFields } = validatedData;
+  const { options, ...questionFields } = validatedData;
 
-    // const existingQuestion = await db.question.findFirst({
-    //     where: { sequence: questionFields.sequence },
-    // });
+  // const existingQuestion = await db.question.findFirst({
+  //     where: { sequence: questionFields.sequence },
+  // });
 
-    // if (existingQuestion) {
-    //     return { message: "Question with this sequence already exists" };
-    // }
+  // if (existingQuestion) {
+  //     return { message: "Question with this sequence already exists" };
+  // }
 
-    const question = await db.question.update({
-        where: { id },
-        data: {
-            ...questionFields,
-            options: {
-                deleteMany: {},
-                create: options,
-            },
-        },
-    });
+  const question = await db.question.update({
+    where: { id },
+    data: {
+      ...questionFields,
+      options: {
+        deleteMany: {},
+        create: options,
+      },
+    },
+  });
 
-    revalidatePath("/admin/questions");
-    revalidatePath(`/admin/questions/${id}`);
-    return question;
+  revalidatePath("/admin/questions");
+  revalidatePath(`/admin/questions/${id}`);
+  return question;
 }
 
 export const getQuestions = unstable_cache(
-    async () => {
+  async () => {
+    const session = await currentUser();
 
-        const session = await currentUser();
+    if (!session) {
+      return redirect("/auth/login");
+    }
 
-        if (!session) {
-            return redirect("/auth/login")
-        }
-    
-        const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'read');
-    
-        if (!hasPermission) {
-            return { message: "You don't have permission to read questions" };
-        }
+    const hasPermission = await checkPermission(
+      session?.role,
+      Resource.QUESTIONS,
+      "read",
+    );
 
-        return db.question.findMany({
-            orderBy: { sequence: "asc" },
-            include: { options: true },
-        });
-    },
-    ["questions"],
-    { revalidate: 60 }, // Revalidate every 60 seconds
+    if (!hasPermission) {
+      return { message: "You don't have permission to read questions" };
+    }
+
+    return db.question.findMany({
+      orderBy: { sequence: "asc" },
+      include: { options: true },
+    });
+  },
+  ["questions"],
+  { revalidate: 60 }, // Revalidate every 60 seconds
 );

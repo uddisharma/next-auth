@@ -11,24 +11,29 @@ interface PageProps {
 }
 
 export default async function EditBlogPage({ params }: PageProps) {
-
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect("/auth/login");
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.BLOGS, 'read');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.BLOGS,
+    "read",
+  );
 
   if (!hasPermission) {
-    return <FormError message="You do not have permission to view this content!" />
+    return (
+      <FormError message="You do not have permission to view this content!" />
+    );
   }
 
   const blog = await db.blog.findUnique({
     where: { id: Number(params.id) },
   });
 
-  console.log("content", blog?.content)
+  console.log("content", blog?.content);
 
   if (!blog) {
     notFound();

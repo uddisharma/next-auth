@@ -14,7 +14,11 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.NEWSLETTER, 'delete');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.NEWSLETTER,
+    "delete",
+  );
 
   if (!hasPermission) {
     return NextResponse.json({ error: "" }, { status: 403 });
@@ -27,7 +31,10 @@ export async function DELETE(
       where: { id },
     });
 
-    return NextResponse.json({ message: "Newsletter deleted successfully" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Newsletter deleted successfully" },
+      { status: 200 },
+    );
   } catch (error) {
     console.error("Error deleting newsletter:", error);
     return NextResponse.json(

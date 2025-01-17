@@ -22,45 +22,51 @@ export default async function ReportsPage({ searchParams }: PageProps) {
 
   const where: Prisma.ReportWhereInput = search
     ? {
-      OR: [
-        {
-          user: {
-            firstName: {
-              contains: search,
-              mode: "insensitive" as Prisma.QueryMode,
+        OR: [
+          {
+            user: {
+              firstName: {
+                contains: search,
+                mode: "insensitive" as Prisma.QueryMode,
+              },
             },
           },
-        },
-        {
-          user: {
-            lastName: {
-              contains: search,
-              mode: "insensitive" as Prisma.QueryMode,
+          {
+            user: {
+              lastName: {
+                contains: search,
+                mode: "insensitive" as Prisma.QueryMode,
+              },
             },
           },
-        },
-        {
-          user: {
-            email: {
-              contains: search,
-              mode: "insensitive" as Prisma.QueryMode,
+          {
+            user: {
+              email: {
+                contains: search,
+                mode: "insensitive" as Prisma.QueryMode,
+              },
             },
           },
-        },
-      ],
-    }
+        ],
+      }
     : {};
 
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect("/auth/login");
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.REPORTS, 'read');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.REPORTS,
+    "read",
+  );
 
   if (!hasPermission) {
-    return <FormError message="You do not have permission to view this content!" />
+    return (
+      <FormError message="You do not have permission to view this content!" />
+    );
   }
 
   const reports = await db.report.findMany({
@@ -76,15 +82,12 @@ export default async function ReportsPage({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
-
       <main className="container mx-auto py-8">
-
         <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
           <h2 className="text-2xl font-bold">Reports</h2>
         </div>
 
         <div className="flex flex-wrap gap-4 mb-6">
-
           <div className="flex items-center gap-4">
             <SearchInput defaultValue={search} />
           </div>
@@ -113,21 +116,28 @@ export default async function ReportsPage({ searchParams }: PageProps) {
                     {report.user.firstName} {report.user.lastName}
                   </div>
 
-                  <div>
-                    {report?.questions?.length} questions
-                  </div>
+                  <div>{report?.questions?.length} questions</div>
 
-                  <div>{format(new Date(report.createdAt), 'dd/MM/yyyy')}</div>
+                  <div>{format(new Date(report.createdAt), "dd/MM/yyyy")}</div>
 
                   <div className="flex items-left justify-left ">
-                    <ReportActions report={{ id: report.id, name: report?.user?.firstName ?? "" }} />
+                    <ReportActions
+                      report={{
+                        id: report.id,
+                        name: report?.user?.firstName ?? "",
+                      }}
+                    />
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <Pagination searchParams={searchParams} totalBlogs={totalReports} totalPages={totalPages} />
+        <Pagination
+          searchParams={searchParams}
+          totalBlogs={totalReports}
+          totalPages={totalPages}
+        />
       </main>
     </div>
   );

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MoreHorizontal, Eye, Pencil, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Eye, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -88,7 +88,8 @@ export default function QuestionActions({ question }: QuestionActionsProps) {
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete the
-                question with text "{question.text}" and remove it from our servers.
+                question with text "{question.text}" and remove it from our
+                servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -103,4 +104,3 @@ export default function QuestionActions({ question }: QuestionActionsProps) {
     </DropdownMenu>
   );
 }
-

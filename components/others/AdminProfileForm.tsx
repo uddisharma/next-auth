@@ -28,7 +28,7 @@ interface AdminProfileFormProps {
     lastName: string | null;
     email: string;
     role: string;
-    loginType: string
+    loginType: string;
   };
 }
 
@@ -112,11 +112,7 @@ export default function AdminProfileForm({ user }: AdminProfileFormProps) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter your email"
-                  type="email"
-                  {...field}
-                />
+                <Input placeholder="Enter your email" type="email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -129,21 +125,23 @@ export default function AdminProfileForm({ user }: AdminProfileFormProps) {
             <FormItem>
               <FormLabel>Role</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Role"
-                  {...field}
-                  disabled
-                />
+                <Input placeholder="Role" {...field} disabled />
               </FormControl>
             </FormItem>
           )}
         />
-        {session?.isOAuth === false && user.loginType == "EMAIL" &&
+        {session?.isOAuth === false && user.loginType == "EMAIL" && (
           <div>
-            <Label htmlFor="isTwoFactorEnabled">Enable Two-Factor Authentication</Label>
-            <Switch id="isTwoFactorEnabled" name="isTwoFactorEnabled" defaultChecked={session.isTwoFactorEnabled} />
+            <Label htmlFor="isTwoFactorEnabled">
+              Enable Two-Factor Authentication
+            </Label>
+            <Switch
+              id="isTwoFactorEnabled"
+              name="isTwoFactorEnabled"
+              defaultChecked={session.isTwoFactorEnabled}
+            />
           </div>
-        }
+        )}
         <Button type="submit" disabled={isUpdating} className="w-full">
           {isUpdating ? "Updating..." : "Update Profile"}
         </Button>

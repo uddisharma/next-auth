@@ -2,11 +2,11 @@
 import { put } from "@vercel/blob";
 
 export const uploadFile = async (formData: FormData) => {
-    const imageFile = formData.get("image") as File;
+  const imageFile = formData.get("image") as File;
 
-    const blob = await put(imageFile.name, imageFile, {
-        access: "public",
-    });
+  const blob = await put(imageFile.name, imageFile, {
+    access: "public",
+  });
 
-    return blob
-}
+  return blob;
+};

@@ -17,13 +17,13 @@ import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
 const capitalizeFirstLetter = (str: string | null): string => {
-  if (!str) return '';
+  if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
 export const login = async (
   values: z.infer<typeof LoginSchema>,
-  callbackUrl?: string | null
+  callbackUrl?: string | null,
 ) => {
   const validatedFields = LoginSchema.safeParse(values);
 
@@ -40,17 +40,20 @@ export const login = async (
   }
 
   if (existingUser.loginType && existingUser.loginType !== "EMAIL") {
-    return { error: "Please login with " + capitalizeFirstLetter(existingUser.loginType) }
+    return {
+      error:
+        "Please login with " + capitalizeFirstLetter(existingUser.loginType),
+    };
   }
 
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(
-      existingUser.email
+      existingUser.email,
     );
 
     await sendVerificationEmail(
       verificationToken.email,
-      verificationToken.token
+      verificationToken.token,
     );
 
     return { success: "Confirmation email Sent!" };
@@ -89,7 +92,7 @@ export const login = async (
       });
 
       const existingConfirmation = await getTwoFactorConfirmationByUserId(
-        existingUser.id
+        existingUser.id,
       );
 
       if (existingConfirmation) {

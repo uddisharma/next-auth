@@ -13,7 +13,7 @@ export const LoginSchema = z.object({
 
 export const LoginWithPhoneSchema = z.object({
   email: z.string(),
-  phone: z.string().min(10, ({ message: "Phone number is required" })),
+  phone: z.string().min(10, { message: "Phone number is required" }),
   otp: z.string().length(6, { message: "OTP must be exactly 6 digits" }),
 });
 
@@ -40,9 +40,11 @@ export const RegisterWithOtpSchema = z.object({
 });
 
 export const PhoneSchema = z.object({
-  phone: z.string().min(10, 'Phone number must be at least 10 digits').max(10, 'Phone number is too long'),
+  phone: z
+    .string()
+    .min(10, "Phone number must be at least 10 digits")
+    .max(10, "Phone number is too long"),
 });
-
 
 export const OtpSchema = z.object({
   otp: z.string().min(6, "OTP must be 6 digits").max(6, "OTP must be 6 digits"),
@@ -64,7 +66,12 @@ export const SettingsSchema = z
   .object({
     name: z.optional(z.string()),
     isTwoFactorEnabled: z.optional(z.boolean()),
-    role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.SUPER_ADMIN, UserRole.EDITOR]),
+    role: z.enum([
+      UserRole.ADMIN,
+      UserRole.USER,
+      UserRole.SUPER_ADMIN,
+      UserRole.EDITOR,
+    ]),
     email: z.optional(z.string().email()),
     password: z.optional(z.string().min(6)),
     newPassword: z.optional(z.string().min(6)),
@@ -80,7 +87,7 @@ export const SettingsSchema = z
     {
       message: "New password is required!",
       path: ["newPassword"],
-    }
+    },
   )
   .refine(
     (data) => {
@@ -93,7 +100,7 @@ export const SettingsSchema = z
     {
       message: "Password is required!",
       path: ["password"],
-    }
+    },
   );
 
 export const userSchema = z.object({
@@ -111,9 +118,15 @@ export const userSchema = z.object({
 });
 
 export const BlogSchema = z.object({
-  title: z.string().min(10, "Title must be at least 10 characters long").max(255, "Title must be at most 255 characters long"),
+  title: z
+    .string()
+    .min(10, "Title must be at least 10 characters long")
+    .max(255, "Title must be at most 255 characters long"),
   content: z.string().min(10, "Content must be at least 10 characters long"),
-  category: z.string().min(2, "Category is required").max(100, "Category must be at most 100 characters long"),
+  category: z
+    .string()
+    .min(2, "Category is required")
+    .max(100, "Category must be at most 100 characters long"),
   subCategory: z.string().optional(),
   image: z.string().optional(),
   published: z.boolean(),
@@ -172,7 +185,10 @@ export const AdminProfileSchema = z.object({
 
 export const QuestionSchema = z.object({
   text: z.string().min(5, "Question text must be at least 5 characters long"),
-  sequence: z.coerce.number().min(1, "Sequence must be at least 1").positive("Sequence must be a positive integer"),
+  sequence: z.coerce
+    .number()
+    .min(1, "Sequence must be at least 1")
+    .positive("Sequence must be a positive integer"),
   questionType: z.enum(["SINGLE_SELECT", "MULTIPLE_SELECT", "TEXT"]),
   required: z.boolean(),
   isActive: z.boolean(),
@@ -181,9 +197,9 @@ export const QuestionSchema = z.object({
       z.object({
         text: z.string().min(1, "Option text cannot be empty"),
         sequence: z.number(),
-      })
+      }),
     )
-    .optional()
+    .optional(),
   //@ts-ignore
   // .refine((opts, ctx) => {
   //   const { questionType } = ctx.parent as { questionType: "SINGLE_SELECT" | "MULTIPLE_SELECT" | "TEXT" };
@@ -195,11 +211,11 @@ export const QuestionSchema = z.object({
 });
 
 export const ProfileSchema = z.object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
-    phone: z.string().nonempty("Phone number is required"),
-    email: z.string().email("Invalid email format"),
-    location: z.string().min(1, "Location is required"),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  phone: z.string().nonempty("Phone number is required"),
+  email: z.string().email("Invalid email format"),
+  location: z.string().min(1, "Location is required"),
 });
 
 export const contactSubmissionSchema = z.object({

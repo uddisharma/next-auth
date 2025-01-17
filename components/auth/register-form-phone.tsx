@@ -6,14 +6,17 @@ import UserForm from "./userForm";
 
 const RegisterFormPhone = () => {
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
-  const [phone_email, setPhoneEmail] = useState<{ phone: string, email: string }>({ phone: "", email: "" });
+  const [phone_email, setPhoneEmail] = useState<{
+    phone: string;
+    email: string;
+  }>({ phone: "", email: "" });
 
   const setOTPSent = (boolen: boolean) => {
-    setIsOtpSent(boolen)
-  }
+    setIsOtpSent(boolen);
+  };
   const setData = (phone: string, email: string) => {
-    setPhoneEmail({ phone, email })
-  }
+    setPhoneEmail({ phone, email });
+  };
 
   return (
     <div className="space-y-6">

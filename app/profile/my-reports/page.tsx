@@ -13,7 +13,7 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function MyReportsPage() {
-  const sessions = await currentUser()
+  const sessions = await currentUser();
   if (!sessions) {
     return redirect("/auth/login");
   }

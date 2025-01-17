@@ -8,7 +8,6 @@ interface PageProps {
 }
 
 export default async function ViewReportPage({ params }: PageProps) {
-
   const sessions = await currentUser();
 
   if (!sessions) {

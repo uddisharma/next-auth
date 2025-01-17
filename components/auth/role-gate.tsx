@@ -7,7 +7,6 @@ interface RoleGateProps {
 }
 
 export const RoleGate = ({ children, allowed }: RoleGateProps) => {
-
   if (allowed === false) {
     return (
       <FormError message="You do not have permission to view this content!" />

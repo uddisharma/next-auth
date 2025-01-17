@@ -1,26 +1,25 @@
-import { getPermissions } from './permissions';
-import { UserRole, Resource } from '@prisma/client';
+import { getPermissions } from "./permissions";
+import { UserRole, Resource } from "@prisma/client";
 
-type PermissionType = 'create' | 'read' | 'update' | 'delete';
+type PermissionType = "create" | "read" | "update" | "delete";
 
 export async function checkPermission(
   userRole: UserRole,
   resource: Resource,
-  action: PermissionType
+  action: PermissionType,
 ) {
   const permissions = await getPermissions(userRole, resource);
 
   switch (action) {
-    case 'create':
+    case "create":
       return permissions.canCreate;
-    case 'read':
+    case "read":
       return permissions.canRead;
-    case 'update':
+    case "update":
       return permissions.canUpdate;
-    case 'delete':
+    case "delete":
       return permissions.canDelete;
     default:
       return false;
   }
 }
-

@@ -53,13 +53,13 @@ export default function ProfileForm({ user }: ProfileFormProps) {
       lastName: formData.get("lastName") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
-      isTwoFactorEnabled: formData.get("isTwoFactorEnabled") == 'on',
+      isTwoFactorEnabled: formData.get("isTwoFactorEnabled") == "on",
     };
 
     try {
       const updatedUser = await updateProfile(userData);
       console.log(updatedUser);
-      if ('message' in updatedUser) {
+      if ("message" in updatedUser) {
         toast.error(updatedUser.message as string);
       }
       router.refresh();
@@ -76,7 +76,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
     setIsDeleting(true);
     try {
       const deleted_data = await deleteProfile();
-      if (deleted_data && 'message' in deleted_data) {
+      if (deleted_data && "message" in deleted_data) {
         toast.error(deleted_data.message as string);
         return;
       }
@@ -93,12 +93,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <Label htmlFor="name">Full Name</Label>
-        <Input
-          id="name"
-          name="name"
-          defaultValue={user.name || ""}
-          required
-        />
+        <Input id="name" name="name" defaultValue={user.name || ""} required />
       </div>
       <div>
         <Label htmlFor="firstName">First Name</Label>
@@ -137,12 +132,18 @@ export default function ProfileForm({ user }: ProfileFormProps) {
           defaultValue={user.phone || ""}
         />
       </div>
-      {session?.isOAuth === false && user.loginType == "EMAIL" &&
+      {session?.isOAuth === false && user.loginType == "EMAIL" && (
         <div>
-          <Label htmlFor="isTwoFactorEnabled">Enable Two-Factor Authentication</Label>
-          <Switch id="isTwoFactorEnabled" name="isTwoFactorEnabled" defaultChecked={session.isTwoFactorEnabled} />
+          <Label htmlFor="isTwoFactorEnabled">
+            Enable Two-Factor Authentication
+          </Label>
+          <Switch
+            id="isTwoFactorEnabled"
+            name="isTwoFactorEnabled"
+            defaultChecked={session.isTwoFactorEnabled}
+          />
         </div>
-      }
+      )}
       <Button type="submit" disabled={isUpdating}>
         {isUpdating ? "Updating..." : "Update Profile"}
       </Button>
@@ -169,15 +170,11 @@ export default function ProfileForm({ user }: ProfileFormProps) {
         </AlertDialogContent>
       </AlertDialog>
       <Link href="/">
-        <Button className="ml-4">
-          Go to Home
-        </Button>
+        <Button className="ml-4">Go to Home</Button>
       </Link>
       <Link href="/admin">
-        <Button className="ml-4" >
-          Admin
-        </Button>
+        <Button className="ml-4">Admin</Button>
       </Link>
-    </form >
+    </form>
   );
 }

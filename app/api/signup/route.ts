@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import {db} from "@/lib/db";
+import { db } from "@/lib/db";
 import { sendSMS } from "@/lib/sms";
 import { signupSchema } from "@/schemas";
 import { z } from "zod";

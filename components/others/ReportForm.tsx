@@ -64,7 +64,9 @@ export default function ReportForm({ questions, userId }: ReportFormProps) {
           <Label>{question.text}</Label>
           {question.questionType === "SINGLE_SELECT" && (
             <RadioGroup
-              onValueChange={(value: any) => handleInputChange(question.id, value)}
+              onValueChange={(value: any) =>
+                handleInputChange(question.id, value)
+              }
               className="flex flex-col space-y-1"
             >
               {question.options.map((option) => (

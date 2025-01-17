@@ -1,5 +1,5 @@
-import {  UserRole, Resource } from '@prisma/client';
-import { db } from './db';
+import { UserRole, Resource } from "@prisma/client";
+import { db } from "./db";
 
 export async function getPermissions(role: UserRole, resource: Resource) {
   const permission = await db.permission.findUnique({
@@ -11,11 +11,12 @@ export async function getPermissions(role: UserRole, resource: Resource) {
     },
   });
 
-  return permission || {
-    canCreate: false,
-    canRead: false,
-    canUpdate: false,
-    canDelete: false,
-  };
+  return (
+    permission || {
+      canCreate: false,
+      canRead: false,
+      canUpdate: false,
+      canDelete: false,
+    }
+  );
 }
-

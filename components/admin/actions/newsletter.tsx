@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MoreHorizontal, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -30,7 +30,9 @@ interface NewsLetterActionsProps {
   };
 }
 
-export default function NewsLetterActions({ newsletter }: NewsLetterActionsProps) {
+export default function NewsLetterActions({
+  newsletter,
+}: NewsLetterActionsProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
@@ -75,7 +77,7 @@ export default function NewsLetterActions({ newsletter }: NewsLetterActionsProps
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete the
-                 data of "{newsletter.email}" and remove it from our servers.
+                data of "{newsletter.email}" and remove it from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -90,4 +92,3 @@ export default function NewsLetterActions({ newsletter }: NewsLetterActionsProps
     </DropdownMenu>
   );
 }
-

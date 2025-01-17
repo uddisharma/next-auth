@@ -1,14 +1,10 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { Menu } from 'lucide-react'
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from '@/components/ui/sheet'
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Header = () => {
   return (
@@ -24,7 +20,10 @@ const Header = () => {
         </nav>
         <div className="flex items-center gap-4">
           <Link href="/auth/login">
-            <Button variant="default" className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px]">
+            <Button
+              variant="default"
+              className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px]"
+            >
               Sign up / Log in
             </Button>
           </Link>
@@ -35,12 +34,21 @@ const Header = () => {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent className='bg-white' side="left">
+            <SheetContent className="bg-white" side="left">
               <nav className="flex flex-col gap-4 mt-8">
-                <Link href="/technology" className="text-lg font-medium">Our Technology</Link>
-                <Link href="/analyze" className="text-lg font-medium">Analyze</Link>
-                <Link href="/pricing" className="text-lg font-medium">Pricing</Link>
-                <Button variant="default" className="w-full bg-btnblue text-white rounded-[12px] p-[12px_20px] mt-4">
+                <Link href="/technology" className="text-lg font-medium">
+                  Our Technology
+                </Link>
+                <Link href="/analyze" className="text-lg font-medium">
+                  Analyze
+                </Link>
+                <Link href="/pricing" className="text-lg font-medium">
+                  Pricing
+                </Link>
+                <Button
+                  variant="default"
+                  className="w-full bg-btnblue text-white rounded-[12px] p-[12px_20px] mt-4"
+                >
                   Sign up / Log in
                 </Button>
               </nav>
@@ -49,8 +57,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
-
+export default Header;

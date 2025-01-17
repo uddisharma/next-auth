@@ -14,10 +14,17 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.REPORTS, 'delete');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.REPORTS,
+    "delete",
+  );
 
   if (!hasPermission) {
-    return NextResponse.json({ error: "You don't have permission to delete a report" }, { status: 403 });
+    return NextResponse.json(
+      { error: "You don't have permission to delete a report" },
+      { status: 403 },
+    );
   }
 
   const id = parseInt(params.id);

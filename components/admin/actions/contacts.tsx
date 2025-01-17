@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MoreHorizontal, Eye, Pencil, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Eye, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -91,4 +91,3 @@ export default function QuestionActions({ contact }: ContactActionsProps) {
     </DropdownMenu>
   );
 }
-

@@ -49,7 +49,6 @@ const RegisterForm = () => {
   };
 
   return (
-
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="space-y-4">
@@ -119,7 +118,6 @@ const RegisterForm = () => {
         </Button>
       </form>
     </Form>
-
   );
 };
 

@@ -76,14 +76,14 @@ export default function QuestionForm({ question }: QuestionFormProps) {
     try {
       if (question) {
         const updatedQuestion = await updateQuestion(question.id, data);
-        if ('message' in updatedQuestion) {
+        if ("message" in updatedQuestion) {
           toast.error(updatedQuestion.message as string);
           return;
         }
         toast.success("Question updated successfully");
       } else {
         const addedQuestion = await addQuestion(data);
-        if ('message' in addedQuestion) {
+        if ("message" in addedQuestion) {
           toast.error(addedQuestion.message as string);
           return;
         }
@@ -137,7 +137,9 @@ export default function QuestionForm({ question }: QuestionFormProps) {
                         placeholder="Enter sequence"
                         type="number"
                         {...field}
-                        onChange={(e) => field.onChange(parseInt(e.target.value, 10))}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value, 10))
+                        }
                       />
                     </FormControl>
                     <FormDescription>
@@ -162,8 +164,12 @@ export default function QuestionForm({ question }: QuestionFormProps) {
                           <SelectValue placeholder="Select question type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="SINGLE_SELECT">Single Select</SelectItem>
-                          <SelectItem value="MULTIPLE_SELECT">Multiple Select</SelectItem>
+                          <SelectItem value="SINGLE_SELECT">
+                            Single Select
+                          </SelectItem>
+                          <SelectItem value="MULTIPLE_SELECT">
+                            Multiple Select
+                          </SelectItem>
                           <SelectItem value="TEXT">Text</SelectItem>
                         </SelectContent>
                       </Select>
@@ -226,12 +232,16 @@ export default function QuestionForm({ question }: QuestionFormProps) {
           </CardContent>
         </Card>
 
-        {(questionType === "MULTIPLE_SELECT" || questionType === "SINGLE_SELECT") && (
+        {(questionType === "MULTIPLE_SELECT" ||
+          questionType === "SINGLE_SELECT") && (
           <Card>
             <CardContent className="pt-6">
               <Label className="mb-2 block">Options</Label>
               {fields.map((field, index) => (
-                <div key={field.id} className="flex items-center space-x-2 mt-2">
+                <div
+                  key={field.id}
+                  className="flex items-center space-x-2 mt-2"
+                >
                   <DragHandleDots2Icon className="cursor-move" />
                   <Input
                     {...form.register(`options.${index}.text`)}
@@ -256,7 +266,9 @@ export default function QuestionForm({ question }: QuestionFormProps) {
                   </Button>
                   <Button
                     type="button"
-                    onClick={() => index < fields.length - 1 && move(index, index + 1)}
+                    onClick={() =>
+                      index < fields.length - 1 && move(index, index + 1)
+                    }
                     variant="outline"
                     size="sm"
                     disabled={index === fields.length - 1}
@@ -267,7 +279,9 @@ export default function QuestionForm({ question }: QuestionFormProps) {
               ))}
               <Button
                 type="button"
-                onClick={() => append({ text: "", sequence: fields.length + 1 })}
+                onClick={() =>
+                  append({ text: "", sequence: fields.length + 1 })
+                }
                 className="mt-2"
               >
                 Add Option
@@ -293,4 +307,3 @@ export default function QuestionForm({ question }: QuestionFormProps) {
     </Form>
   );
 }
-

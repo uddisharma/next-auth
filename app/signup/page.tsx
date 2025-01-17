@@ -1,32 +1,42 @@
-'use client'
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Checkbox } from "@/components/ui/checkbox"
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 export default function SignupForm() {
-  const [verificationSent, setVerificationSent] = useState(false)
+  const [verificationSent, setVerificationSent] = useState(false);
 
   const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ]
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
-  const days = Array.from({ length: 31 }, (_, i) => i + 1)
-  const currentYear = new Date().getFullYear()
-  const years = Array.from({ length: 100 }, (_, i) => currentYear - i)
+  const days = Array.from({ length: 31 }, (_, i) => i + 1);
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
   return (
     <div className="grid min-h-screen space-y-5 text-textGray lg:grid-cols-2 bg-white gap-10 px-5 md:px-12 pb-10 p-5 md:p-10">
@@ -95,7 +105,10 @@ export default function SignupForm() {
 
             <div className="space-y-2">
               <Label>What&apos;s your gender? (optional)</Label>
-              <RadioGroup defaultValue="female" className="flex gap-4 text-[#111]">
+              <RadioGroup
+                defaultValue="female"
+                className="flex gap-4 text-[#111]"
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="female" id="female" />
                   <Label htmlFor="female">Female</Label>
@@ -112,11 +125,13 @@ export default function SignupForm() {
             </div>
 
             <div className="space-y-5 pt-5">
-              <Label className="text-[#111]">What&apos;s your date of birth?</Label>
+              <Label className="text-[#111]">
+                What&apos;s your date of birth?
+              </Label>
               <div className="grid grid-cols-3 gap-4">
                 <div>
                   <p className="mb-3">Month</p>
-                  <Select >
+                  <Select>
                     <SelectTrigger>
                       <SelectValue placeholder="Month" />
                     </SelectTrigger>
@@ -166,7 +181,8 @@ export default function SignupForm() {
               <div className="flex items-center space-x-2">
                 <Checkbox id="marketing" />
                 <Label htmlFor="marketing" className="text-sm">
-                  Share my registration data with our content providers for marketing purposes.
+                  Share my registration data with our content providers for
+                  marketing purposes.
                 </Label>
               </div>
 
@@ -210,6 +226,5 @@ export default function SignupForm() {
         />
       </div>
     </div>
-  )
+  );
 }
-

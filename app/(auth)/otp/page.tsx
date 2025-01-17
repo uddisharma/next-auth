@@ -1,54 +1,57 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function VerificationPage() {
-  const [timeLeft, setTimeLeft] = useState(30)
-  const [isActive, setIsActive] = useState(true)
-  const [otp, setOtp] = useState(['', '', '', ''])
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [isActive, setIsActive] = useState(true);
+  const [otp, setOtp] = useState(["", "", "", ""]);
 
   useEffect(() => {
-    if (!isActive || timeLeft <= 0) return
+    if (!isActive || timeLeft <= 0) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1)
-    }, 1000)
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
 
-    return () => clearInterval(timer)
-  }, [timeLeft, isActive])
+    return () => clearInterval(timer);
+  }, [timeLeft, isActive]);
 
   const formatTime = (seconds: number) => {
     return `${Math.floor(seconds / 60)
       .toString()
-      .padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`
-  }
+      .padStart(2, "0")}:${(seconds % 60).toString().padStart(2, "0")}`;
+  };
 
   const handleResend = () => {
-    setTimeLeft(30)
-    setIsActive(true)
-  }
+    setTimeLeft(30);
+    setIsActive(true);
+  };
 
   const handleInputChange = (index: number, value: string) => {
     if (value.length <= 1 && /^\d*$/.test(value)) {
-      const newOtp = [...otp]
-      newOtp[index] = value
-      setOtp(newOtp)
-      
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+
       // Auto-focus next input
-      if (value !== '' && index < 3) {
-        const nextInput = document.getElementById(`otp-${index + 1}`)
-        nextInput?.focus()
+      if (value !== "" && index < 3) {
+        const nextInput = document.getElementById(`otp-${index + 1}`);
+        nextInput?.focus();
       }
     }
-  }
+  };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && otp[index] === '' && index > 0) {
-      const prevInput = document.getElementById(`otp-${index - 1}`)
-      prevInput?.focus()
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === "Backspace" && otp[index] === "" && index > 0) {
+      const prevInput = document.getElementById(`otp-${index - 1}`);
+      prevInput?.focus();
     }
-  }
+  };
 
   return (
     <div className="">
@@ -84,14 +87,14 @@ export default function VerificationPage() {
               {formatTime(timeLeft)}
             </div>
 
-            <Button 
-              className="w-full bg-btnblue hover:bg-btnblue/80 text-white py-6"
-            >
+            <Button className="w-full bg-btnblue hover:bg-btnblue/80 text-white py-6">
               Next
             </Button>
 
             <div className="text-center space-x-1">
-              <span className="text-gray-500">If you didn't receive a code!</span>
+              <span className="text-gray-500">
+                If you didn't receive a code!
+              </span>
               <button
                 onClick={handleResend}
                 className="text-orange hover:underline focus:outline-none"
@@ -103,6 +106,5 @@ export default function VerificationPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }
-

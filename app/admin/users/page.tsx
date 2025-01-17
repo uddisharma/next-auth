@@ -24,39 +24,45 @@ export default async function UsersPage({ searchParams }: PageProps) {
 
   const where: Prisma.UserWhereInput = search
     ? {
-      OR: [
-        {
-          firstName: {
-            contains: search,
-            mode: "insensitive" as Prisma.QueryMode,
+        OR: [
+          {
+            firstName: {
+              contains: search,
+              mode: "insensitive" as Prisma.QueryMode,
+            },
           },
-        },
-        {
-          lastName: {
-            contains: search,
-            mode: "insensitive" as Prisma.QueryMode,
+          {
+            lastName: {
+              contains: search,
+              mode: "insensitive" as Prisma.QueryMode,
+            },
           },
-        },
-        {
-          email: {
-            contains: search,
-            mode: "insensitive" as Prisma.QueryMode,
+          {
+            email: {
+              contains: search,
+              mode: "insensitive" as Prisma.QueryMode,
+            },
           },
-        },
-      ],
-    }
+        ],
+      }
     : {};
 
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect("/auth/login");
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.USERS, 'read');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.USERS,
+    "read",
+  );
 
   if (!hasPermission) {
-    return <FormError message="You do not have permission to view this content!" />
+    return (
+      <FormError message="You do not have permission to view this content!" />
+    );
   }
 
   const users = await db.user.findMany({
@@ -71,15 +77,12 @@ export default async function UsersPage({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
-
       <main className="container mx-auto py-8">
-
         <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
           <h2 className="text-2xl font-bold">Reports</h2>
         </div>
 
         <div className="flex flex-wrap gap-4 mb-6">
-
           <div className="flex items-center gap-4">
             <SearchInput defaultValue={search} />
           </div>
@@ -110,28 +113,28 @@ export default async function UsersPage({ searchParams }: PageProps) {
                   key={user.id}
                   className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
                 >
-                  <div>
-                    {user?.name}
-                  </div>
+                  <div>{user?.name}</div>
 
-                  <div>
-                    {user.email}
-                  </div>
-                  <div>
-                    {user.role}
-                  </div>
+                  <div>{user.email}</div>
+                  <div>{user.role}</div>
 
-                  <div>{format(new Date(user.createdAt), 'dd/MM/yyyy')}</div>
+                  <div>{format(new Date(user.createdAt), "dd/MM/yyyy")}</div>
 
                   <div className="flex items-left justify-left ">
-                    <UserActions user={{ id: user.id, name: user?.name??"" }} />
+                    <UserActions
+                      user={{ id: user.id, name: user?.name ?? "" }}
+                    />
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <Pagination searchParams={searchParams} totalBlogs={totalUsers} totalPages={totalPages} />
+        <Pagination
+          searchParams={searchParams}
+          totalBlogs={totalUsers}
+          totalPages={totalPages}
+        />
       </main>
     </div>
   );

@@ -8,26 +8,27 @@ import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
 
 export async function updateAdminProfile(userId: string, userData: any) {
+  const session = await currentUser();
 
-    const session = await currentUser();
+  if (!session) {
+    return redirect("/auth/login");
+  }
 
-    if (!session) {
-        return redirect("/auth/login")
-    }
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.USERS,
+    "update",
+  );
 
-    const hasPermission = await checkPermission(session?.role, Resource.USERS, 'update');
+  if (!hasPermission) {
+    return { message: "You don't have permission to update this profile" };
+  }
 
-    if (!hasPermission) {
-        return { message: "You don't have permission to update this profile" };
-    }
+  const updatedUser = await db.user.update({
+    where: { id: userId },
+    data: userData,
+  });
 
-    const updatedUser = await db.user.update({
-        where: { id: userId },
-        data: userData,
-    });
-
-    revalidatePath("/admin/profile");
-    return updatedUser;
+  revalidatePath("/admin/profile");
+  return updatedUser;
 }
-
-

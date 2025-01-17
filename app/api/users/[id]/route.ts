@@ -14,10 +14,17 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.USERS, 'delete');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.USERS,
+    "delete",
+  );
 
   if (!hasPermission) {
-    return NextResponse.json({ error: "You don't have permission to create a blog" }, { status: 403 });
+    return NextResponse.json(
+      { error: "You don't have permission to create a blog" },
+      { status: 403 },
+    );
   }
 
   const id = params.id;

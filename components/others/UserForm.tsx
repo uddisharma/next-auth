@@ -31,7 +31,10 @@ const userSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number").optional(),
+  phone: z
+    .string()
+    .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number")
+    .optional(),
   role: z.enum(["USER", "ADMIN", "SUPER_ADMIN", "EDITOR"]),
 });
 
@@ -61,7 +64,7 @@ export default function UserForm({ user }: UserFormProps) {
       lastName: user?.lastName || "",
       email: user?.email || "",
       phone: user?.phone || "",
-      role: (user?.role as UserFormValues['role']) || "USER",
+      role: (user?.role as UserFormValues["role"]) || "USER",
     },
   });
 
@@ -70,14 +73,14 @@ export default function UserForm({ user }: UserFormProps) {
     try {
       if (user) {
         const result = await updateUser(user.id.toString(), data);
-        if ('message' in result) {
+        if ("message" in result) {
           toast.error(result.message as string);
           return;
         }
         toast.success("User updated successfully");
       } else {
         const result = await addUser(data);
-        if (result && 'message' in result) {
+        if (result && "message" in result) {
           toast.error(result.message as string);
           return;
         }
@@ -174,7 +177,10 @@ export default function UserForm({ user }: UserFormProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Role</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select role" />
@@ -192,7 +198,11 @@ export default function UserForm({ user }: UserFormProps) {
               )}
             />
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : user ? "Update User" : "Add User"}
+              {isSubmitting
+                ? "Submitting..."
+                : user
+                  ? "Update User"
+                  : "Add User"}
             </Button>
           </form>
         </Form>
@@ -200,4 +210,3 @@ export default function UserForm({ user }: UserFormProps) {
     </Card>
   );
 }
-

@@ -9,17 +9,20 @@ import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
 
 export async function submitReport(reportData: ReportFormData) {
-
   const session = await currentUser();
 
   if (!session) {
-      return redirect("/auth/login")
+    return redirect("/auth/login");
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.REPORTS, 'create');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.REPORTS,
+    "create",
+  );
 
   if (!hasPermission) {
-      return { message: "You don't have permission to submit a report" };
+    return { message: "You don't have permission to submit a report" };
   }
 
   const validatedData = reportSchema.parse(reportData);
@@ -50,13 +53,17 @@ export async function getReports() {
   const session = await currentUser();
 
   if (!session) {
-      return redirect("/auth/login")
+    return redirect("/auth/login");
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.REPORTS, 'read');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.REPORTS,
+    "read",
+  );
 
   if (!hasPermission) {
-      return { message: "You don't have permission to read reports" };
+    return { message: "You don't have permission to read reports" };
   }
 
   return db.report.findMany({

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MoreHorizontal, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -74,8 +74,8 @@ export default function LeadActions({ lead }: LeadActionsProps) {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete the lead of
-                 "{lead.name}" and remove it from our servers.
+                This action cannot be undone. This will permanently delete the
+                lead of "{lead.name}" and remove it from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -90,4 +90,3 @@ export default function LeadActions({ lead }: LeadActionsProps) {
     </DropdownMenu>
   );
 }
-

@@ -14,10 +14,17 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.CONTACT_SUBMISSIONS, 'delete');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.CONTACT_SUBMISSIONS,
+    "delete",
+  );
 
   if (!hasPermission) {
-    return NextResponse.json({ error: "You don't have permission to delete a contact submission" }, { status: 403 });
+    return NextResponse.json(
+      { error: "You don't have permission to delete a contact submission" },
+      { status: 403 },
+    );
   }
 
   try {
@@ -25,7 +32,10 @@ export async function DELETE(
       where: { id: params.id },
     });
 
-    return NextResponse.json({ message: "Contact submission deleted successfully" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Contact submission deleted successfully" },
+      { status: 200 },
+    );
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to delete contact submission" },

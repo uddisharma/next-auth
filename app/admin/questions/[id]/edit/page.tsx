@@ -11,17 +11,22 @@ interface PageProps {
 }
 
 export default async function EditQuestionPage({ params }: PageProps) {
-
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect("/auth/login");
   }
 
-  const hasPermission = await checkPermission(session?.role, Resource.QUESTIONS, 'read');
+  const hasPermission = await checkPermission(
+    session?.role,
+    Resource.QUESTIONS,
+    "read",
+  );
 
   if (!hasPermission) {
-    return <FormError message="You do not have permission to view this content!" />
+    return (
+      <FormError message="You do not have permission to view this content!" />
+    );
   }
 
   const question = await db.question.findUnique({

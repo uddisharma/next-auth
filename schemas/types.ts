@@ -1,17 +1,23 @@
-import { UserRole } from "@prisma/client"
+import { UserRole } from "@prisma/client";
 
-export type ExportType = "blog" | "question" | "contact" | "report" | "user" | "newsletter" | "leads"
+export type ExportType =
+  | "blog"
+  | "question"
+  | "contact"
+  | "report"
+  | "user"
+  | "newsletter"
+  | "leads";
 
 export interface User {
-    id: string
-    name: string | null
-    firstName: string | null
-    lastName: string | null
-    phone: string | null
-    email: string | null
-    image: string | null
-    location: string | null
-    createdAt: string | null
-    role: UserRole | null
+  id: string;
+  name: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  phone: string | null;
+  email: string | null;
+  image: string | null;
+  location: string | null;
+  createdAt: string | null;
+  role: UserRole | null;
 }
-
