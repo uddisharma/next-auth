@@ -2,7 +2,6 @@
 
 import * as z from "zod";
 import bcrypt from "bcryptjs";
-
 import { db } from "@/lib/db";
 import { SettingsSchema } from "@/schemas";
 import { getUserByEmailorPhone, getUserById } from "@/data/user";

@@ -2,7 +2,6 @@
 
 import * as z from "zod";
 import bcrypt from "bcryptjs";
-
 import { getPasswordResetTokenByToken } from "@/data/password-token";
 import { getUserByEmailorPhone } from "@/data/user";
 import { NewPasswordSchema } from "@/schemas";

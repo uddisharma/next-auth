@@ -2,7 +2,6 @@
 
 import * as z from "zod";
 import { AuthError } from "next-auth";
-
 import { signIn } from "@/auth";
 import { LoginWithPhoneSchema, PhoneSchema } from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";

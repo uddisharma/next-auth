@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
@@ -17,7 +16,7 @@ import {
 } from "@/components/ui/select";
 import { addUser } from "@/actions/users";
 import { toast } from "sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsTrigger } from "@/components/ui/tabs";
 import { getUserByEmailorPhone } from "@/data/user";
 import {
     Form,
@@ -27,7 +26,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { LoginType } from "@prisma/client";
 
 const userSchema = z.object({

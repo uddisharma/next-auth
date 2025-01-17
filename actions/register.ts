@@ -2,7 +2,6 @@
 
 import * as z from "zod";
 import bcrypt from "bcrypt";
-
 import { RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmailorPhone } from "@/data/user";

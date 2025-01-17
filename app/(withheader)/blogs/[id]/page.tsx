@@ -12,9 +12,17 @@ interface PageProps {
   params: { id: number };
 }
 
+function removeHtmlCssTags(input: string) {
+  if (typeof input !== "string") {
+    throw new Error("Input must be a string");
+  }
+  return input.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
+
   const blog = await db.blog.findUnique({
     where: { id: Number(params.id) },
   });
@@ -26,9 +34,28 @@ export async function generateMetadata({
     };
   }
 
+  const title = `${blog.title} | Mr Mard`
+  const description = removeHtmlCssTags(blog.content.slice(0, 160) ?? "")
+
   return {
-    title: `${blog.title} | Our Platform`,
-    description: blog.content.slice(0, 160),
+    title,
+    description,
+    openGraph: {
+      locale: "en_US",
+      url: process.env.NEXT_PUBLIC_BASE_URL + `blogs/${params.id}`,
+      type: "website",
+      title,
+      description,
+      images: blog?.image ?? "",
+      //@ts-ignore
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        image: blog?.image ?? "",
+      },
+    },
+
   };
 }
 
@@ -58,7 +85,7 @@ export default async function BlogPage({ params }: PageProps) {
     }
   });
 
-  const getShuffledBlogs = (length:number) => {
+  const getShuffledBlogs = (length: number) => {
     const shuffledBlogs = blogs.sort(() => Math.random() - 0.5).slice(0, length);
     return shuffledBlogs;
   }

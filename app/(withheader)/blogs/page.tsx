@@ -13,6 +13,7 @@ import { format } from 'date-fns'
 import { calculateReadingTime } from '@/lib/calculatetime'
 import Pagination from '@/components/others/pagination'
 import Categories from '@/components/others/categories'
+import Newsletter from '@/components/others/newsletter'
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -166,22 +167,7 @@ export default async function Blogs({ searchParams }: PageProps) {
 
       <Categories />
 
-      <section className="bg-btnblue py-20 mb-10">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl text-white mb-2">Sign up to our Newsletter</h2>
-          <p className="text-white/80 mb-8">Stay up to date with the latest news announcements and articles</p>
-          <div className="flex gap-2 max-w-md mx-auto">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              className="bg-transparent border-white/20 text-white placeholder:text-white/50 p-5"
-            />
-            <Button className="bg-yellow text-btnblue hover:bg-yellow p-5">
-              Subscribe
-            </Button>
-          </div>
-        </div>
-      </section>
+    <Newsletter />
 
     </div>
   )

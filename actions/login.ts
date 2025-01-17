@@ -3,7 +3,6 @@
 import * as z from "zod";
 import { AuthError } from "next-auth";
 import bcrypt from "bcryptjs";
-
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
