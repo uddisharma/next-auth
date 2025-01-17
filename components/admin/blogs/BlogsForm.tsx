@@ -16,8 +16,7 @@ import {
     FormMessage,
     FormDescription,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { addBlog, updateBlog } from "@/actions/blogs";
 import { uploadFile } from "@/actions/upload";
 import { toast } from "sonner";
@@ -28,6 +27,8 @@ import { generateJSON } from '@tiptap/html';
 import StarterKit from '@tiptap/starter-kit';
 import Image from 'next/image';
 import { Loader2, Upload, X } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { categories } from "@/data/categories";
 
 interface BlogFormProps {
     blog?: {
@@ -156,9 +157,24 @@ export default function BlogForm({ blog }: BlogFormProps) {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Category</FormLabel>
-                                        <FormControl>
+                                        {/* <FormControl>
                                             <Input placeholder="Enter category" {...field} />
-                                        </FormControl>
+                                        </FormControl> */}
+                                        <Select
+                                            onValueChange={field.onChange}
+                                            defaultValue={field.value}
+                                        >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a category" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent>
+                                                {categories?.map((category, index) => (
+                                                    <SelectItem key={index} value={category?.value}>{category?.name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
                                         <FormMessage />
                                     </FormItem>
                                 )}
