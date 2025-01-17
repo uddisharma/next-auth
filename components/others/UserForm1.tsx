@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/select";
 import { addUser } from "@/actions/users";
 import { toast } from "sonner";
-import { Tabs, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserByEmailorPhone } from "@/data/user";
 import {
     Form,
