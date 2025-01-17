@@ -70,12 +70,6 @@ export default function ReportActions({ report }: ReportActionsProps) {
             View
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={`/admin/reports/${report.id}/edit`}>
-            <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
-            Edit
-          </Link>
-        </DropdownMenuItem>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

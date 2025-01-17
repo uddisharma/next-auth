@@ -74,7 +74,7 @@ export default function LeadActions({ lead }: LeadActionsProps) {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete the
+                This action cannot be undone. This will permanently delete the lead of
                  "{lead.name}" and remove it from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>

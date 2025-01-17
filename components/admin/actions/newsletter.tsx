@@ -75,7 +75,7 @@ export default function NewsLetterActions({ newsletter }: NewsLetterActionsProps
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete the
-                 "{newsletter.email}" and remove it from our servers.
+                 data of "{newsletter.email}" and remove it from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

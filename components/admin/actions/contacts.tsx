@@ -64,18 +64,6 @@ export default function QuestionActions({ contact }: ContactActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem asChild>
-          <Link href={`/admin/questions/${contact.id}`}>
-            <Eye className="mr-2 h-4 w-4 cursor-pointer" />
-            View
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={`/admin/questions/${contact.id}/edit`}>
-            <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
-            Edit
-          </Link>
-        </DropdownMenuItem>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

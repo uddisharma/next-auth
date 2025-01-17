@@ -65,7 +65,7 @@ export default function BlogActions({ blog }: BlogActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/admin/blogs/${blog.id}`}>
+          <Link href={`/blogs/${blog.id}`}>
             <Eye className="mr-2 h-4 w-4 cursor-pointer" />
             View
           </Link>
