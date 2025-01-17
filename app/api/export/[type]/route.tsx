@@ -31,6 +31,12 @@ export async function GET(
       case "user":
         const users = await db.user.findMany();
         return NextResponse.json(users, { status: 200 });
+      case "leads":
+        const leads = await db.leads.findMany();
+        return NextResponse.json(leads, { status: 200 });
+      case "newsletter":
+        const newsletters = await db.newsLetter.findMany();
+        return NextResponse.json(newsletters, { status: 200 });
     }
   } catch (error) {
     return NextResponse.json(
