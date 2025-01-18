@@ -65,12 +65,6 @@ export default function UserActions({ user }: UserActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/admin/questions/${user.id}`}>
-            <Eye className="mr-2 h-4 w-4 cursor-pointer" />
-            View
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
           <Link href={`/admin/users/${user.id}/edit`}>
             <Pencil className="mr-2 h-4 w-4 cursor-pointer" />
             Edit

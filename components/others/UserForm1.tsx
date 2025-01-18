@@ -53,7 +53,7 @@ export default function UserForm() {
       ...data,
       firstName: data.name.split(" ")[0] ?? "",
       lastName: data.name.split(" ")[1] ?? "",
-      loginType: data.password ? "EMAIL" : ("PHONE" ?? ("GOOGLE" as LoginType)),
+      loginType: data.password ? "EMAIL" : "PHONE",
     };
 
     try {
@@ -91,7 +91,7 @@ export default function UserForm() {
           value={activeTab}
           onValueChange={(value) => setActiveTab(value as "email" | "phone")}
         >
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-2 mt-5">
             <TabsTrigger value="email">Email Registration</TabsTrigger>
             <TabsTrigger value="phone">Phone Registration</TabsTrigger>
           </TabsList>

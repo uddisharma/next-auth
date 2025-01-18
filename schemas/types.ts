@@ -21,3 +21,12 @@ export interface User {
   createdAt: string | null;
   role: UserRole | null;
 }
+
+export interface permissions {
+  role: string;
+  resource: string;
+  canCreate: boolean;
+  canRead: boolean;
+  canUpdate: boolean;
+  canDelete: boolean;
+}

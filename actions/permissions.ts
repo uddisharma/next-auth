@@ -2,17 +2,9 @@
 
 import { currentRole } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { permissions } from "@/schemas/types";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
-
-interface permissions {
-  role: string;
-  resource: string;
-  canCreate: boolean;
-  canRead: boolean;
-  canUpdate: boolean;
-  canDelete: boolean;
-}
 
 export async function updatePermissions(permissions: permissions[]) {
   try {
@@ -29,7 +21,7 @@ export async function updatePermissions(permissions: permissions[]) {
       };
     }
 
-    await processPermissionsInBatches(permissions, 5, db);
+    await processPermissionsInBatches(permissions, 12, db);
 
     return { success: true, message: "Permissions updated successfully" };
   } catch (error: any) {

@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Prisma } from "@prisma/client";
 import SearchInput from "@/components/others/SearchInput";
 import { currentUser } from "@/lib/auth";
@@ -74,11 +72,6 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
 
           <div className="flex items-center gap-4 ml-auto">
             <ExportButton type="contact" />
-            <Link href={"/admin/questions/new"}>
-              <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
-                + New Question
-              </Button>
-            </Link>
           </div>
         </div>
 
