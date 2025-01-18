@@ -1,0 +1,50 @@
+"use server";
+
+import { RegisterWithOtpSchema, RegisterWithOtpSchemaData } from "@/schemas";
+import { db } from "@/lib/db";
+import { getUserByEmailorPhone } from "@/data/user";
+import { generateOtp } from "@/lib/otp";
+import { sendSMS } from "@/lib/sms";
+
+export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
+  const validatedFields = RegisterWithOtpSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const { email, name, phone } = validatedFields.data;
+
+  const existingUser = await getUserByEmailorPhone(email, phone);
+
+  if (existingUser?.email == email && existingUser.phone == phone) {
+    return { error: "Email and Phone both are already in use!" };
+  }
+
+  if (existingUser?.email == email) {
+    return { error: "Email already in use!" };
+  }
+
+  if (existingUser?.phone == phone) {
+    return { error: "Phone already in use!" };
+  }
+
+  const { otp, otpExpires } = generateOtp();
+
+  await db.user.create({
+    data: {
+      name,
+      firstName: name.split(" ")[0] ?? "",
+      lastName: name.split(" ")[1] ?? "",
+      email,
+      phone,
+      otp,
+      otpExpires,
+      loginType: "PHONE",
+    },
+  });
+
+  await sendSMS(phone, `Your OTP for signup is: ${otp}`);
+
+  return { sucess: "OTP sent successfully " + otp };
+};

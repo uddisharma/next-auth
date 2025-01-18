@@ -1,0 +1,245 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      String                 @id @default(uuid())
+  name                    String?
+  email                   String?                @unique
+  emailVerified           DateTime?
+  image                   String?
+  password                String?
+  role                    UserRole               @default(USER)
+  accounts                Account[]
+  isTwoFactorEnabled      Boolean                @default(false)
+  twoFactorConfirmation   TwoFactorConfirmation?
+  twoFactorConfirmationId Int?
+  phone                   String?                @unique @db.VarChar(15)
+  otp                     Int?
+  otpExpires              DateTime?
+  loginType               LoginType?             @default(GOOGLE)
+  reports                 Report[]
+  firstName               String?                @db.VarChar(100)
+  lastName                String?                @db.VarChar(100)
+  gender                  Gender?                @default(MALE)
+  age                     Int?
+  location                String?
+  pinCode                 Int?
+  source                  String?
+  lastLogin               DateTime?
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+
+  blogs Blog[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model VerificationToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("verification_tokens")
+}
+
+model PasswordResetToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("password_reset_tokens")
+}
+
+model TwoFactorToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("two_factor_tokens")
+}
+
+model TwoFactorConfirmation {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@map("two_factor_confirmations")
+}
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  content     String   @db.Text
+  image       String?
+  published   Boolean  @default(false)
+  authorId    String
+  category    String   @db.VarChar(100)
+  subCategory String?  @db.VarChar(100)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@map("blogs")
+}
+
+model Report {
+  id             Int       @id @default(autoincrement())
+  userId         String
+  startTime      DateTime
+  endTime        DateTime
+  sessionId      String
+  recommendation Json
+  questions      Json[] // [{question: string, answer: string}]
+  deletedAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("reports")
+}
+
+model Question {
+  id           Int          @id @default(autoincrement())
+  text         String       @db.Text
+  sequence     Int
+  questionType QuestionType @default(SINGLE_SELECT)
+  required     Boolean      @default(true)
+  isActive     Boolean      @default(true)
+  isDeleted    Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @default(now()) @updatedAt
+
+  options Option[]
+
+  @@index([questionType])
+  @@map("questions")
+}
+
+model Option {
+  id         Int      @id @default(autoincrement())
+  questionId Int
+  text       String   @db.Text
+  sequence   Int
+  isActive   Boolean  @default(true)
+  isDeleted  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+  @@map("options")
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  phone     String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model Permission {
+  id        Int      @id @default(autoincrement())
+  role      UserRole
+  resource  Resource
+  canCreate Boolean  @default(false)
+  canRead   Boolean  @default(false)
+  canUpdate Boolean  @default(false)
+  canDelete Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([role, resource])
+}
+
+model NewsLetter {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Leads {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Resource {
+  BLOGS
+  REPORTS
+  QUESTIONS
+  USERS
+  CONTACT_SUBMISSIONS
+  NEWSLETTER
+  LEADS
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  USER
+  EDITOR
+}
+
+enum QuestionType {
+  SINGLE_SELECT
+  MULTIPLE_SELECT
+  TEXT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum LoginType {
+  GOOGLE
+  PHONE
+  EMAIL
+}
