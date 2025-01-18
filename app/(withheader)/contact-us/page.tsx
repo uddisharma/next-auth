@@ -1,89 +1,44 @@
-// 'use client'
-
-// import { useState } from 'react'
-// import { submitContactForm } from '@/actions/contacts'
-// import { toast } from 'sonner'
-
-// export default function ContactPage() {
-//   const [isSubmitting, setIsSubmitting] = useState(false)
-//   const [data, setData] = useState({
-//     name: '',
-//     email: '',
-//     message: ''
-//   })
-//   const [submitMessage, setSubmitMessage] = useState('')
-
-//   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-//     event.preventDefault()
-//     setIsSubmitting(true)
-//     setSubmitMessage('')
-//     try {
-//       await submitContactForm(data)
-//       setSubmitMessage('Thank you for your submission!')
-//       setData({
-//         name: '',
-//         email: '',
-//         message: ''
-//       })
-//     } catch (error) {
-//       setSubmitMessage('An error occurred. Please try again.')
-//     } finally {
-//       setIsSubmitting(false)
-//     }
-//   }
-
-//   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//     setData({
-//       ...data,
-//       [event.target.name]: event.target.value
-//     })
-//   }
-
-//   return (
-//     <div className="container mx-auto p-4">
-//       <h1 className="text-2xl font-bold mb-4">Contact Us</h1>
-
-//       <form onSubmit={handleSubmit} className="mb-8">
-//         <div className="mb-4">
-//           <label htmlFor="name" className="block mb-2">Name</label>
-//           <input type="text" id="name" name="name" required className="w-full p-2 border rounded" onChange={handleChange} />
-//         </div>
-//         <div className="mb-4">
-//           <label htmlFor="email" className="block mb-2">Email</label>
-//           <input type="email" id="email" name="email" required className="w-full p-2 border rounded" onChange={handleChange} />
-//         </div>
-//         <div className="mb-4">
-//           <label htmlFor="message" className="block mb-2">Message</label>
-//           <textarea id="message" name="message" required className="w-full p-2 border rounded" onChange={handleChange} />
-//         </div>
-//         <button
-//           type="submit"
-//           className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-blue-300"
-//           disabled={isSubmitting}
-//         >
-//           {isSubmitting ? 'Submitting...' : 'Submit'}
-//         </button>
-//       </form>
-
-//       {submitMessage && (
-//         <div className="mt-4 p-2 bg-green-100 text-green-700 rounded">
-//           {submitMessage}
-//         </div>
-//       )}
-//     </div>
-//   )
-// }
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Mail, Phone } from "lucide-react";
+import { MapPin, Mail, Phone } from 'lucide-react';
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ContactFormData, contactSchema } from "@/schemas";
+import { useTransition } from "react";
+import { submitContactForm } from "@/actions/contacts";
+import { toast } from "sonner";
 
 export default function ContactPage() {
+  const [isPending, startTransition] = useTransition();
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+  });
+
+  const onSubmit = (data: ContactFormData) => {
+    startTransition(async () => {
+      const res = await submitContactForm(data);
+      if (res?.success) {
+        toast.success(res.message);
+        reset();
+      } else {
+        toast.error(res.message);
+      }
+    });
+  };
+
   return (
-    <div className=" md:px-24">
+    <div className="md:px-24">
       {/* Main Content */}
       <main className="mx-auto px-4 py-2 md:py-6 mb-20">
         <div className="text-center mb-6">
@@ -142,7 +97,7 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <form className="space-y-6 pt-10">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pt-10">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
@@ -150,7 +105,11 @@ export default function ContactPage() {
                   id="firstName"
                   placeholder="First Name"
                   className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                  {...register("firstName")}
                 />
+                {errors.firstName && (
+                  <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
@@ -158,7 +117,11 @@ export default function ContactPage() {
                   id="lastName"
                   placeholder="Last Name"
                   className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                  {...register("lastName")}
                 />
+                {errors.lastName && (
+                  <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+                )}
               </div>
             </div>
 
@@ -170,7 +133,11 @@ export default function ContactPage() {
                   type="email"
                   placeholder="Email"
                   className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
               </div>
               <div className="space-y-5">
                 <Label htmlFor="phone">Phone Number</Label>
@@ -179,15 +146,20 @@ export default function ContactPage() {
                   type="tel"
                   placeholder="+1 012 3456 789"
                   className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                  {...register("phone")}
                 />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm">{errors.phone.message}</p>
+                )}
               </div>
             </div>
 
-            <div className="space-y-5">
+            {/* <div className="space-y-5">
               <Label>Select Subject?</Label>
               <RadioGroup
                 defaultValue="general1"
                 className="flex flex-wrap gap-4"
+                {...register("subject")}
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="general1" id="general1" />
@@ -206,6 +178,44 @@ export default function ContactPage() {
                   <Label htmlFor="general4">General Inquiry</Label>
                 </div>
               </RadioGroup>
+              {errors.subject && (
+                <p className="text-red-500 text-sm">{errors.subject.message}</p>
+              )}
+            </div> */}
+
+            <div className="space-y-5">
+              <Label>Select Subject?</Label>
+              <Controller
+                name="subject"
+                control={control}
+                render={({ field }) => (
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex flex-wrap gap-4"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="general1" id="general1" />
+                      <Label htmlFor="general1">General Inquiry</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="general2" id="general2" />
+                      <Label htmlFor="general2">General Inquiry</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="general3" id="general3" />
+                      <Label htmlFor="general3">General Inquiry</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="general4" id="general4" />
+                      <Label htmlFor="general4">General Inquiry</Label>
+                    </div>
+                  </RadioGroup>
+                )}
+              />
+              {errors.subject && (
+                <p className="text-red-500 text-sm">{errors.subject.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -214,11 +224,15 @@ export default function ContactPage() {
                 id="message"
                 placeholder="Write your message.."
                 className="min-h-[120px] border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
+                {...register("message")}
               />
+              {errors.message && (
+                <p className="text-red-500 text-sm">{errors.message.message}</p>
+              )}
             </div>
             <div className="flex items-end justify-end">
-              <Button className="w-full md:w-auto bg-btnblue text-white mt-10 ">
-                Send Message
+              <Button disabled={isPending} type="submit" className="w-full md:w-auto bg-btnblue text-white mt-10">
+                {isPending ? "Submitting..." : "Submit"}
               </Button>
             </div>
           </form>
@@ -227,3 +241,4 @@ export default function ContactPage() {
     </div>
   );
 }
+

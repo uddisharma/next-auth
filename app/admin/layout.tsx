@@ -4,15 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "@/components/others/sidebar";
+import { currentRole } from "@/lib/auth";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const role = await currentRole();
+
   return (
     <div>
       <div className="bg-gray-50 flex pb-[550px]">
-        <div className="hidden lg:block w-64">{/* <Sidebar /> */}</div>
+        <div className="hidden lg:block w-64"><Sidebar role={role} /></div>
         <Sheet>
           <SheetContent side="left" className="p-0 w-64">
-            <Sidebar />
+            <Sidebar role={role} />
           </SheetContent>
           <div className="flex-1">
             <header className="bg-white px-4 py-4 flex items-center justify-between border-b">

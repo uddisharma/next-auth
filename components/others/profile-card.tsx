@@ -76,6 +76,13 @@ export default function ProfileCard({ admin, stats }: Props) {
     }
   };
 
+  function formatRole(role: string | undefined): string | undefined {
+    if (!role) return undefined;
+    const words = role.split('_');
+    words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+    return words.join(' ');
+  }
+
   return (
     <>
       <Card className="w-full max-w-md mx-auto bg-white">
@@ -95,7 +102,7 @@ export default function ProfileCard({ admin, stats }: Props) {
           <h2 className="text-2xl font-semibold mt-4">
             {admin?.firstName} {admin?.lastName}
           </h2>
-          <p className="text-muted-foreground">{admin?.role ?? "Founder"}</p>
+          <p className="text-muted-foreground">{formatRole(admin?.role ?? "Founder")}</p>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex rounded-full bg-slate-100 p-[12px_32px]">
@@ -106,11 +113,10 @@ export default function ProfileCard({ admin, stats }: Props) {
                   setTimeframe(period as any);
                   handleTimeRangeChange(period as any);
                 }}
-                className={`flex-1 py-1 text-[12px] rounded-full transition-colors ${
-                  timeframe === period
-                    ? "bg-white shadow-sm"
-                    : "hover:bg-white/50"
-                }`}
+                className={`flex-1 py-1 text-[12px] rounded-full transition-colors ${timeframe === period
+                  ? "bg-white shadow-sm"
+                  : "hover:bg-white/50"
+                  }`}
               >
                 {period === "ALL" ? "ALL TIME" : period}
               </button>

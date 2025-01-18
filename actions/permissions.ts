@@ -5,15 +5,17 @@ import { db } from "@/lib/db";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 
+interface permissions {
+  role: string;
+  resource: string;
+  canCreate: boolean;
+  canRead: boolean;
+  canUpdate: boolean;
+  canDelete: boolean;
+}
+
 export async function updatePermissions(
-  permissions: {
-    role: string;
-    resource: string;
-    canCreate: boolean;
-    canRead: boolean;
-    canUpdate: boolean;
-    canDelete: boolean;
-  }[],
+  permissions: permissions[],
 ) {
   try {
     const userRole = await currentRole();
@@ -29,7 +31,48 @@ export async function updatePermissions(
       };
     }
 
-    const updatePromises = permissions.map(async (permission) => {
+    await processPermissionsInBatches(permissions, 5, db);
+
+    return { success: true, message: "Permissions updated successfully" };
+  } catch (error: any) {
+    console.error("Error updating permissions:", error?.message);
+    return { success: false, message: "Failed to update permissions" };
+  }
+}
+
+export const fetchPermissions = unstable_cache(
+  async () => {
+    try {
+      const permissions = await db.permission.findMany();
+      return { success: true, data: permissions };
+    } catch (error) {
+      console.error("Error fetching permissions:", error);
+      return { success: false, error: "Failed to fetch permissions" };
+    }
+  },
+  ["blogs"],
+  { revalidate: 60 },
+);
+
+
+const processPermissionsInBatches = async (permissions: permissions[], batchSize: number, db: any) => {
+  const chunkArray = (arr: any[], size: number) => {
+    return arr.reduce((chunks, item, i) => {
+      const chunkIndex = Math.floor(i / size);
+      if (!chunks[chunkIndex]) chunks[chunkIndex] = [];
+      chunks[chunkIndex].push(item);
+      return chunks;
+    }, [] as any[][]);
+  };
+
+  const permissionBatches = chunkArray(permissions, batchSize);
+
+  for (const batch of permissionBatches) {
+    if (!db.$isConnected) {
+      await db.$connect();
+    }
+
+    const updatePromises = batch.map(async (permission: permissions) => {
       await db.permission.upsert({
         where: {
           role_resource: {
@@ -55,23 +98,8 @@ export async function updatePermissions(
     });
 
     await Promise.all(updatePromises);
-    return { success: true, message: "Permissions updated successfully" };
-  } catch (error) {
-    console.error("Error updating permissions:", error);
-    return { success: false, message: "Failed to update permissions" };
+    await db.$disconnect();
   }
-}
+};
 
-export const fetchPermissions = unstable_cache(
-  async () => {
-    try {
-      const permissions = await db.permission.findMany();
-      return { success: true, data: permissions };
-    } catch (error) {
-      console.error("Error fetching permissions:", error);
-      return { success: false, error: "Failed to fetch permissions" };
-    }
-  },
-  ["blogs"],
-  { revalidate: 60 }, // Revalidate every 60 seconds
-);
+

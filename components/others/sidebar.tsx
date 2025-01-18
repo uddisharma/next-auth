@@ -5,7 +5,6 @@ import {
   FileText,
   HelpCircle,
   FileBarChart,
-  User,
   Users,
   LogOut,
   ScanFace,
@@ -23,17 +22,15 @@ const navItems = [
   { icon: Users, label: "Users", href: "/admin/users" },
   {
     icon: Users,
-    label: "Contact Submissions",
+    label: "Contacts",
     href: "/admin/contact-submissions",
   },
   { icon: ScanFace, label: "Permissions", href: "/admin/permissions" },
   { icon: Newspaper, label: "NewsLetter", href: "/admin/newsletter" },
   { icon: Bolt, label: "Leads", href: "/admin/leads" },
-  { icon: User, label: "Profile", href: "/admin/profile" },
-  // { icon: LogOut, label: 'Logout', href: '/auth/logout' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ role }: { role: string | undefined }) {
   const pathname = usePathname();
   return (
     <div className="w-64 bg-btnblue text-white h-screen flex flex-col fixed left-0">
@@ -48,11 +45,10 @@ export default function Sidebar() {
           <Link
             key={item.label}
             href={item.href}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg mb-1   ${
-              pathname.startsWith(item.href)
-                ? "bg-yellow text-btnblue"
-                : "hover:bg-white/10"
-            }`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg mb-1   ${pathname.startsWith(item.href)
+              ? "bg-yellow text-btnblue"
+              : "hover:bg-white/10"
+              } ${role !== "SUPER_ADMIN" && item.label === "Permissions" ? "hidden" : ""}`}
           >
             <item.icon className="w-5 h-5" />
             <span>{item.label}</span>

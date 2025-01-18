@@ -171,8 +171,11 @@ model Option {
 
 model ContactSubmission {
   id        String   @id @default(cuid())
-  name      String
+  firstName String
+  lastName  String
+  phone     String
   email     String
+  subject   String
   message   String
   createdAt DateTime @default(now())
 }

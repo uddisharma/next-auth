@@ -281,30 +281,21 @@ async function main() {
 
   const sampleSubmissions = [
     {
-      name: "John Doe",
+      firstName: "John Doe",
+      lastName: "Smith",
       email: "john@example.com",
-      message: "Hello, I have a question about your services.",
+      phone: "1234567890",
+      subject: "Feedback",
+      message: "How can we improve our response time?",
     },
     {
-      name: "Jane Smith",
-      email: "jane@example.com",
-      message: "I'd like to schedule a consultation.",
-    },
-    {
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      message: "Can you provide more information about pricing?",
-    },
-    {
-      name: "Alice Brown",
-      email: "alice@example.com",
-      message: "I'm interested in your product. Please contact me.",
-    },
-    {
-      name: "Charlie Wilson",
-      email: "charlie@example.com",
-      message: "Do you offer support for international customers?",
-    },
+      firstName: "Jane Doe 2",
+      lastName: "Smith 2",
+      email: "jane2@example.com",
+      phone: "9876543212",
+      subject: "Question",
+      message: "What features would you like to see improved?",
+    }
   ];
 
   for (const submission of sampleSubmissions) {
@@ -354,7 +345,22 @@ async function main() {
       canUpdate: true,
       canDelete: true,
     },
-
+    {
+      role: UserRole.SUPER_ADMIN,
+      resource: Resource.LEADS,
+      canCreate: true,
+      canRead: true,
+      canUpdate: true,
+      canDelete: true,
+    },
+    {
+      role: UserRole.SUPER_ADMIN,
+      resource: Resource.NEWSLETTER,
+      canCreate: true,
+      canRead: true,
+      canUpdate: true,
+      canDelete: true,
+    },
     {
       role: UserRole.ADMIN,
       resource: Resource.BLOGS,
@@ -395,7 +401,22 @@ async function main() {
       canUpdate: true,
       canDelete: false,
     },
-
+    {
+      role: UserRole.ADMIN,
+      resource: Resource.LEADS,
+      canCreate: true,
+      canRead: true,
+      canUpdate: true,
+      canDelete: true,
+    },
+    {
+      role: UserRole.ADMIN,
+      resource: Resource.NEWSLETTER,
+      canCreate: true,
+      canRead: true,
+      canUpdate: true,
+      canDelete: true,
+    },
     {
       role: UserRole.EDITOR,
       resource: Resource.BLOGS,
@@ -436,7 +457,22 @@ async function main() {
       canUpdate: false,
       canDelete: false,
     },
-
+    {
+      role: UserRole.EDITOR,
+      resource: Resource.LEADS,
+      canCreate: true,
+      canRead: true,
+      canUpdate: true,
+      canDelete: true,
+    },
+    {
+      role: UserRole.EDITOR,
+      resource: Resource.NEWSLETTER,
+      canCreate: true,
+      canRead: true,
+      canUpdate: true,
+      canDelete: true,
+    },
     {
       role: UserRole.USER,
       resource: Resource.BLOGS,
@@ -476,6 +512,22 @@ async function main() {
       canRead: false,
       canUpdate: false,
       canDelete: false,
+    },
+    {
+      role: UserRole.USER,
+      resource: Resource.LEADS,
+      canCreate: true,
+      canRead: true,
+      canUpdate: true,
+      canDelete: true,
+    },
+    {
+      role: UserRole.USER,
+      resource: Resource.NEWSLETTER,
+      canCreate: true,
+      canRead: true,
+      canUpdate: true,
+      canDelete: true,
     },
   ];
 

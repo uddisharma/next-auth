@@ -25,6 +25,8 @@ import { toast } from "sonner";
 import { updatePermissions } from "@/actions/permissions";
 import { Resource, UserRole } from "@prisma/client";
 import { fetchPermissions } from "@/actions/permissions";
+import { currentRole, currentUser } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 type PermissionKey = "canCreate" | "canRead" | "canUpdate" | "canDelete";
 
@@ -34,8 +36,19 @@ export default function PermissionsManager() {
   >({});
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter()
+
+  const getRole = async () => {
+    const role = await currentRole();
+    if (role !== "SUPER_ADMIN") {
+      toast.error("You don't have permission to access this page.");
+      router.push("/admin");
+      return;
+    }
+  }
 
   useEffect(() => {
+
     const loadPermissions = async () => {
       const result = await fetchPermissions();
       if (result.success) {
@@ -57,7 +70,7 @@ export default function PermissionsManager() {
       }
       setIsLoading(false);
     };
-
+    getRole()
     loadPermissions();
   }, []);
 
@@ -172,7 +185,7 @@ export default function PermissionsManager() {
                             <Checkbox
                               checked={
                                 permissions[`${role}-${resource}`]?.[
-                                  permission
+                                permission
                                 ] || false
                               }
                               onCheckedChange={() =>

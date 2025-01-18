@@ -24,11 +24,12 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
 
   const where: Prisma.ContactSubmissionWhereInput = search
     ? {
-        OR: [
-          { name: { contains: search, mode: "insensitive" } },
-          { email: { contains: search, mode: "insensitive" } },
-        ],
-      }
+      OR: [
+        { firstName: { contains: search, mode: "insensitive" } },
+        { lastName: { contains: search, mode: "insensitive" } },
+        { email: { contains: search, mode: "insensitive" } },
+      ],
+    }
     : {};
 
   const session = await currentUser();
@@ -83,10 +84,11 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
 
         <div className="bg-white rounded-lg border overflow-x-auto">
           <div className="min-w-[600px]">
-            <div className="grid grid-cols-[0.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+            <div className="grid grid-cols-[1fr_2fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
               <div>Name</div>
               <div>Email</div>
-              <div>Message</div>
+              <div>Phone</div>
+              <div>Subject</div>
               <div>Created At</div>
               <div>Actions</div>
             </div>
@@ -95,13 +97,15 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
               {submissions.map((submission) => (
                 <div
                   key={submission.id}
-                  className="grid grid-cols-[0.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                  className="grid grid-cols-[1fr_2fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
                 >
-                  <div className="text-center">{submission.name}</div>
+                  <div >{submission.firstName}</div>
 
                   <div>{submission.email}</div>
 
-                  <div>{submission.message}</div>
+                  <div>{submission.phone}</div>
+
+                  <div>{submission.subject}</div>
 
                   <div>
                     {format(new Date(submission.createdAt), "dd/MM/yyyy")}
@@ -109,7 +113,7 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
 
                   <div className="flex items-left justify-left ">
                     <ContactActions
-                      contact={{ id: submission.id, name: submission.name }}
+                      contact={{ id: submission.id, submission: submission }}
                     />
                   </div>
                 </div>
