@@ -295,7 +295,7 @@ async function main() {
       phone: "9876543212",
       subject: "Question",
       message: "What features would you like to see improved?",
-    }
+    },
   ];
 
   for (const submission of sampleSubmissions) {

@@ -45,10 +45,11 @@ export default function Sidebar({ role }: { role: string | undefined }) {
           <Link
             key={item.label}
             href={item.href}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg mb-1   ${pathname.startsWith(item.href)
-              ? "bg-yellow text-btnblue"
-              : "hover:bg-white/10"
-              } ${role !== "SUPER_ADMIN" && item.label === "Permissions" ? "hidden" : ""}`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg mb-1   ${
+              pathname.startsWith(item.href)
+                ? "bg-yellow text-btnblue"
+                : "hover:bg-white/10"
+            } ${role !== "SUPER_ADMIN" && item.label === "Permissions" ? "hidden" : ""}`}
           >
             <item.icon className="w-5 h-5" />
             <span>{item.label}</span>

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Mail, Phone } from 'lucide-react';
+import { MapPin, Mail, Phone } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactFormData, contactSchema } from "@/schemas";
@@ -108,7 +108,9 @@ export default function ContactPage() {
                   {...register("firstName")}
                 />
                 {errors.firstName && (
-                  <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+                  <p className="text-red-500 text-sm">
+                    {errors.firstName.message}
+                  </p>
                 )}
               </div>
               <div className="space-y-2">
@@ -120,7 +122,9 @@ export default function ContactPage() {
                   {...register("lastName")}
                 />
                 {errors.lastName && (
-                  <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+                  <p className="text-red-500 text-sm">
+                    {errors.lastName.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -231,7 +235,11 @@ export default function ContactPage() {
               )}
             </div>
             <div className="flex items-end justify-end">
-              <Button disabled={isPending} type="submit" className="w-full md:w-auto bg-btnblue text-white mt-10">
+              <Button
+                disabled={isPending}
+                type="submit"
+                className="w-full md:w-auto bg-btnblue text-white mt-10"
+              >
                 {isPending ? "Submitting..." : "Submit"}
               </Button>
             </div>
@@ -241,4 +249,3 @@ export default function ContactPage() {
     </div>
   );
 }
-

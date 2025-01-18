@@ -12,7 +12,9 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <div className="bg-gray-50 flex pb-[550px]">
-        <div className="hidden lg:block w-64"><Sidebar role={role} /></div>
+        <div className="hidden lg:block w-64">
+          <Sidebar role={role} />
+        </div>
         <Sheet>
           <SheetContent side="left" className="p-0 w-64">
             <Sidebar role={role} />

@@ -14,9 +14,7 @@ interface permissions {
   canDelete: boolean;
 }
 
-export async function updatePermissions(
-  permissions: permissions[],
-) {
+export async function updatePermissions(permissions: permissions[]) {
   try {
     const userRole = await currentRole();
 
@@ -54,8 +52,11 @@ export const fetchPermissions = unstable_cache(
   { revalidate: 60 },
 );
 
-
-const processPermissionsInBatches = async (permissions: permissions[], batchSize: number, db: any) => {
+const processPermissionsInBatches = async (
+  permissions: permissions[],
+  batchSize: number,
+  db: any,
+) => {
   const chunkArray = (arr: any[], size: number) => {
     return arr.reduce((chunks, item, i) => {
       const chunkIndex = Math.floor(i / size);
@@ -101,5 +102,3 @@ const processPermissionsInBatches = async (permissions: permissions[], batchSize
     await db.$disconnect();
   }
 };
-
-

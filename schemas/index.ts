@@ -194,7 +194,6 @@ export const ProfileSchema = z.object({
   location: z.string().min(1, "Location is required"),
 });
 
-
 export const contactSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -203,7 +202,6 @@ export const contactSchema = z.object({
   subject: z.string().min(2, "Subject must be at least 2 characters"),
   message: z.string().min(10, "Message must be at least 10 characters long"),
 });
-
 
 export const LeadsSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),

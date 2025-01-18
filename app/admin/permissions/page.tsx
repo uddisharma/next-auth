@@ -36,7 +36,7 @@ export default function PermissionsManager() {
   >({});
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter()
+  const router = useRouter();
 
   const getRole = async () => {
     const role = await currentRole();
@@ -45,10 +45,9 @@ export default function PermissionsManager() {
       router.push("/admin");
       return;
     }
-  }
+  };
 
   useEffect(() => {
-
     const loadPermissions = async () => {
       const result = await fetchPermissions();
       if (result.success) {
@@ -70,7 +69,7 @@ export default function PermissionsManager() {
       }
       setIsLoading(false);
     };
-    getRole()
+    getRole();
     loadPermissions();
   }, []);
 
@@ -185,7 +184,7 @@ export default function PermissionsManager() {
                             <Checkbox
                               checked={
                                 permissions[`${role}-${resource}`]?.[
-                                permission
+                                  permission
                                 ] || false
                               }
                               onCheckedChange={() =>

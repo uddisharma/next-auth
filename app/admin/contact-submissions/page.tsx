@@ -24,12 +24,12 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
 
   const where: Prisma.ContactSubmissionWhereInput = search
     ? {
-      OR: [
-        { firstName: { contains: search, mode: "insensitive" } },
-        { lastName: { contains: search, mode: "insensitive" } },
-        { email: { contains: search, mode: "insensitive" } },
-      ],
-    }
+        OR: [
+          { firstName: { contains: search, mode: "insensitive" } },
+          { lastName: { contains: search, mode: "insensitive" } },
+          { email: { contains: search, mode: "insensitive" } },
+        ],
+      }
     : {};
 
   const session = await currentUser();
@@ -99,7 +99,7 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
                   key={submission.id}
                   className="grid grid-cols-[1fr_2fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
                 >
-                  <div >{submission.firstName}</div>
+                  <div>{submission.firstName}</div>
 
                   <div>{submission.email}</div>
 

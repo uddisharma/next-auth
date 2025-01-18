@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { MoreHorizontal, Eye, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Eye, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -100,11 +100,14 @@ export default function ContactActions({ contact }: ContactActionsProps) {
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete the
-                  contact of "{contact?.submission?.firstName}" and remove it from our servers.
+                  contact of "{contact?.submission?.firstName}" and remove it
+                  from our servers.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel onClick={() => setIsDropdownOpen(false)}>Cancel</AlertDialogCancel>
+                <AlertDialogCancel onClick={() => setIsDropdownOpen(false)}>
+                  Cancel
+                </AlertDialogCancel>
                 <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
                   {isDeleting ? "Deleting..." : "Delete"}
                 </AlertDialogAction>
@@ -121,4 +124,3 @@ export default function ContactActions({ contact }: ContactActionsProps) {
     </>
   );
 }
-
