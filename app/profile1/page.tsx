@@ -6,6 +6,12 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import ProfileForm from "@/components/others/ProfileForm1";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import Link from "next/link";
 
 export default async function ProfilePage() {
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -82,15 +88,27 @@ export default async function ProfilePage() {
             <Bell className="h-5 w-5" />
           </Button>
 
-          <div className="hidden md:flex items-center gap-4 cursor-pointer">
-            <Image
-              src={user?.image || "/user.png"}
-              alt="Profile"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-          </div>
+          <Popover>
+            <PopoverTrigger asChild>
+              <div className="hidden md:flex items-center gap-4 cursor-pointer">
+                <Image
+                  src={user?.image || "/user.png"}
+                  alt="Profile"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-56">
+              <div className="grid gap-4">
+                <Link href="/profile" className="font-medium">
+                  Profile
+                </Link>
+                <Button variant="outline">Logout</Button>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
 

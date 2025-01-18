@@ -6,39 +6,43 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
-import { ProfileFormData, ProfileSchema, UserFormData } from "@/schemas";
+import { ProfileFormData, ProfileSchema } from "@/schemas";
 
-type UserData = {
-  firstName: string | null;
-  lastName: string | null;
-  email: string;
-  phone: string | null;
-};
+// type UserData = {
+//   firstName: string | null;
+//   lastName: string | null;
+//   email: string;
+//   phone: string | null;
+// };
 
-export async function updateProfile(userData: UserData) {
+export async function updateProfile(userData: any) {
   const session = await currentUser();
 
   if (!session) {
     return redirect("/auth/login");
   }
 
-  const hasPermission = await checkPermission(
-    session?.role,
-    Resource.USERS,
-    "update",
-  );
+  // const hasPermission = await checkPermission(
+  //   session?.role,
+  //   Resource.USERS,
+  //   "update",
+  // );
 
-  if (!hasPermission) {
-    return { message: "You don't have permission to update this profile" };
+  // if (!hasPermission) {
+  //   return { message: "You don't have permission to update this profile" };
+  // }
+
+  try {
+    await db.user.update({
+      where: { id: session.id },
+      data: userData,
+    });
+    revalidatePath("/profile1");
+    return { success: true, message: "Profile updated successfully" };
+  } catch (error) {
+    console.error("Failed to update user:", error);
+    return { success: false, message: "Failed to update user" };
   }
-
-  const updatedUser = await db.user.update({
-    where: { id: session.id },
-    data: userData,
-  });
-
-  revalidatePath("/profile");
-  return updatedUser;
 }
 
 export async function deleteProfile() {
@@ -112,5 +116,47 @@ export async function updateProfilePhoto(
   } catch (error) {
     console.error("Failed to update user:", error);
     return { success: false, error: "Failed to update user" };
+  }
+}
+
+export async function updateProfileEmail(
+  emails: { emails: string; createdAt: string }[],
+  type: string,
+) {
+  const session = await currentUser();
+
+  if (!session) {
+    return redirect("/auth/login");
+  }
+
+  try {
+    if (type == "add") {
+      const user = await db.user.findUnique({
+        where: { id: session.id },
+        select: { emails: true },
+      });
+      //@ts-ignore
+      const lastEmail = emails[emails.length - 1].email;
+      //@ts-ignore
+      if (user?.emails.some((email) => email.email === lastEmail)) {
+        return { success: false, message: "Email already exists" };
+      }
+    }
+
+    await db.user.update({
+      where: { id: session.id },
+      data: {
+        emails,
+      },
+    });
+
+    revalidatePath("/profile1");
+    return {
+      success: true,
+      message: `Email ${type == "add" ? "added" : "deleted"} successfully`,
+    };
+  } catch (error) {
+    console.error("Failed to update user:", error);
+    return { success: false, message: "Failed to update user" };
   }
 }

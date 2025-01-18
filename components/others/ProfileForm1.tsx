@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -12,18 +12,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Mail } from "lucide-react";
+import { Camera, Loader2, Mail, Trash2 } from "lucide-react";
 import { profileSchema, ProfileFormValues } from "@/schemas";
 import Image from "next/image";
 import { timeAgo } from "@/lib/timeAgo";
-import { User as PrismaUser } from "@prisma/client";
-import { DateRange } from "react-day-picker";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { updateProfile, updateProfileEmail } from "@/actions/my-profile";
+import { toast } from "sonner";
 
-interface User extends PrismaUser {
-  emails: { email: string; createdAt: string }[];
-}
-
-export default function ProfileForm({ user }: { user: User | undefined }) {
+export default function ProfileForm({ user }: { user: any | undefined }) {
   const [isEditable, setIsEditable] = useState(false);
   const {
     control,
@@ -41,8 +46,87 @@ export default function ProfileForm({ user }: { user: User | undefined }) {
     },
   });
 
+  const [isEmailPopupOpen, setIsEmailPopupOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
+  const EmailPopup = () => {
+    const [newEmail, setNewEmail] = useState("");
+    const [isPending, startTransition] = useTransition();
+
+    const handleAddNewEmail = () => {
+      if (!newEmail) {
+        return toast.error("Email is required");
+      }
+      startTransition(async () => {
+        const newEmailObject = { email: newEmail, createdAt: new Date() };
+        const emails = [...(user?.emails || []), newEmailObject];
+        const res = await updateProfileEmail(emails, "add");
+        if (res.success) {
+          toast.success(res.message);
+          setIsEmailPopupOpen(false);
+          setNewEmail("");
+        } else {
+          toast.error(res.message);
+        }
+      });
+    };
+
+    return (
+      <Dialog open={isEmailPopupOpen} onOpenChange={setIsEmailPopupOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add Email Address</DialogTitle>
+          </DialogHeader>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleAddNewEmail();
+            }}
+          >
+            <Input
+              type="email"
+              placeholder="Enter new email"
+              value={newEmail}
+              required
+              onChange={(e) => setNewEmail(e.target.value)}
+            />
+            <Button
+              className="mt-2 w-full"
+              disabled={!newEmail || isPending}
+              type="submit"
+            >
+              {isPending ? "Adding..." : "Add Email"}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+    );
+  };
+
+  const handleEmailDelete = (email: { email: string }) => () => {
+    const emails = user?.emails?.filter(
+      (e: { email: string }) => e.email !== email.email,
+    );
+    startTransition(async () => {
+      const res = await updateProfileEmail(emails, "delete");
+      if (res.success) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    });
+  };
+
   const onSubmit = (data: ProfileFormValues) => {
     console.log(data);
+    startTransition(async () => {
+      const res = await updateProfile(data);
+      if (res?.success) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    });
     setIsEditable(false);
   };
 
@@ -50,13 +134,36 @@ export default function ProfileForm({ user }: { user: User | undefined }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-6 flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <Image
-            src={user?.image || "/user.png"}
-            alt={user?.name || "User"}
-            width={64}
-            height={64}
-            className="rounded-full"
-          />
+          <div className="relative">
+            <Image
+              src={user?.image || "/user.png"}
+              alt={user?.name || "User"}
+              width={64}
+              height={64}
+              className="rounded-full"
+            />
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="absolute bottom-0 right-0 bg-blue-100 rounded-full p-2">
+                  <Camera className="w-4 h-4 text-blue-600" />
+                </button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Update Profile Picture</DialogTitle>
+                </DialogHeader>
+                <Image
+                  src={user?.image || "/user.png"}
+                  alt={user?.name || "User"}
+                  width={200}
+                  height={200}
+                  className="rounded-full mx-auto"
+                />
+                <Input type="file" accept="image/*" />
+                <Button>Update Picture</Button>
+              </DialogContent>
+            </Dialog>
+          </div>
           <div>
             <h3 className="text-xl font-medium">{user?.name}</h3>
             <p className="text-gray-500">{user?.email}</p>
@@ -213,33 +320,70 @@ export default function ProfileForm({ user }: { user: User | undefined }) {
       </div>
 
       <div className="mt-6">
-        <h4 className="mb-4 text-sm font-medium text-gray-700">
-          My email Address
-        </h4>
+        {user?.emails?.length > 0 && (
+          <h4 className="mb-4 text-sm font-medium text-gray-700">
+            My email Address
+          </h4>
+        )}
         {user?.emails?.map((email: { email: string; createdAt: string }) => (
           <div
-            className="flex items-start gap-3 rounded-lg bg-gray-50 p-4 m-3"
+            className="flex items-start justify-between gap-3 rounded-lg bg-gray-50 p-4 m-3"
             key={email.email}
           >
-            <div className="rounded-full bg-blue-100 p-2">
-              <Mail className="h-5 w-5 text-blue-600" />
+            <div className="flex items-center gap-3">
+              <div className="rounded-full bg-blue-100 p-2">
+                <Mail className="h-5 w-5 text-blue-600" />
+              </div>
+              <div>
+                <p className="font-medium">{email?.email}</p>
+                <p className="text-sm text-gray-500">
+                  {timeAgo(new Date(email.createdAt))}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="font-medium">{email?.email}</p>
-              <p className="text-sm text-gray-500">
-                {timeAgo(new Date(email.createdAt))}
-              </p>
-            </div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <div className="rounded-full bg-red-400 p-2 cursor-pointer">
+                  {isPending ? (
+                    <Loader2 className="animate-spin h-5 w-5 text-white" />
+                  ) : (
+                    <Trash2 className="h-5 w-5 text-white" />
+                  )}
+                </div>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Are you absolutely sure?</DialogTitle>
+                </DialogHeader>
+                <DialogDescription>
+                  This action cannot be undone. This will permanently delete the
+                  email and remove it from our servers.
+                </DialogDescription>
+                <DialogFooter>
+                  <Button
+                    disabled={isPending}
+                    onClick={handleEmailDelete(email)}
+                  >
+                    {isPending ? "Deleting..." : "Continue"}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         ))}
-        <Button variant="ghost" className="mt-2 bg-[#4182F9] bg-opacity-20">
+        <Button
+          onClick={() => setIsEmailPopupOpen(true)}
+          variant="ghost"
+          className="mt-2 bg-[#4182F9] bg-opacity-20"
+        >
           + Add Email Address
         </Button>
+        <EmailPopup />
       </div>
 
       {isEditable && (
-        <Button type="submit" className="mt-6">
-          Save Changes
+        <Button disabled={isPending} type="submit" className="mt-6">
+          {isPending ? "Saving..." : "Save Changes"}
         </Button>
       )}
     </form>
