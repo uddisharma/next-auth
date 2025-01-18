@@ -96,7 +96,7 @@ export default async function ProfilePage() {
                   alt="Profile"
                   width={40}
                   height={40}
-                  className="rounded-full"
+                  className="rounded-lg w-[40px] h-[40px]"
                 />
               </div>
             </PopoverTrigger>

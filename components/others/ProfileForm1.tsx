@@ -25,8 +25,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { updateProfile, updateProfileEmail } from "@/actions/my-profile";
+import {
+  updateProfile,
+  updateProfileEmail,
+  updateProfilePhoto,
+} from "@/actions/my-profile";
 import { toast } from "sonner";
+import { uploadFile } from "@/actions/upload";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function ProfileForm({ user }: { user: any | undefined }) {
   const [isEditable, setIsEditable] = useState(false);
@@ -48,6 +54,8 @@ export default function ProfileForm({ user }: { user: any | undefined }) {
 
   const [isEmailPopupOpen, setIsEmailPopupOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const EmailPopup = () => {
     const [newEmail, setNewEmail] = useState("");
@@ -117,6 +125,35 @@ export default function ProfileForm({ user }: { user: any | undefined }) {
     });
   };
 
+  const handleImageUpload = (formData: FormData) => {
+    startTransition(async () => {
+      try {
+        const result = await uploadFile(formData);
+        const data = await updateProfilePhoto(result.url);
+        if (data?.success) {
+          user!.image = result.url;
+          setPreviewImage(null);
+          setIsOpen(false);
+        } else {
+          toast.error(data?.error);
+        }
+      } catch (error) {
+        toast.error("Something went wrong !");
+      }
+    });
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const onSubmit = (data: ProfileFormValues) => {
     console.log(data);
     startTransition(async () => {
@@ -138,31 +175,59 @@ export default function ProfileForm({ user }: { user: any | undefined }) {
             <Image
               src={user?.image || "/user.png"}
               alt={user?.name || "User"}
-              width={64}
-              height={64}
-              className="rounded-full"
+              width={100}
+              height={100}
+              className="rounded-full w-[100px] h-[100px]"
             />
-            <Dialog>
-              <DialogTrigger asChild>
-                <button className="absolute bottom-0 right-0 bg-blue-100 rounded-full p-2">
-                  <Camera className="w-4 h-4 text-blue-600" />
-                </button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Update Profile Picture</DialogTitle>
-                </DialogHeader>
-                <Image
-                  src={user?.image || "/user.png"}
-                  alt={user?.name || "User"}
-                  width={200}
-                  height={200}
-                  className="rounded-full mx-auto"
-                />
-                <Input type="file" accept="image/*" />
-                <Button>Update Picture</Button>
-              </DialogContent>
-            </Dialog>
+            <button
+              onClick={() => setIsOpen(true)}
+              className="absolute bottom-0 right-0 bg-blue-100 rounded-full p-2"
+            >
+              <Camera className="w-4 h-4 text-blue-600" />
+            </button>
+            {isOpen && (
+              <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Update Profile Picture</DialogTitle>
+                  </DialogHeader>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const formData = new FormData(e.currentTarget);
+                      handleImageUpload(formData);
+                    }}
+                  >
+                    <div className="space-y-4">
+                      <div className="flex justify-center">
+                        <Avatar className="w-32 h-32">
+                          <AvatarImage
+                            src={previewImage || user?.image || "/user.png"}
+                          />
+                          <AvatarFallback>{user?.name}</AvatarFallback>
+                        </Avatar>
+                      </div>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        id="image"
+                        name="image"
+                        onChange={handleFileChange}
+                        className="w-full"
+                      />
+                      <div className="flex justify-end space-x-2">
+                        <Button
+                          disabled={isPending || !previewImage}
+                          type="submit"
+                        >
+                          {isPending ? "Loading..." : "Save"}
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
+                </DialogContent>
+              </Dialog>
+            )}
           </div>
           <div>
             <h3 className="text-xl font-medium">{user?.name}</h3>
