@@ -240,6 +240,18 @@ export const userSchema2 = z.object({
   loginType: z.enum(["EMAIL", "PHONE", "GOOGLE"]),
 });
 
+export const profileSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+  gender: z.enum(["male", "female", "other"]),
+  country: z.string().min(1, "Country is required"),
+  language: z.string().min(1, "Language is required"),
+  timezone: z.string().min(1, "Timezone is required"),
+  phone: z.string().optional(),
+});
+
+export type ProfileFormValues = z.infer<typeof profileSchema>;
 export type userSchema2Data = z.infer<typeof userSchema2>;
 export type userSchema1Data = z.infer<typeof userSchema1>;
 export type NewsLetterSchemaData = z.infer<typeof NewsLetterSchema>;

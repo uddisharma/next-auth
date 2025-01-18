@@ -1,24 +1,33 @@
-"use client";
-
-import { Bell, Mail } from "lucide-react";
+import { Bell } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
+import ProfileForm from "@/components/others/ProfileForm1";
 
-export default function ProfilePage() {
-  const currentDate = new Date("2022-06-07").toLocaleDateString("en-US", {
+export default async function ProfilePage() {
+  const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "short",
     day: "2-digit",
     month: "short",
     year: "numeric",
   });
+
+  const session = await currentUser();
+
+  if (!session) {
+    return redirect("/auth/login");
+  }
+
+  const user = await db.user.findUnique({
+    where: { id: session.id },
+  });
+
+  if (!user) {
+    return redirect("/auth/login");
+  }
 
   return (
     <div className="min-h-screen px-5 md:px-16 pt-5">
@@ -26,7 +35,7 @@ export default function ProfilePage() {
         <div className="flex md:flex-row justify-between items-start md:items-center gap-4 w-full mb-2 md:mb-0">
           <div className="md:w-auto md:mb-0">
             <h2 className="text-2xl font-medium text-gray-800">
-              Welcome, Naveen
+              Welcome, {user.name}
             </h2>
             <p className="text-sm text-gray-500">{currentDate}</p>
           </div>
@@ -37,7 +46,7 @@ export default function ProfilePage() {
             </Button>
             <div className="flex items-center gap-4">
               <Image
-                src="/user.png"
+                src={user?.image || "/user.png"}
                 alt="Profile"
                 width={40}
                 height={40}
@@ -75,7 +84,7 @@ export default function ProfilePage() {
 
           <div className="hidden md:flex items-center gap-4 cursor-pointer">
             <Image
-              src="/user.png"
+              src={user?.image || "/user.png"}
               alt="Profile"
               width={40}
               height={40}
@@ -90,126 +99,7 @@ export default function ProfilePage() {
 
       {/* Profile Section */}
       <div className="rounded-lg bg-white p-6 shadow-sm pb-20">
-        <div className="mb-6 flex items-start justify-between">
-          <div className="flex items-center gap-4">
-            <Image
-              src="/user.png"
-              alt="Profile"
-              width={64}
-              height={64}
-              className="rounded-full"
-            />
-            <div>
-              <h3 className="text-xl font-medium">Naveen</h3>
-              <p className="text-gray-500">abc@gmail.com</p>
-            </div>
-          </div>
-          <Button className="bg-btnblue hover:bg-btnblue/90 text-white">
-            Edit
-          </Button>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              First Name
-            </label>
-            <Input
-              placeholder="Your First Name"
-              className="border-none bg-[#F9F9F9]"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              Last Name
-            </label>
-            <Input
-              placeholder="Your Last Name"
-              className="border-none bg-[#F9F9F9]"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">Gender</label>
-            <Select defaultValue="male">
-              <SelectTrigger className="border-none bg-[#F9F9F9]">
-                <SelectValue placeholder="Select gender" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="male">Male</SelectItem>
-                <SelectItem value="female">Female</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">Country</label>
-            <Select defaultValue="india">
-              <SelectTrigger className="border-none bg-[#F9F9F9]">
-                <SelectValue placeholder="Select country" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="india">India</SelectItem>
-                <SelectItem value="usa">USA</SelectItem>
-                <SelectItem value="uk">UK</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              Language
-            </label>
-            <Select>
-              <SelectTrigger className="border-none bg-[#F9F9F9]">
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="english">English</SelectItem>
-                <SelectItem value="hindi">Hindi</SelectItem>
-                <SelectItem value="spanish">Spanish</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              Time Zone
-            </label>
-            <Select>
-              <SelectTrigger className="border-none bg-[#F9F9F9]">
-                <SelectValue placeholder="Select timezone" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ist">
-                  (GMT+5:30) India Standard Time
-                </SelectItem>
-                <SelectItem value="pst">(GMT-8:00) Pacific Time</SelectItem>
-                <SelectItem value="est">(GMT-5:00) Eastern Time</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          <h4 className="mb-4 text-sm font-medium text-gray-700">
-            My email Address
-          </h4>
-          <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4">
-            <div className="rounded-full bg-blue-100 p-2">
-              <Mail className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <p className="font-medium">abc@gmail.com</p>
-              <p className="text-sm text-gray-500">1 month ago</p>
-            </div>
-          </div>
-          <Button variant="ghost" className="mt-4 bg-[#4182F9] bg-opacity-20">
-            + Add Email Address
-          </Button>
-        </div>
+        <ProfileForm user={user} />
       </div>
     </div>
   );
