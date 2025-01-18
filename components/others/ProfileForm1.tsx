@@ -16,8 +16,14 @@ import { Mail } from "lucide-react";
 import { profileSchema, ProfileFormValues } from "@/schemas";
 import Image from "next/image";
 import { timeAgo } from "@/lib/timeAgo";
+import { User as PrismaUser } from "@prisma/client";
+import { DateRange } from "react-day-picker";
 
-export default function ProfileForm({ user }: { user: any }) {
+interface User extends PrismaUser {
+  emails: { email: string; createdAt: string }[];
+}
+
+export default function ProfileForm({ user }: { user: User | undefined }) {
   const [isEditable, setIsEditable] = useState(false);
   const {
     control,
@@ -28,10 +34,10 @@ export default function ProfileForm({ user }: { user: any }) {
     defaultValues: {
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
-      gender: user?.gender || "male",
-      country: user?.country || "india",
-      language: user?.language || "english",
-      timezone: user?.timeZone || "ist",
+      gender: user?.gender || "MALE",
+      country: user?.country || "India",
+      language: user?.language || "English",
+      timezone: user?.timeZone || "IST",
     },
   });
 
@@ -122,9 +128,9 @@ export default function ProfileForm({ user }: { user: any }) {
                   <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
+                  <SelectItem value="MALE">Male</SelectItem>
+                  <SelectItem value="FEMALE">Female</SelectItem>
+                  <SelectItem value="OTHER">Other</SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -146,9 +152,9 @@ export default function ProfileForm({ user }: { user: any }) {
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="india">India</SelectItem>
-                  <SelectItem value="usa">USA</SelectItem>
-                  <SelectItem value="uk">UK</SelectItem>
+                  <SelectItem value="India">India</SelectItem>
+                  <SelectItem value="USA">USA</SelectItem>
+                  <SelectItem value="UK">UK</SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -170,9 +176,9 @@ export default function ProfileForm({ user }: { user: any }) {
                   <SelectValue placeholder="Select language" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="english">English</SelectItem>
-                  <SelectItem value="hindi">Hindi</SelectItem>
-                  <SelectItem value="spanish">Spanish</SelectItem>
+                  <SelectItem value="English">English</SelectItem>
+                  <SelectItem value="Hindi">Hindi</SelectItem>
+                  <SelectItem value="Spanish">Spanish</SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -194,11 +200,11 @@ export default function ProfileForm({ user }: { user: any }) {
                   <SelectValue placeholder="Select timezone" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ist">
+                  <SelectItem value="IST">
                     (GMT+5:30) India Standard Time
                   </SelectItem>
-                  <SelectItem value="pst">(GMT-8:00) Pacific Time</SelectItem>
-                  <SelectItem value="est">(GMT-5:00) Eastern Time</SelectItem>
+                  <SelectItem value="PST">(GMT-8:00) Pacific Time</SelectItem>
+                  <SelectItem value="EST">(GMT-5:00) Eastern Time</SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -210,16 +216,23 @@ export default function ProfileForm({ user }: { user: any }) {
         <h4 className="mb-4 text-sm font-medium text-gray-700">
           My email Address
         </h4>
-        <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4">
-          <div className="rounded-full bg-blue-100 p-2">
-            <Mail className="h-5 w-5 text-blue-600" />
+        {user?.emails?.map((email: { email: string; createdAt: string }) => (
+          <div
+            className="flex items-start gap-3 rounded-lg bg-gray-50 p-4 m-3"
+            key={email.email}
+          >
+            <div className="rounded-full bg-blue-100 p-2">
+              <Mail className="h-5 w-5 text-blue-600" />
+            </div>
+            <div>
+              <p className="font-medium">{email?.email}</p>
+              <p className="text-sm text-gray-500">
+                {timeAgo(new Date(email.createdAt))}
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="font-medium">{user.email}</p>
-            <p className="text-sm text-gray-500">{timeAgo(user.createdAt)}</p>
-          </div>
-        </div>
-        <Button variant="ghost" className="mt-4 bg-[#4182F9] bg-opacity-20">
+        ))}
+        <Button variant="ghost" className="mt-2 bg-[#4182F9] bg-opacity-20">
           + Add Email Address
         </Button>
       </div>

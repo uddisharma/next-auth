@@ -29,11 +29,16 @@ model User {
   gender                  Gender?                @default(MALE)
   age                     Int?
   location                String?
+  country                 String?
+  language                String?
+  timeZone                String?
+  emails                  Json[]
   pinCode                 Int?
   source                  String?
   lastLogin               DateTime?
-  createdAt               DateTime               @default(now())
-  updatedAt               DateTime               @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   blogs Blog[]
 

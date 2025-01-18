@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { Gender, UserRole } from "@prisma/client";
 import * as z from "zod";
 
 export const LoginSchema = z.object({
@@ -244,7 +244,7 @@ export const profileSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
-  gender: z.enum(["male", "female", "other"]),
+  gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHER]),
   country: z.string().min(1, "Country is required"),
   language: z.string().min(1, "Language is required"),
   timezone: z.string().min(1, "Timezone is required"),
