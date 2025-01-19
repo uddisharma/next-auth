@@ -1,12 +1,15 @@
-"use client";
+// "use client";
 
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { currentUser } from "@/lib/auth";
+import Logout from "./Logout";
 
-const Header = () => {
+const Header = async () => {
+  const sessions = await currentUser();
   return (
     <header className="py-5">
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -19,14 +22,18 @@ const Header = () => {
           <Link href="/pricing">Pricing</Link>
         </nav>
         <div className="flex items-center gap-4">
-          <Link href="/auth/login">
-            <Button
-              variant="default"
-              className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px]"
-            >
-              Sign up / Log in
-            </Button>
-          </Link>
+          {sessions?.image ? (
+            <Logout image={sessions.image} hidden={false} />
+          ) : (
+            <Link href="/auth/login">
+              <Button
+                variant="default"
+                className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px]"
+              >
+                Sign up / Log in
+              </Button>
+            </Link>
+          )}
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">

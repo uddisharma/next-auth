@@ -35,6 +35,7 @@ import { uploadFile } from "@/actions/upload";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Switch } from "../ui/switch";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function ProfileForm({
   user,
@@ -44,6 +45,8 @@ export default function ProfileForm({
   session: any;
 }) {
   const [isEditable, setIsEditable] = useState(false);
+  const { update } = useSession();
+
   const {
     control,
     handleSubmit,
@@ -66,6 +69,7 @@ export default function ProfileForm({
       const res = await updateProfile(data);
       if (res?.success) {
         toast.success(res.message);
+        update();
         setIsEditable(false);
       } else {
         toast.error(res.message);
@@ -153,6 +157,7 @@ export default function ProfileForm({
         const data = await updateProfilePhoto(result.url);
         if (data?.success) {
           user!.image = result.url;
+          update();
           setPreviewImage(null);
           setIsOpen(false);
         } else {

@@ -1,41 +1,25 @@
+import React from "react";
 import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { db } from "@/lib/db";
-import ProfileForm from "@/components/others/ProfileForm";
 import Logout from "@/components/others/Logout";
 
-export default async function ProfilePage() {
+const ProfileHeader = ({ user }: { user: any }) => {
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "short",
     day: "2-digit",
     month: "short",
     year: "numeric",
   });
-
-  const session = await currentUser();
-
-  if (!session) {
-    return redirect("/auth/login");
-  }
-
-  const user = await db.user.findUnique({
-    where: { id: session.id },
-  });
-
-  if (!user) {
-    return redirect("/auth/login");
-  }
+  console.log(user);
 
   return (
-    <div className="min-h-screen px-5 md:px-16 pt-5">
+    <div>
       <div className="mb-5 md:mb-8 flex flex-wrap md:flex-nowrap items-center w-full justify-between gap-4">
         <div className="flex md:flex-row justify-between items-start md:items-center gap-4 w-full mb-2 md:mb-0">
           <div className="md:w-auto md:mb-0">
             <h2 className="text-2xl font-medium text-gray-800">
-              Welcome, {user.firstName}
+              Welcome, {user?.name}
             </h2>
             <p className="text-sm text-gray-500">{currentDate}</p>
           </div>
@@ -77,14 +61,9 @@ export default async function ProfilePage() {
           <Logout image={user?.image || "/user.png"} hidden={true} />
         </div>
       </div>
-
-      {/* Alert Banner */}
       <div className="mb-4 md:mb-8 rounded-lg bg-[#F6E05E] p-5 md:p-6"></div>
-
-      {/* Profile Section */}
-      <div className="rounded-lg bg-white p-6 shadow-sm pb-20">
-        <ProfileForm user={user} session={session} />
-      </div>
     </div>
   );
-}
+};
+
+export default ProfileHeader;

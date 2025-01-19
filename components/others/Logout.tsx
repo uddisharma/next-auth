@@ -18,14 +18,20 @@ const Logout = ({ image, hidden }: { image?: string; hidden?: boolean }) => {
             alt="Profile"
             width={40}
             height={40}
-            className="rounded-lg w-[40px] h-[40px]"
+            className="rounded-full w-[40px] h-[40px]"
           />
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-48 mr-10">
         <div className="grid gap-4">
+          <Link href="/" className="font-medium">
+            Home
+          </Link>
           <Link href="/profile" className="font-medium">
             Profile
+          </Link>
+          <Link href="/profile/my-reports" className="font-medium">
+            My Reports
           </Link>
           <Button
             onClick={() => signOut({ callbackUrl: "/" })}
