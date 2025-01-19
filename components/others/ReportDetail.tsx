@@ -126,6 +126,7 @@ export default function ReportDetails({ report }: { report: Report }) {
                   <ul className="list-disc list-inside">
                     {//@ts-ignore
                     report?.recommendation?.strengths?.map(
+                      //@ts-ignore
                       (strength, index) => <li key={index}>{strength}</li>,
                     )}
                   </ul>
@@ -135,6 +136,7 @@ export default function ReportDetails({ report }: { report: Report }) {
                   <ul className="list-disc list-inside">
                     {//@ts-ignore
                     report?.recommendation?.areasForImprovement?.map(
+                      //@ts-ignore
                       (area, index) => <li key={index}>{area}</li>,
                     )}
                   </ul>
