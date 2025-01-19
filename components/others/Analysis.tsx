@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import AnalyticsIllustration from "@/components/others/analytics-illustrations";
 import ProgressDots from "@/components/others/progress-dots";
 import { Button } from "@/components/ui/button";
 import { Input } from "../ui/input";
+import { submitReport } from "@/actions/submit-report";
+import { toast } from "sonner";
 
 interface Option {
   id: number;
@@ -23,12 +25,13 @@ interface Question {
   options: Option[];
 }
 
-const MultiStepForm = ({ dummyData }: { dummyData: Question[] }) => {
+const MultiStepForm = ({ data }: { data: Question[] }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [responses, setResponses] = useState<Record<number, string | string[]>>(
     {},
   );
   const [errors, setErrors] = useState<string>("");
+  const [isPending, startTransition] = useTransition();
 
   const handleOptionChange = (
     questionId: number,
@@ -48,7 +51,7 @@ const MultiStepForm = ({ dummyData }: { dummyData: Question[] }) => {
   };
 
   const handleNext = (): void => {
-    const currentQuestion = dummyData[currentStep];
+    const currentQuestion = data[currentStep];
     if (currentQuestion.required && !responses[currentQuestion.id]) {
       setErrors("This question is required.");
       return;
@@ -63,21 +66,37 @@ const MultiStepForm = ({ dummyData }: { dummyData: Question[] }) => {
   };
 
   const handleSubmit = (): void => {
-    console.log("Form Responses:", responses);
-    alert("Form submitted successfully!");
+    const questions = {
+      questions: data.map((question) => ({
+        question: question.text,
+        answer:
+          responses[question.id] ||
+          (question.questionType === "TEXT" ? "" : []),
+      })),
+    };
+    startTransition(async () => {
+      const res = await submitReport(questions);
+      if (res?.success) {
+        toast.success(res.message);
+        setResponses({});
+        setCurrentStep(0);
+      } else {
+        toast.error(res.message);
+      }
+    });
   };
 
-  const currentQuestion = dummyData[currentStep];
+  const currentQuestion = data[currentStep];
 
   return (
     <div className="flex flex-col px-5 md:px-10 my-2 mb-20 md:mb-0 md:py-10">
       <main className="flex-1 md:px-4 md:py-12 w-full">
         <div className="grid md:grid-cols-2 justify-center gap-20 items-center">
-          <div className="">
+          <div>
             <AnalyticsIllustration />
           </div>
-          <div className="">
-            <ProgressDots total={dummyData.length} current={currentStep} />
+          <div>
+            <ProgressDots total={data.length} current={currentStep} />
             <div className="space-y-14 mt-16">
               <div className="space-y-2">
                 <h1 className="text-2xl font-bold text-gray-900">
@@ -100,7 +119,11 @@ const MultiStepForm = ({ dummyData }: { dummyData: Question[] }) => {
                             ? "default"
                             : "outline"
                         }
-                        className={`flex-1 border-[1px] border-black text-black bg-white ${responses[currentQuestion.id] === option.text ? "bg-btnblue text-white" : ""}`}
+                        className={`flex-1 border-[1px] border-black text-black bg-white ${
+                          responses[currentQuestion.id] === option.text
+                            ? "bg-btnblue text-white"
+                            : ""
+                        }`}
                         onClick={() =>
                           handleOptionChange(
                             currentQuestion.id,
@@ -123,7 +146,13 @@ const MultiStepForm = ({ dummyData }: { dummyData: Question[] }) => {
                             ? "default"
                             : "outline"
                         }
-                        className={`flex-1 border-[1px] border-black text-black bg-white ${(responses[currentQuestion.id] as string[])?.includes(option.text) ? "bg-btnblue text-white" : ""}`}
+                        className={`flex-1 border-[1px] border-black text-black bg-white ${
+                          (responses[currentQuestion.id] as string[])?.includes(
+                            option.text,
+                          )
+                            ? "bg-btnblue text-white"
+                            : ""
+                        }`}
                         onClick={() =>
                           handleOptionChange(
                             currentQuestion.id,
@@ -161,12 +190,12 @@ const MultiStepForm = ({ dummyData }: { dummyData: Question[] }) => {
                 <Button
                   variant="outline"
                   onClick={handlePrevious}
-                  className=" px-14"
+                  className="px-14"
                 >
                   Previous
                 </Button>
               )}
-              {currentStep < dummyData.length - 1 ? (
+              {currentStep < data.length - 1 ? (
                 <Button
                   onClick={handleNext}
                   className="bg-btnblue text-white px-14"
@@ -175,10 +204,11 @@ const MultiStepForm = ({ dummyData }: { dummyData: Question[] }) => {
                 </Button>
               ) : (
                 <Button
+                  disabled={isPending}
                   onClick={handleSubmit}
                   className="bg-btnblue text-white px-14"
                 >
-                  Submit
+                  {isPending ? "Submitting..." : "Submit"}
                 </Button>
               )}
             </div>

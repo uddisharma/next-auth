@@ -1,9 +1,10 @@
 import MultiStepForm from "@/components/others/Analysis";
+import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import React from "react";
 
 const Page = async () => {
-  const activeQuestions = await db.question.findMany({
+  const questions = await db.question.findMany({
     where: { isActive: true },
     include: { options: true },
     orderBy: { sequence: "asc" },
@@ -11,7 +12,7 @@ const Page = async () => {
 
   return (
     <div>
-      <MultiStepForm dummyData={activeQuestions} />
+      <MultiStepForm data={questions} />
     </div>
   );
 };
