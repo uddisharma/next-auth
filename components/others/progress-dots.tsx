@@ -10,7 +10,7 @@ export default function ProgressDots({ total, current }: ProgressDotsProps) {
         <div
           key={i}
           className={`w-5 h-5 rounded-full border-[1px] border-btnblue ${
-            i === 0 ? "bg-btnblue" : "bg-white"
+            i <= current ? "bg-btnblue" : "bg-white"
           }
                         }`}
           aria-current={i === current - 1 ? "step" : undefined}

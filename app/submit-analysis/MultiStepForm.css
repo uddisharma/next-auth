@@ -1,0 +1,78 @@
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.step-dot {
+  width: 15px;
+  height: 15px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.step-dot.active {
+  background-color: #0033cc;
+}
+
+.question-container {
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.option-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 5px;
+  border: 1px solid #0033cc;
+  border-radius: 5px;
+  background-color: white;
+  color: #0033cc;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.option-button.selected {
+  background-color: #0033cc;
+  color: white;
+}
+
+.option-button:hover {
+  background-color: #cce0ff;
+}
+
+.error-text {
+  color: red;
+  margin-top: 10px;
+}
+
+.navigation-buttons {
+  margin-top: 20px;
+}
+
+.nav-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #0033cc;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  background-color: #0022aa;
+}

@@ -25,6 +25,7 @@ interface ReportFormProps {
 }
 
 export default function ReportForm({ questions, userId }: ReportFormProps) {
+  console.log(questions);
   const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
