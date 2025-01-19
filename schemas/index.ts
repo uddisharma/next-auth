@@ -243,12 +243,11 @@ export const userSchema2 = z.object({
 export const profileSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  gender: z.enum([Gender.MALE, Gender.FEMALE, Gender.OTHER]),
+  gender: z.string().min(1, "Gender is required"),
   country: z.string().min(1, "Country is required"),
   language: z.string().min(1, "Language is required"),
-  timezone: z.string().min(1, "Timezone is required"),
-  phone: z.string().optional(),
+  timeZone: z.string().min(1, "Timezone is required"),
+  isTwoFactorEnabled: z.boolean(),
 });
 
 export type ProfileFormValues = z.infer<typeof profileSchema>;
