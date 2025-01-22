@@ -13,6 +13,7 @@ import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { Gender } from "@prisma/client";
 
 export const register = async (values: RegisterSchemaData) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -51,8 +52,9 @@ export const regularRegister = async (values: RegularRegisterData) => {
     if (!validatedFields.success) {
       return { success: false, message: "Invalid fields!" };
     }
+    const { name, email, phone, gender } = validatedFields?.data;
 
-    const User = await getUserByPhone(validatedFields.data.phone);
+    const User = await getUserByPhone(phone);
 
     if (!User) {
       return { success: false, message: "User not found!" };
@@ -65,7 +67,10 @@ export const regularRegister = async (values: RegularRegisterData) => {
     await db.user.update({
       where: { id: User.id },
       data: {
-        ...validatedFields,
+        name,
+        email,
+        phone,
+        gender: validatedFields.data.gender as Gender,
         signUpSuccess: true,
       },
     });
@@ -77,6 +82,8 @@ export const regularRegister = async (values: RegularRegisterData) => {
     });
     return { success: "Login Sucess!" };
   } catch (error) {
+    // @ts-ignore
+    console.log(error?.message);
     return { success: false, message: "An error occurred. Please try again." };
   }
 };
