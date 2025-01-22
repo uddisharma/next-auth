@@ -10,13 +10,13 @@ import { SubscriptionPopup } from "@/components/others/leads/Popup";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Mr Mard",
-  description: "Mr Mard",
-  icons: {
-    icon: "/icon.png",
-  },
-};
+// export const metadata: Metadata = {
+//   title: "Mr Mard",
+//   description: "Mr Mard",
+//   icons: {
+//     icon: "/icon.png",
+//   },
+// };
 
 export default async function RootLayout({
   children,

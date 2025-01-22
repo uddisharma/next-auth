@@ -1,11 +1,18 @@
 "use server";
 
 import bcrypt from "bcrypt";
-import { RegisterSchema, RegisterSchemaData } from "@/schemas";
+import {
+  RegisterSchema,
+  RegisterSchemaData,
+  RegularRegister,
+  RegularRegisterData,
+} from "@/schemas";
 import { db } from "@/lib/db";
-import { getUserByEmailorPhone } from "@/data/user";
+import { getUserByEmailorPhone, getUserByPhone } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export const register = async (values: RegisterSchemaData) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -35,4 +42,41 @@ export const register = async (values: RegisterSchemaData) => {
   await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   return { sucess: "Confirmation email sent!" };
+};
+
+export const regularRegister = async (values: RegularRegisterData) => {
+  try {
+    const validatedFields = RegularRegister.safeParse(values);
+
+    if (!validatedFields.success) {
+      return { success: false, message: "Invalid fields!" };
+    }
+
+    const User = await getUserByPhone(validatedFields.data.phone);
+
+    if (!User) {
+      return { success: false, message: "User not found!" };
+    }
+
+    if (User?.signUpSuccess) {
+      return { success: false, message: "User already registered!" };
+    }
+
+    await db.user.update({
+      where: { id: User.id },
+      data: {
+        ...validatedFields,
+        signUpSuccess: true,
+      },
+    });
+
+    await signIn("credentials", {
+      phone: validatedFields.data.phone,
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
+      loginType: "PHONE",
+    });
+    return { success: "Login Sucess!" };
+  } catch (error) {
+    return { success: false, message: "An error occurred. Please try again." };
+  }
 };

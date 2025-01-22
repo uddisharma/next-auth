@@ -12,7 +12,6 @@ export const LoginSchema = z.object({
 });
 
 export const LoginWithPhoneSchema = z.object({
-  email: z.string(),
   phone: z.string().min(10, { message: "Phone number is required" }),
   otp: z.string().length(6, { message: "OTP must be exactly 6 digits" }),
 });
@@ -30,13 +29,28 @@ export const RegisterSchema = z.object({
 });
 
 export const RegisterWithOtpSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email"),
   phone: z
     .string()
     .min(10, "Phone number must be at least 10 digits")
     .max(10, "Phone number must be at most 10 digits")
     .regex(/^\d+$/, "Phone number must contain only digits"),
+});
+
+export const RegularRegister = z.object({
+  name: z.string().min(1, {
+    message: "Name is required",
+  }),
+  email: z.string().email({
+    message: "Email is required",
+  }),
+  phone: z
+    .string()
+    .min(10, "Phone number must be at least 10 digits")
+    .max(10, "Phone number must be at most 10 digits")
+    .regex(/^\d+$/, "Phone number must contain only digits"),
+  gender: z.string().min(1, {
+    message: "Gender is required",
+  }),
 });
 
 export const PhoneSchema = z.object({
@@ -273,3 +287,4 @@ export type RegisterSchemaData = z.infer<typeof RegisterSchema>;
 export type ResetSchemaData = z.infer<typeof ResetSchema>;
 export type SettingsSchemaData = z.infer<typeof SettingsSchema>;
 export type OtpSchemaData = z.infer<typeof OtpSchema>;
+export type RegularRegisterData = z.infer<typeof RegularRegister>;

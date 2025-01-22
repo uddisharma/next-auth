@@ -34,3 +34,16 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
     html: `<p>Your 2FA code: ${token}</p>`,
   });
 };
+
+export const sendVerificationOTP = async (
+  email: string,
+  otp: number,
+  otpExpires: Date,
+) => {
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "2FA Code",
+    html: `<p>Your verification code: ${otp} and expires in 10 minutes</p>`,
+  });
+};

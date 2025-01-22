@@ -9,7 +9,7 @@ import {
   PhoneSchemaData,
 } from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { getUserByEmailorPhone, getUserByPhone } from "@/data/user";
+import { getUserByPhone } from "@/data/user";
 import { verifyOTP } from "@/data/verifyOtp";
 import { db } from "@/lib/db";
 import { generateOtp } from "@/lib/otp";
@@ -24,35 +24,31 @@ export const loginOTP = async (
     return { error: "Invalid fields!" };
   }
 
-  const { phone, otp, email } = validatedFields.data;
+  const { phone, otp } = validatedFields.data;
 
-  let user = null;
-
-  if (email == "") {
-    user = await getUserByPhone(phone);
-  } else {
-    user = await getUserByEmailorPhone(email, phone);
-  }
+  let user = await getUserByPhone(phone);
 
   if (!user) {
-    return { error: "User not found!" };
+    return { success: false, redirect: false, message: "User not found!" };
   }
 
   const isValid = await verifyOTP(user.id, Number(otp));
 
   if (!isValid) {
-    return { error: "Invalid OTP!" };
+    return { success: false, redirect: false, message: "Invalid OTP!" };
+  }
+
+  if (!user?.signUpSuccess) {
+    return { success: false, redirect: true, message: "Signup first!" };
   }
 
   try {
     await signIn("credentials", {
-      email,
       phone,
       otp,
       callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
       loginType: "PHONE",
     });
-
     return { success: "Login Sucess!" };
   } catch (error) {
     if (error instanceof AuthError) {

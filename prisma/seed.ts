@@ -31,6 +31,7 @@ async function main() {
         ],
         role: UserRole.SUPER_ADMIN,
         otpExpires: new Date(Date.now() + 1000 * 60 * 10), // 10 minutes
+        signUpSuccess: true,
       },
     }),
     db.user.create({
@@ -60,6 +61,7 @@ async function main() {
         ],
         role: UserRole.SUPER_ADMIN,
         otpExpires: new Date(Date.now() + 1000 * 60 * 10), // 10 minutes
+        signUpSuccess: true,
       },
     }),
     db.user.create({
@@ -89,6 +91,7 @@ async function main() {
         ],
         role: UserRole.EDITOR,
         otpExpires: new Date(Date.now() + 1000 * 60 * 10), // 10 minutes
+        signUpSuccess: true,
       },
     }),
     db.user.create({
@@ -107,6 +110,7 @@ async function main() {
         lastLogin: new Date(),
         otp: 333444,
         otpExpires: new Date(Date.now() + 1000 * 60 * 10), // 10 minutes
+        signUpSuccess: true,
       },
     }),
   ]);

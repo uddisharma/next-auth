@@ -42,15 +42,9 @@ export default {
             LoginWithPhoneSchema.safeParse(credentials);
 
           if (validatedPhoneFields.success) {
-            const { email, phone } = validatedPhoneFields.data;
+            const { phone } = validatedPhoneFields.data;
 
-            let user = null;
-
-            if (email == "") {
-              user = await getUserByPhone(phone);
-            } else {
-              user = await getUserByEmailorPhone(email, phone);
-            }
+            let user = await getUserByPhone(phone);
 
             if (!user) return null;
 
