@@ -2,7 +2,7 @@
 import { EmailVerification, VerifyEmail } from "@/actions/email-verification";
 import { regularRegister } from "@/actions/register";
 import { decryptPhoneNumber } from "@/lib/encryption";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -22,6 +22,8 @@ const Page = () => {
     resendTimer: 0,
   });
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -106,6 +108,7 @@ const Page = () => {
       if (res?.success) {
         toast.success(res.message);
         setData({ name: "", email: "", gender: "", otp: "" });
+        router.push("/profile");
       } else {
         toast.error(res?.message);
       }

@@ -52,7 +52,7 @@ export const regularRegister = async (values: RegularRegisterData) => {
     if (!validatedFields.success) {
       return { success: false, message: "Invalid fields!" };
     }
-    const { name, email, phone, gender } = validatedFields?.data;
+    const { name, email, phone } = validatedFields?.data;
 
     const User = await getUserByPhone(phone);
 
@@ -76,11 +76,11 @@ export const regularRegister = async (values: RegularRegisterData) => {
     });
 
     await signIn("credentials", {
+      redirect: false,
       phone: validatedFields.data.phone,
-      callbackUrl: DEFAULT_LOGIN_REDIRECT,
       loginType: "PHONE",
     });
-    return { success: "Login Sucess!" };
+    return { success: true, message: "User registered successfully!" };
   } catch (error) {
     // @ts-ignore
     console.log(error?.message);

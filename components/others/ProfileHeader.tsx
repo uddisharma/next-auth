@@ -11,7 +11,6 @@ const ProfileHeader = ({ user }: { user: any }) => {
     month: "short",
     year: "numeric",
   });
-  console.log(user);
 
   return (
     <div>

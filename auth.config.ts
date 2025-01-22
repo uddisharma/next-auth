@@ -40,7 +40,6 @@ export default {
         if (credentials.loginType === "PHONE") {
           const validatedPhoneFields =
             LoginWithPhoneSchema.safeParse(credentials);
-
           if (validatedPhoneFields.success) {
             const { phone } = validatedPhoneFields.data;
 

@@ -6,15 +6,20 @@ import { z } from "zod";
 
 export async function EmailVerification(phone: string, email: string) {
   try {
+    const existingUserwithEmail = await db.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUserwithEmail) {
+      return { success: false, message: "Email already exists" };
+    }
+
     const existingUser = await db.user.findUnique({
       where: { phone },
     });
 
     if (!existingUser) {
-      return {
-        success: false,
-        message: "This phone number is not available. Please try again.",
-      };
+      return { success: false, message: "User not found" };
     }
 
     const { otp, otpExpires } = await generateOtp();
@@ -29,6 +34,8 @@ export async function EmailVerification(phone: string, email: string) {
     });
     return { success: true, message: "OTP sent successfully" };
   } catch (error) {
+    // @ts-ignore
+    console.log(error?.message);
     if (error instanceof z.ZodError) {
       return { success: false, message: error.errors[0].message };
     }
