@@ -36,6 +36,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Switch } from "../ui/switch";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { splitName } from "@/lib/splitname";
 
 export default function ProfileForm({
   user,
@@ -46,6 +47,7 @@ export default function ProfileForm({
 }) {
   const [isEditable, setIsEditable] = useState(false);
   const { update } = useSession();
+  const { firstName, lastName } = splitName(user?.name ?? "");
 
   const {
     control,
@@ -54,8 +56,8 @@ export default function ProfileForm({
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      firstName: user?.firstName || "",
-      lastName: user?.lastName || "",
+      firstName: user?.firstName ?? firstName ?? "",
+      lastName: user?.lastName ?? lastName ?? "",
       gender: user?.gender || "MALE",
       country: user?.country || "India",
       language: user?.language || "English",

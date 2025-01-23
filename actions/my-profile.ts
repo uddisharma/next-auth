@@ -8,13 +8,6 @@ import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
 import { ProfileFormData, ProfileSchema } from "@/schemas";
 
-// type UserData = {
-//   firstName: string | null;
-//   lastName: string | null;
-//   email: string;
-//   phone: string | null;
-// };
-
 export async function updateProfile(userData: any) {
   const session = await currentUser();
 
@@ -22,20 +15,13 @@ export async function updateProfile(userData: any) {
     return redirect("/auth/login");
   }
 
-  // const hasPermission = await checkPermission(
-  //   session?.role,
-  //   Resource.USERS,
-  //   "update",
-  // );
-
-  // if (!hasPermission) {
-  //   return { message: "You don't have permission to update this profile" };
-  // }
-
   try {
     await db.user.update({
       where: { id: session.id },
-      data: userData,
+      data: {
+        ...userData,
+        name: userData?.firstName + " " + userData?.lastName,
+      },
     });
     revalidatePath("/profile1");
     return { success: true, message: "Profile updated successfully" };

@@ -13,6 +13,7 @@ import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 import { signIn } from "@/auth";
 import { Gender } from "@prisma/client";
+import { splitName } from "@/lib/splitname";
 
 export const register = async (values: RegisterSchemaData) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -63,10 +64,14 @@ export const regularRegister = async (values: RegularRegisterData) => {
       return { success: false, message: "User already registered!" };
     }
 
+    const { firstName, lastName } = await splitName(name);
+
     await db.user.update({
       where: { id: User.id },
       data: {
         name,
+        firstName,
+        lastName,
         email,
         phone,
         gender: validatedFields.data.gender as Gender,

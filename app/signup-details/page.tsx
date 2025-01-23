@@ -22,7 +22,6 @@ const Page = () => {
     resendTimer: 0,
   });
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
   const router = useRouter();
 
   const handleChange = (
