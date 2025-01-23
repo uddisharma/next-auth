@@ -18,10 +18,10 @@ const SignUp = () => {
     setSuccess("");
     startTransition(() => {
       registerWithOTP({ phone }).then((data) => {
-        if (data.error) {
-          return setError(data.error);
+        if (data.success == false) {
+          return setError(data.message);
         }
-        setSuccess(data.sucess);
+        if (data?.success) setSuccess(data.message);
         const phoneNumber = encryptPhoneNumber(phone);
         router.push(`/otp-verification?token=${phoneNumber}`);
       });

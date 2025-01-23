@@ -12,7 +12,6 @@ import { getUserByEmailorPhone, getUserByPhone } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 import { signIn } from "@/auth";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { Gender } from "@prisma/client";
 
 export const register = async (values: RegisterSchemaData) => {
@@ -78,6 +77,7 @@ export const regularRegister = async (values: RegularRegisterData) => {
     await signIn("credentials", {
       redirect: false,
       phone: validatedFields.data.phone,
+      otp: "789456",
       loginType: "PHONE",
     });
     return { success: true, message: "User registered successfully!" };

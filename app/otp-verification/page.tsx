@@ -41,7 +41,7 @@ const page = () => {
         if (data.error) {
           return setError(data.error);
         }
-        setSuccess(data.sucess);
+        setSuccess(data.message);
       });
     });
   };
