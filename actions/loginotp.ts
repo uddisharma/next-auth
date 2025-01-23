@@ -44,12 +44,12 @@ export const loginOTP = async (
 
   try {
     await signIn("credentials", {
+      redirect: false,
       phone,
       otp,
-      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
       loginType: "PHONE",
     });
-    return { success: "Login Sucess!" };
+    return { success: true, message: "Login successful!" };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

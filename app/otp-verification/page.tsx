@@ -31,6 +31,7 @@ const page = () => {
         router.push(`/signup-details?token=${decryptPhone}`);
       } else {
         toast.success(res.message);
+        router.push("/profile");
       }
     });
   };
@@ -38,8 +39,8 @@ const page = () => {
   const handleResendOTP = async () => {
     startTransition1(() => {
       registerWithOTP({ phone }).then((data) => {
-        if (data.error) {
-          return setError(data.error);
+        if (data.success == false) {
+          return setError(data.message);
         }
         setSuccess(data.message);
       });
