@@ -235,7 +235,7 @@ export default function ProfileForm({
                           disabled={isPending || !previewImage}
                           type="submit"
                         >
-                          {isPending ? "Loading..." : "Save"}
+                          {isPending ? "Saving..." : "Save"}
                         </Button>
                       </div>
                     </div>

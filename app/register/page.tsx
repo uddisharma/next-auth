@@ -1,26 +1,51 @@
 "use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/navigation";
+import { encryptPhoneNumber } from "@/lib/encryption";
+import { registerWithOTP } from "@/actions/register-phone";
+import { toast } from "sonner";
+
+const phoneSchema = z.object({
+  phoneNumber: z
+    .string()
+    .min(10, "Phone number must be exactly 10 digits.")
+    .max(10, "Phone number must be exactly 10 digits.")
+    .regex(/^[0-9]+$/, "Phone number must contain only numbers."),
+});
+
+type PhoneFormInputs = z.infer<typeof phoneSchema>;
 
 export default function SignUpPage() {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<PhoneFormInputs>({
+    resolver: zodResolver(phoneSchema),
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
+  const onSubmit = async (data: PhoneFormInputs) => {
+    try {
+      const response = await registerWithOTP({ phone: data.phoneNumber });
+      if (!response.success) {
+        toast.error(response.message);
+      }
+      toast.success("OTP sent successfully. Please check your phone.");
+      const encryptedPhone = encryptPhoneNumber(data.phoneNumber);
+      router.push(`/otp?token=${encryptedPhone}`);
+    } catch (error: any) {
+      alert(error.message || "An error occurred.");
+    }
   };
 
   return (
     <>
-      {/* <div>
-                <Link href="/" className="text-2xl font-bold inline-block px-12 mt-10">
-                    Mr. Mard
-                </Link>
-            </div> */}
-
       <div className="flex flex-wrap bg-white p-5">
         <div className="w-full lg:w-1/2 md:p-12">
           <div className="max-w-md">
@@ -38,7 +63,10 @@ export default function SignUpPage() {
               </Link>
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-8 md:space-y-10">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-8 md:space-y-10"
+            >
               <div className="space-y-2">
                 <label className="block text-gray-500 text-sm">
                   Contact Number
@@ -63,12 +91,16 @@ export default function SignUpPage() {
                   <input
                     type="tel"
                     placeholder="00000 00000"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="flex-1 border border-black rounded-[11px] px-4 py-2.5 focus:outline-none focus:border-[#1E1B4B] h-[40px] md:h-[35px] text-center w-full"
                     maxLength={10}
+                    className="flex-1 border border-black rounded-[11px] px-4 py-2.5 focus:outline-none focus:border-[#1E1B4B] h-[40px] md:h-[35px] text-center w-full"
+                    {...register("phoneNumber")}
                   />
                 </div>
+                {errors.phoneNumber && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.phoneNumber.message}
+                  </p>
+                )}
               </div>
 
               <Separator className="mb-5 bg-[#999]" />
@@ -76,8 +108,9 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 className="w-full bg-[#1E1B4B] text-white py-3.5 rounded-lg hover:bg-btnblue transition-colors"
+                disabled={isSubmitting}
               >
-                Verify OTP
+                {isSubmitting ? "Verifying..." : "Verify OTP"}
               </button>
             </form>
 

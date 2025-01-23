@@ -8,20 +8,15 @@ import {
   PhoneSchema,
   PhoneSchemaData,
 } from "@/schemas";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { getUserByPhone } from "@/data/user";
 import { verifyOTP } from "@/data/verifyOtp";
 import { db } from "@/lib/db";
 import { generateOtp } from "@/lib/otp";
 
-export const loginOTP = async (
-  values: LoginWithPhoneSchemaData,
-  callbackUrl?: string | null,
-) => {
+export const loginOTP = async (values: LoginWithPhoneSchemaData) => {
   const validatedFields = LoginWithPhoneSchema.safeParse(values);
-
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { success: false, message: "Invalid fields!" };
   }
 
   const { phone, otp } = validatedFields.data;

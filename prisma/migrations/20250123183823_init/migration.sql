@@ -32,6 +32,7 @@ CREATE TABLE "users" (
     "lastName" VARCHAR(100),
     "gender" "Gender" DEFAULT 'MALE',
     "age" INTEGER,
+    "dob" TEXT,
     "location" TEXT,
     "country" TEXT,
     "language" TEXT,

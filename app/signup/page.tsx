@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
+import { EmailVerification, VerifyEmail } from "@/actions/email-verification";
+import { regularRegister } from "@/actions/register";
+import { decryptPhoneNumber } from "@/lib/encryption";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function SignupForm() {
-  const [verificationSent, setVerificationSent] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [isPending1, startTransition1] = useTransition();
+  const [isPending2, startTransition2] = useTransition();
+  const [verification, setVerification] = useState({
+    isOtpSent: false,
+    isVerified: false,
+    resendTimer: 0,
+  });
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    otp: "",
+    gender: "",
+    day: "",
+    month: "",
+    year: "",
+  });
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const months = [
     "January",
@@ -38,22 +63,105 @@ export default function SignupForm() {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
+  useEffect(() => {
+    if (verification.resendTimer > 0) {
+      const timer = setTimeout(() => {
+        setVerification((prev) => ({
+          ...prev,
+          resendTimer: prev.resendTimer - 1,
+        }));
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [verification.resendTimer]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSendOtp = () => {
+    if (!formData.email) {
+      return toast.error("Email is required");
+    }
+    const decryptPhone = searchParams.get("token") ?? "";
+    const phone = decryptPhoneNumber(decryptPhone) ?? "";
+
+    startTransition(async () => {
+      const res = await EmailVerification(phone, formData.email);
+      if (res?.success === false) {
+        toast.error(res?.message);
+      } else {
+        toast.success(res?.message);
+        setVerification({
+          ...verification,
+          isOtpSent: true,
+          isVerified: false,
+        });
+        setVerification((prev) => ({ ...prev, resendTimer: 30 }));
+      }
+    });
+  };
+
+  const handleVerifyOtp = () => {
+    if (!formData.otp) {
+      return toast.error("OTP is required");
+    }
+    startTransition1(async () => {
+      const res = await VerifyEmail(formData.email, formData.otp);
+      if (res?.success === false) {
+        toast.error(res?.message);
+      } else {
+        toast.success(res?.message);
+        setVerification({ ...verification, isVerified: true });
+      }
+    });
+  };
+
+  const handleSaveUser = (e: React.FormEvent) => {
+    e.preventDefault();
+    startTransition2(async () => {
+      const res = await regularRegister({
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        gender: formData.gender,
+        dob: `${formData.year}-${formData.month}-${formData.day}`,
+        phone: decryptPhoneNumber(searchParams.get("token") ?? "") ?? "",
+      });
+      if (res?.success) {
+        toast.success(res.message);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          otp: "",
+          gender: "",
+          day: "",
+          month: "",
+          year: "",
+        });
+        router.push("/profile");
+      } else {
+        toast.error(res?.message);
+      }
+    });
+  };
+
   return (
     <div className="grid min-h-screen space-y-5 text-textGray lg:grid-cols-2 bg-white gap-10 px-5 md:px-12 pb-10 p-5 md:p-10">
-      <div className="">
+      <div>
         <div className="mx-auto max-w-md space-y-6">
-          {/* <div className="space-y-2">
-            <h1 className="text-2xl font-bold">Mr. Mard</h1>
-          </div> */}
-
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
               <Input
                 id="firstName"
+                name="firstName"
                 placeholder="Enter your first name"
-                required
+                value={formData.firstName}
+                onChange={handleInputChange}
                 className="border-btnblue"
+                required
               />
             </div>
 
@@ -61,9 +169,12 @@ export default function SignupForm() {
               <Label htmlFor="lastName">Last Name</Label>
               <Input
                 id="lastName"
+                name="lastName"
                 placeholder="Enter your last name"
-                required
+                value={formData.lastName}
+                onChange={handleInputChange}
                 className="border-btnblue"
+                required
               />
             </div>
 
@@ -71,32 +182,43 @@ export default function SignupForm() {
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 placeholder="Enter your email address"
-                required
+                value={formData.email}
+                onChange={handleInputChange}
                 className="border-btnblue"
+                required
               />
               <div className="flex justify-end pt-3">
                 <Button
-                  className=" bg-btnblue hover:bg-btnblue/90 text-white"
-                  onClick={() => setVerificationSent(true)}
+                  className="bg-btnblue hover:bg-btnblue/90 text-white"
+                  onClick={handleSendOtp}
+                  disabled={verification.isOtpSent || isPending}
                 >
                   Send Code
                 </Button>
               </div>
             </div>
 
-            {verificationSent && (
+            {verification.isOtpSent && (
               <div className="space-y-2">
-                <Label htmlFor="verification">Verification</Label>
+                <Label htmlFor="otp">Verification Code</Label>
                 <Input
-                  id="verification"
-                  placeholder="Enter the code sent on your email address"
-                  required
+                  id="otp"
+                  name="otp"
+                  placeholder="Enter the code"
+                  value={formData.otp}
+                  onChange={handleInputChange}
                   className="border-btnblue"
+                  required
                 />
                 <div className="flex justify-end pt-3">
-                  <Button className=" bg-btnblue hover:bg-btnblue/90 text-white">
+                  <Button
+                    className="bg-btnblue hover:bg-btnblue/90 text-white"
+                    onClick={handleVerifyOtp}
+                    disabled={verification.isVerified || isPending1}
+                  >
                     Verify
                   </Button>
                 </div>
@@ -104,77 +226,93 @@ export default function SignupForm() {
             )}
 
             <div className="space-y-2">
+              <Label>Date of Birth</Label>
+              <div className="flex gap-4">
+                <Select
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, month: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Month" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {months.map((month, index) => (
+                      <SelectItem
+                        key={month}
+                        value={String(index + 1).padStart(2, "0")}
+                      >
+                        {" "}
+                        {/* Ensures 2-digit format */}
+                        {month}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, day: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Day" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {days.map((day) => (
+                      <SelectItem
+                        key={day}
+                        value={String(day).padStart(2, "0")}
+                      >
+                        {" "}
+                        {/* Ensures 2-digit format */}
+                        {day}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, year: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Year" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {years.map((year) => (
+                      <SelectItem key={year} value={String(year)}>
+                        {year}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
               <Label>What&apos;s your gender? (optional)</Label>
               <RadioGroup
-                defaultValue="female"
+                name="gender"
+                onValueChange={(value) =>
+                  setFormData({ ...formData, gender: value })
+                }
                 className="flex gap-4 text-[#111]"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="female" id="female" />
+                  <RadioGroupItem value="FEMALE" id="female" />
                   <Label htmlFor="female">Female</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="male" id="male" />
+                  <RadioGroupItem value="MALE" id="male" />
                   <Label htmlFor="male">Male</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="non-binary" id="non-binary" />
+                  <RadioGroupItem value="OTHER" id="non-binary" />
                   <Label htmlFor="non-binary">Non-binary</Label>
                 </div>
               </RadioGroup>
-            </div>
-
-            <div className="space-y-5 pt-5">
-              <Label className="text-[#111]">
-                What&apos;s your date of birth?
-              </Label>
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <p className="mb-3">Month</p>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Month" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {months.map((month) => (
-                        <SelectItem key={month} value={month.toLowerCase()}>
-                          {month}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <p className="mb-3">Day</p>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Date" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {days.map((day) => (
-                        <SelectItem key={day} value={day.toString()}>
-                          {day}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <p className="mb-3">Year</p>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Year" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {years.map((year) => (
-                        <SelectItem key={year} value={year.toString()}>
-                          {year}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
             </div>
 
             <div className="space-y-4">
@@ -198,11 +336,14 @@ export default function SignupForm() {
                 .
               </div>
 
-              {/* Placeholder for reCAPTCHA */}
-              {/* <div className="h-[78px] w-full rounded border bg-gray-50"></div> */}
-
-              <Button className="w-full bg-btnblue hover:bg-btnblue/90 text-white">
-                Sign up
+              <Button
+                className={`w-full bg-btnblue hover:bg-btnblue/90 text-white ${
+                  !verification.isVerified ? "cursor-not-allowed" : ""
+                }`}
+                onClick={handleSaveUser}
+                disabled={!verification.isVerified}
+              >
+                {isPending2 ? "Signing up..." : "Sign Up"}
               </Button>
 
               <div className="text-center text-sm text-black">
@@ -222,7 +363,7 @@ export default function SignupForm() {
           alt="Profile"
           width={600}
           height={700}
-          className=" "
+          className=""
         />
       </div>
     </div>

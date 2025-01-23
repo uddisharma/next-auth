@@ -42,7 +42,6 @@ export default {
             LoginWithPhoneSchema.safeParse(credentials);
           if (validatedPhoneFields.success) {
             const { phone } = validatedPhoneFields.data;
-
             let user = await getUserByPhone(phone);
 
             if (!user) return null;

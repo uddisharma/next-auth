@@ -52,7 +52,7 @@ export const regularRegister = async (values: RegularRegisterData) => {
     if (!validatedFields.success) {
       return { success: false, message: "Invalid fields!" };
     }
-    const { name, email, phone } = validatedFields?.data;
+    const { name, email, phone, dob } = validatedFields?.data;
 
     const User = await getUserByPhone(phone);
 
@@ -74,7 +74,8 @@ export const regularRegister = async (values: RegularRegisterData) => {
         lastName,
         email,
         phone,
-        gender: validatedFields.data.gender as Gender,
+        dob,
+        gender: validatedFields.data.gender?.toLocaleUpperCase() as Gender,
         signUpSuccess: true,
       },
     });
@@ -82,7 +83,7 @@ export const regularRegister = async (values: RegularRegisterData) => {
     await signIn("credentials", {
       redirect: false,
       phone: validatedFields.data.phone,
-      otp: "789456",
+      otp: "7894",
       loginType: "PHONE",
     });
     return { success: true, message: "User registered successfully!" };
