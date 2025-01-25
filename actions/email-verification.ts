@@ -32,7 +32,7 @@ export async function EmailVerification(phone: string, email: string) {
         otpExpires,
       },
     });
-    return { success: true, message: "OTP sent successfully" };
+    return { success: true, message: "OTP sent successfully" + " " + otp };
   } catch (error) {
     // @ts-ignore
     console.log(error?.message);

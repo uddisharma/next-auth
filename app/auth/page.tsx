@@ -36,7 +36,7 @@ export default function SignUpPage() {
       if (!response.success) {
         toast.error(response.message);
       }
-      toast.success("OTP sent successfully. Please check your phone.");
+      toast.success(response.message);
       const encryptedPhone = encryptPhoneNumber(data.phoneNumber);
       router.push(`/otp?token=${encryptedPhone}`);
     } catch (error: any) {
