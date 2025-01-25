@@ -34,7 +34,7 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(

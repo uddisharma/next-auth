@@ -8,7 +8,7 @@ export default async function ProfilePage() {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const user = await db.user.findUnique({
@@ -16,7 +16,7 @@ export default async function ProfilePage() {
   });
 
   if (!user) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   return (

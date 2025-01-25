@@ -150,7 +150,6 @@ export const BlogSchema = z.object({
 });
 
 export const reportSchema = z.object({
-  userId: z.number(),
   questions: z.array(
     z.object({
       question: z.string(),

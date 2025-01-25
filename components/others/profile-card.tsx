@@ -16,6 +16,7 @@ import {
 import { uploadFile } from "@/actions/upload";
 import { updateProfilePhoto } from "@/actions/my-profile";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 type Props = {
   admin: Pick<
@@ -35,6 +36,7 @@ export default function ProfileCard({ admin, stats }: Props) {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const { update } = useSession();
   const searchParams = useSearchParams();
 
   const handleTimeRangeChange = (range: string) => {
@@ -56,6 +58,7 @@ export default function ProfileCard({ admin, stats }: Props) {
           admin!.image = result.url;
           setIsOpen(false);
           setPreviewImage(null);
+          update();
         } else {
           toast.error(data?.error);
         }
@@ -196,7 +199,7 @@ export default function ProfileCard({ admin, stats }: Props) {
                   Cancel
                 </Button>
                 <Button disabled={isPending || !previewImage} type="submit">
-                  {isPending ? "Loading..." : "Save"}
+                  {isPending ? "Saving..." : "Save"}
                 </Button>
               </div>
             </div>

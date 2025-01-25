@@ -14,7 +14,7 @@ export const {
   signOut,
 } = NextAuth({
   pages: {
-    signIn: "/auth/login",
+    signIn: "/auth",
     error: "/auth/error",
   },
   events: {
@@ -65,6 +65,7 @@ export const {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
         session.user.name = token.name;
         session.user.email = token.email;
+        session.user.image = token.image as string | null | undefined;
         session.user.isOAuth = token.isOAuth as boolean;
       }
 
@@ -83,6 +84,7 @@ export const {
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
+      token.image = existingUser.image;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       return token;

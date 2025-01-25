@@ -27,16 +27,6 @@ const faqItems: FAQItem[] = [
     answer:
       "Our AI model has been trained on a vast dataset and has achieved an accuracy rate of over 95% in identifying mental health patterns.",
   },
-  {
-    question: "Do you store images of your faces?",
-    answer:
-      "We prioritize your privacy and security. All analysis is done in real-time and no facial images are stored on our servers.",
-  },
-  {
-    question: "What is the accuracy of our AI Model?",
-    answer:
-      "Our AI model has been trained on a vast dataset and has achieved an accuracy rate of over 95% in identifying mental health patterns.",
-  },
 ];
 
 export default function FAQ() {
@@ -48,12 +38,12 @@ export default function FAQ() {
 
   return (
     <section className="mb-16 md:px-16">
-      <h2 className="text-2xl font-semibold mb-10 text-center ">FAQs</h2>
-      <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
+      <h2 className="text-2xl font-semibold mb-10 text-center">FAQs</h2>
+      <div className="flex flex-wrap gap-4">
         {faqItems.map((item, index) => (
           <div
             key={index}
-            className="border border-gray-200 bg-white rounded-lg"
+            className="flex-1 md:flex-[0_0_48%] border border-gray-200 bg-white rounded-lg shadow-sm h-fit"
           >
             <button
               className="flex justify-between items-center w-full p-4 text-left"

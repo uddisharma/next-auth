@@ -31,7 +31,7 @@ export default auth(async (req) => {
 
   const isUserProfile = nextUrl.pathname.startsWith("/profile");
   if (!isLoggedIn && isUserProfile) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+    return Response.redirect(new URL("/auth", nextUrl));
   }
 
   if (isAuthRoute) {
@@ -47,10 +47,11 @@ export default auth(async (req) => {
       callbackUrl += nextUrl.search;
     }
 
-    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+    // const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
     return Response.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
+      // new URL(`/auth?callbackUrl=${encodedCallbackUrl}`, nextUrl),
+      new URL(`/auth`, nextUrl),
     );
   }
 });

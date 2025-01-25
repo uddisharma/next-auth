@@ -46,7 +46,7 @@ const OtpForm = ({ phone_email }: OtpFormProps) => {
     setSuccess("");
 
     startTransition(() => {
-      loginOTP({ ...phone_email, otp: values.otp }, callbackUrl)
+      loginOTP({ ...phone_email, otp: values.otp })
         .then((data) => {
           if (data?.error) {
             otpForm.reset();
@@ -55,7 +55,7 @@ const OtpForm = ({ phone_email }: OtpFormProps) => {
 
           if (data?.success) {
             otpForm.reset();
-            setSuccess(data?.success);
+            setSuccess(data?.message);
           }
         })
         .catch(() => setError("Something went wrong"));

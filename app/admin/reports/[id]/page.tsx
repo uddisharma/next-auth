@@ -23,7 +23,7 @@ export default async function ViewReportPage({ params }: PageProps) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
@@ -80,7 +80,7 @@ export default async function ViewReportPage({ params }: PageProps) {
           </div>
           <div className="flex items-center">
             <Calendar className="mr-2 h-4 w-4 opacity-70" />
-            <span className="font-semibold mr-2">Created At:</span>
+            <span className="font-semibold mr-2">Submitted At:</span>
             {new Date(report.createdAt).toLocaleString()}
           </div>
         </CardContent>

@@ -7,7 +7,7 @@ import ReportsList from "@/components/others/Reports";
 export default async function MyReportsPage() {
   const sessions = await currentUser();
   if (!sessions) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const reports = await db.report.findMany({

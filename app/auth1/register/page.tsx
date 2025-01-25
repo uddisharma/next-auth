@@ -8,7 +8,7 @@ function Register() {
     <CardWrapper
       headerLabel="Create an account"
       backButtonLabel="Already have an account?"
-      backButtonHref="/auth/login"
+      backButtonHref="/auth"
       showSocial
     >
       <Tabs defaultValue="email" className="w-full">

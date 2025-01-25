@@ -12,7 +12,7 @@ export async function addBlog(blogData: BlogFormData) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
@@ -42,7 +42,7 @@ export async function updateBlog(id: number, blogData: BlogFormData) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
@@ -72,7 +72,7 @@ export const getBlogs = unstable_cache(
     const session = await currentUser();
 
     if (!session) {
-      return redirect("/auth/login");
+      return redirect("/auth");
     }
 
     const hasPermission = await checkPermission(

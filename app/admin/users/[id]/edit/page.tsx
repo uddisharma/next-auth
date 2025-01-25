@@ -14,7 +14,7 @@ export default async function EditUserPage({ params }: PageProps) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(

@@ -12,7 +12,7 @@ export async function updateProfile(userData: any) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   try {
@@ -35,7 +35,7 @@ export async function deleteProfile() {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
@@ -61,7 +61,7 @@ export async function updateAdminProfile(data: ProfileFormData) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   try {
@@ -84,7 +84,7 @@ export async function updateProfilePhoto(
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   try {
@@ -112,7 +112,7 @@ export async function updateProfileEmail(
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   try {

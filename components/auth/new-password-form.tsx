@@ -55,7 +55,7 @@ const NewPasswordForm = () => {
     <CardWrapper
       headerLabel="Enter a new password"
       backButtonLabel="Back to login"
-      backButtonHref="/auth/login"
+      backButtonHref="/auth"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

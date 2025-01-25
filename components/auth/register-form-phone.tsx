@@ -20,11 +20,11 @@ const RegisterFormPhone = () => {
 
   return (
     <div className="space-y-6">
-      {!isOtpSent ? (
+      {/* {!isOtpSent ? (
         <UserForm setIsOtpSent={setOTPSent} setData={setData} />
       ) : (
         <OtpForm phone_email={phone_email} />
-      )}
+      )} */}
     </div>
   );
 };

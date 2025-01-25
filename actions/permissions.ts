@@ -11,7 +11,7 @@ export async function updatePermissions(permissions: permissions[]) {
     const userRole = await currentRole();
 
     if (!userRole) {
-      return redirect("/auth/login");
+      return redirect("/auth");
     }
 
     if (userRole !== "SUPER_ADMIN") {

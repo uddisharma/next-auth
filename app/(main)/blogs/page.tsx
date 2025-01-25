@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { currentUser } from "@/lib/auth";
@@ -33,7 +32,7 @@ export default async function Blogs({ searchParams }: PageProps) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
@@ -67,6 +66,11 @@ export default async function Blogs({ searchParams }: PageProps) {
 
   const totalBlogs = await db.blog.count({ where: { published: true } });
 
+  const latestBlog = blogs && blogs[0];
+
+  const formattedDate = format(latestBlog.createdAt, "dd MMMM yyyy");
+  const timeconsume = calculateReadingTime(latestBlog.content);
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow md:px-24">
@@ -85,7 +89,7 @@ export default async function Blogs({ searchParams }: PageProps) {
         </div>
 
         <section className="container mx-auto px-4 mb-10 md:mb-20">
-          <h2 className="text-[24px] mb-6">Recent Post (08)</h2>
+          <h2 className="text-[24px] mb-6">Recent Post ({totalBlogs})</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="relative">
               <Image
@@ -96,32 +100,37 @@ export default async function Blogs({ searchParams }: PageProps) {
                 className="rounded-lg object-cover w-full h-full"
               />
             </div>
-            <div className="bg-[#EDDE79] rounded-lg p-8 flex flex-col justify-between shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] border-solid border-[1px] border-[#252525]">
+            <Link
+              className="bg-[#EDDE79] rounded-lg p-8 flex flex-col justify-between shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] border-solid border-[1px] border-[#252525]"
+              href={`/blogs/${latestBlog?.id}`}
+            >
               <div>
-                <div className="flex items-center gap-2 text-sm mb-2 text-gray1 font-semibold">
-                  <span>22 July 2024</span>
-                  <span>•</span>
-                  <span>4 min</span>
+                <div>
+                  <div className="flex items-center gap-2 text-sm mb-2 text-gray1 font-semibold">
+                    <span>{formattedDate}</span>
+                    <span>•</span>
+                    <span>{formattedDate}</span>
+                  </div>
+                  <h3 className="text-2xl font-semibold">
+                    {latestBlog?.title ?? "Title"}
+                  </h3>
+                  <p
+                    className="text-black mt-2"
+                    dangerouslySetInnerHTML={{
+                      __html: latestBlog?.content?.slice(0, 200) ?? "Content",
+                    }}
+                  />
                 </div>
-                <h3 className="text-2xl font-semibold">
-                  Lorem ipsum dolor sit amet
-                </h3>
-                <p className="text-black mt-2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                  Maecenas vitae mattis tellus. Nullam quis imperdiet augue.
-                  Vestibulum auctor ornare leo, non suscipit magna interdum eu.
-                </p>
+                <Link href={`/blogs/${latestBlog?.id}`}>
+                  <Button
+                    variant="default"
+                    className="self-start mt-5 bg-btnblue text-white hover:bg-btnblue/80 p-[10px_20px] text-[14px] rounded-[10px]"
+                  >
+                    Read More
+                  </Button>
+                </Link>
               </div>
-
-              <Button
-                variant="default"
-                className="self-start mt-5 bg-btnblue text-white hover:bg-btnblue/80 p-[10px_20px] text-[14px] rounded-[10px]"
-              >
-                Read More
-              </Button>
-            </div>
+            </Link>
           </div>
         </section>
         <div className="container mx-auto px-4 ">
@@ -135,51 +144,53 @@ export default async function Blogs({ searchParams }: PageProps) {
             <section className="container mx-auto px-4 mb-20">
               <h2 className="text-2xl mb-6">Weekly Most Read</h2>
               <div className="grid md:grid-cols-3 gap-x-6 gap-y-12">
-                {blogs?.map((blog, i) => {
+                {blogs?.slice(1)?.map((blog, i) => {
                   const formattedDate = format(blog.createdAt, "dd MMMM yyyy");
                   const timeconsume = calculateReadingTime(blog.content);
 
                   return (
-                    <article key={i} className="flex flex-col">
-                      <div className="relative h-[240px] mb-4">
-                        <Image
-                          src={blog?.image ?? "/blogs2.png"}
-                          alt={blog?.title ?? "Blog"}
-                          fill
-                          className="rounded-lg object-cover"
+                    <Link key={i} href={`/blogs/${blog?.id}`}>
+                      <article className="cursor-pointer flex flex-col">
+                        <div className="relative h-[240px] mb-4">
+                          <Image
+                            src={blog?.image ?? "/blogs2.png"}
+                            alt={blog?.title ?? "Blog"}
+                            fill
+                            className="rounded-lg object-cover"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray1 font-semibold mb-2">
+                          <span>{formattedDate}</span>
+                          <span>•</span>
+                          <span>
+                            {timeconsume?.minutes > 0
+                              ? timeconsume.minutes + " min "
+                              : ""}
+                            {timeconsume?.seconds > 0
+                              ? timeconsume.seconds + " sec"
+                              : ""}
+                          </span>
+                        </div>
+                        <h3 className="text-xl font-semibold mb-3">
+                          {blog?.title}
+                        </h3>
+                        <p
+                          className="text-black text-sm mb-4 flex-grow"
+                          dangerouslySetInnerHTML={{
+                            __html: blog?.content?.slice(0, 150) ?? "",
+                          }}
                         />
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray1 font-semibold mb-2">
-                        <span>{formattedDate}</span>
-                        <span>•</span>
-                        <span>
-                          {timeconsume?.minutes > 0
-                            ? timeconsume.minutes + " min "
-                            : ""}
-                          {timeconsume?.seconds > 0
-                            ? timeconsume.seconds + " sec"
-                            : ""}
-                        </span>
-                      </div>
-                      <h3 className="text-xl font-semibold mb-3">
-                        {blog?.title}
-                      </h3>
-                      <p
-                        className="text-black text-sm mb-4 flex-grow"
-                        dangerouslySetInnerHTML={{
-                          __html: blog?.content?.slice(0, 150) ?? "",
-                        }}
-                      />
 
-                      <Link href={`/blogs/${blog?.id}`}>
-                        <Button
-                          variant="default"
-                          className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_12px] text-[14px] rounded-[11px]"
-                        >
-                          Read More
-                        </Button>
-                      </Link>
-                    </article>
+                        <Link href={`/blogs/${blog?.id}`}>
+                          <Button
+                            variant="default"
+                            className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_12px] text-[14px] rounded-[11px]"
+                          >
+                            Read More
+                          </Button>
+                        </Link>
+                      </article>
+                    </Link>
                   );
                 })}
               </div>

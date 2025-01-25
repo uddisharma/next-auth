@@ -22,7 +22,10 @@ export async function submitReport(reportData: ReportFormData) {
   );
 
   if (!hasPermission) {
-    return { message: "You don't have permission to submit a report" };
+    return {
+      success: false,
+      message: "You don't have permission to submit a report",
+    };
   }
 
   const validatedData = reportSchema.parse(reportData);
@@ -43,9 +46,10 @@ export async function submitReport(reportData: ReportFormData) {
 
     revalidatePath("/dashboard");
     revalidatePath("/admin/reports");
-    return report;
+    return { success: true, message: "Report submitted successfully" };
   } catch (error) {
     console.error("Error submitting report:", error);
+    return { success: false, message: "Error submitting report" };
   }
 }
 

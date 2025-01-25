@@ -22,10 +22,10 @@ const Header = async () => {
           <Link href="/pricing">Pricing</Link>
         </nav>
         <div className="flex items-center gap-4">
-          {sessions?.image ? (
-            <Logout image={sessions.image} hidden={false} />
+          {sessions?.name ? (
+            <Logout image={sessions.image ?? "/user.png"} hidden={false} />
           ) : (
-            <Link href="/auth/login">
+            <Link href="/auth">
               <Button
                 variant="default"
                 className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px]"

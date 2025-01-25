@@ -13,7 +13,7 @@ export async function addUser(userData: UserFormData) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
@@ -60,7 +60,7 @@ export async function updateUser(userId: string, userData: UserFormData) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
@@ -90,7 +90,7 @@ export const getUsers = unstable_cache(
     const session = await currentUser();
 
     if (!session) {
-      return redirect("/auth/login");
+      return redirect("/auth");
     }
 
     const hasPermission = await checkPermission(
