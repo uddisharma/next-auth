@@ -46,35 +46,52 @@ export function SubscriptionForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="John Doe" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone</FormLabel>
-              <FormControl>
-                <Input placeholder="+1234567890" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={isPending}>
-          {isPending ? "Subscribing..." : "Subscribe"}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid gap-6 md:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="space-y-2">
+                <FormLabel className="text-white text-lg">Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your name"
+                    className="h-14 bg-white text-black placeholder:text-gray-400"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem className="space-y-2">
+                <FormLabel className="text-white text-lg">
+                  Contact Number
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your number"
+                    className="h-14 bg-white text-black placeholder:text-gray-400"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button
+          type="submit"
+          disabled={isPending}
+          className="w-full h-14 text-[#1B2537] bg-[#EBE086] hover:bg-[#EBE086]/90 text-lg font-semibold"
+          size="lg"
+        >
+          {isPending ? "Submitting..." : "Let's Go!"}
         </Button>
       </form>
     </Form>

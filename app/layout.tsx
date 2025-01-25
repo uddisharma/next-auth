@@ -6,7 +6,7 @@ import "./globals.css";
 import "./prosemirror.css";
 import { Toaster } from "@/components/ui/sonner";
 import NextTopLoader from "nextjs-toploader";
-import { SubscriptionPopup } from "@/components/others/leads/Popup";
+import SubscriptionPopup from "@/components/others/leads/Popup";
 
 const inter = Inter({ subsets: ["latin"] });
 

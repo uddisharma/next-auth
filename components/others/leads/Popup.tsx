@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { SubscriptionForm } from "./Form";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
-export function SubscriptionPopup() {
+export default function SubscriptionPopup() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -20,21 +21,43 @@ export function SubscriptionPopup() {
     localStorage.setItem("popupClosed", "true");
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative">
-        <button
-          onClick={handleClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          aria-label="Close"
-        >
-          <X size={24} />
-        </button>
-        <h2 className="text-2xl font-bold mb-4">Subscribe to Our Newsletter</h2>
-        <SubscriptionForm setIsOpen={setIsOpen} />
-      </div>
-    </div>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="md:max-w-[740px] w-[90%]  border-0 p-0 bg-btnblue rounded-[10px]">
+        <div className="relative p-8 md:p-12 mx-2">
+          {/* Content */}
+          <div className="space-y-8">
+            {/* Title */}
+            <h1 className="text-yellow text-4xl md:text-5xl text-center font-serif">
+              Mr. Mard
+            </h1>
+
+            {/* Main Heading */}
+            <div className="text-center space-y-2">
+              <h2 className="text-white text-2xl md:text-5xl font-medium leading-tight">
+                Stay in touch for
+              </h2>
+              <p className="text-yellow text-2xl md:text-5xl font-medium leading-tight">
+                surprise offers!!
+              </p>
+            </div>
+
+            {/* Privacy Notice */}
+            <p className="text-white/90 text-center text-sm md:text-base">
+              By submitting, you're agreeing to our{" "}
+              <a href="#" className="underline hover:text-yellow">
+                Privacy Policy
+              </a>{" "}
+              and{" "}
+              <a href="#" className="underline hover:text-yellow">
+                Terms of Services
+              </a>
+            </p>
+
+            <SubscriptionForm setIsOpen={setIsOpen} />
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
