@@ -6,11 +6,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { currentUser } from "@/lib/auth";
 import Logout from "./Logout";
 
-const Header = async () => {
+const Header = async ({ className }: { className?: string }) => {
   const sessions = await currentUser();
   return (
-    <header className="py-5">
-      <div className="container mx-auto px-6 flex items-center justify-between">
+    <header className={`py-5 ${className}`}>
+      <div className="container mx-auto px-10 flex items-center justify-between">
         <Link href="/" className="text-xl font-bold">
           Mr. Mard
         </Link>
