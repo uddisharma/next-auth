@@ -1,5 +1,3 @@
-// "use client";
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -23,7 +21,13 @@ const Header = async () => {
         </nav>
         <div className="flex items-center gap-4">
           {sessions?.name ? (
-            <Logout image={sessions.image ?? "/user.png"} hidden={false} />
+            <Logout
+              image={sessions.image ?? "/user.png"}
+              name={sessions.name}
+              email={sessions.email ?? ""}
+              role={sessions.role}
+              hidden={false}
+            />
           ) : (
             <Link href="/auth">
               <Button
@@ -52,12 +56,6 @@ const Header = async () => {
                 <Link href="/pricing" className="text-lg font-medium">
                   Pricing
                 </Link>
-                <Button
-                  variant="default"
-                  className="w-full bg-btnblue text-white rounded-[12px] p-[12px_20px] mt-4"
-                >
-                  Sign up / Log in
-                </Button>
               </nav>
             </SheetContent>
           </Sheet>

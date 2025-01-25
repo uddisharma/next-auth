@@ -3,10 +3,22 @@ import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import Image from "next/image";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 import { Button } from "../ui/button";
+import { signOut } from "next-auth/react";
 
-const Logout = ({ image, hidden }: { image?: string; hidden?: boolean }) => {
+const Logout = ({
+  image,
+  name,
+  email,
+  role,
+  hidden,
+}: {
+  image?: string;
+  name?: string;
+  email?: string;
+  role?: string;
+  hidden?: boolean;
+}) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -18,27 +30,63 @@ const Logout = ({ image, hidden }: { image?: string; hidden?: boolean }) => {
             alt="Profile"
             width={40}
             height={40}
-            className="rounded-full w-[40px] h-[40px]"
+            className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
           />
         </div>
       </PopoverTrigger>
-      <PopoverContent className="w-48 mr-10">
-        <div className="grid gap-4">
-          <Link href="/" className="font-medium">
-            Home
+      <PopoverContent className="w-56 p-4 mr-6 rounded-lg shadow-md border border-gray-200 bg-white">
+        <div className="flex items-center gap-4">
+          <Image
+            src={image || "/user.png"}
+            alt="Profile"
+            width={50}
+            height={50}
+            className="rounded-full w-[50px] h-[50px]"
+          />
+          <div>
+            <p className="font-bold text-md text-gray-900">{name ?? ""}</p>
+            <p className="text-sm text-gray-500">
+              {email?.split("@")[0] ?? ""}
+            </p>
+          </div>
+        </div>
+        <div className="mt-6 space-y-4">
+          <Link
+            href="/profile"
+            className="block text-gray-800 text-sm font-medium hover:text-gray-900"
+          >
+            My Profile
           </Link>
-          <Link href="/profile" className="font-medium">
-            Profile
-          </Link>
-          <Link href="/profile/my-reports" className="font-medium">
+          <Link
+            href="/profile/my-reports"
+            className="block text-gray-800 text-sm font-medium hover:text-gray-900"
+          >
             My Reports
           </Link>
-          <Button
+          <Link
+            href="/plans"
+            className="block text-gray-800 text-sm font-medium hover:text-gray-900"
+          >
+            My Plans
+          </Link>
+          <Link
+            href="/change-password"
+            className="block text-gray-800 text-sm font-medium hover:text-gray-900"
+          >
+            Change Password
+          </Link>
+          <Link
+            href="/past-analysis"
+            className="block text-gray-800 text-sm font-medium hover:text-gray-900"
+          >
+            Past Analysis
+          </Link>
+          <p
             onClick={() => signOut({ callbackUrl: "/" })}
-            variant="outline"
+            className="block text-gray-800 text-sm font-medium cursor-pointer"
           >
             Logout
-          </Button>
+          </p>
         </div>
       </PopoverContent>
     </Popover>
