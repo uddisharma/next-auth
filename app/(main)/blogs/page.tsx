@@ -147,7 +147,6 @@ export default async function Blogs({ searchParams }: PageProps) {
                 {blogs?.slice(1)?.map((blog, i) => {
                   const formattedDate = format(blog.createdAt, "dd MMMM yyyy");
                   const timeconsume = calculateReadingTime(blog.content);
-
                   return (
                     <Link key={i} href={`/blogs/${blog?.id}`}>
                       <article className="cursor-pointer flex flex-col">

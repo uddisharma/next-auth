@@ -1,0 +1,39 @@
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+
+export default function AIInsightsSection() {
+  return (
+    <section className="container mx-auto px-24 py-8">
+      <div className="grid items-center gap-12 lg:grid-cols-2">
+        <div className="relative aspect-square max-w-[600px] rounded-[48px] bg-yellow p-8">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative ">
+              <Image
+                src="/ai1.png"
+                className="rounded-[12px]"
+                alt="AI Insights"
+                width={1000}
+                height={1000}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="space-y-6">
+          <h2 className="text-4xl font-bold tracking-tight">
+            AI-Powered Baldness Insights
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Get personalized recommendations and optimize Plans with our
+            AI-powered insights.
+          </p>
+          <Button
+            size="lg"
+            className="bg-btnblue hover:bg-btnblue/90 rounded-[12px]"
+          >
+            Learn More
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
