@@ -4,6 +4,9 @@ import Image from "next/image";
 export default function AIInsightsSection() {
   return (
     <section className="container mx-auto px-24 py-8">
+      <h2 className="text-4xl bg-white text-center text-btnblue py-8 mb-10">
+        Our Advance AI Modal
+      </h2>
       <div className="grid items-center gap-12 lg:grid-cols-2">
         <div className="relative aspect-square max-w-[600px] rounded-[48px] bg-yellow p-8">
           <div className="absolute inset-0 flex items-center justify-center">
@@ -19,7 +22,7 @@ export default function AIInsightsSection() {
           </div>
         </div>
         <div className="space-y-6">
-          <h2 className="text-4xl font-bold tracking-tight">
+          <h2 className="text-4xl font-semibold tracking-tight">
             AI-Powered Baldness Insights
           </h2>
           <p className="text-xl text-muted-foreground">

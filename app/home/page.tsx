@@ -23,7 +23,9 @@ const Banner = () => {
       <Chart1 />
       <Ai />
       <Blogs />
-      <FAQ />
+      <div className="my-16 mb-28">
+        <FAQ />
+      </div>
       <Footer />
     </div>
   );

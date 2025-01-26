@@ -41,10 +41,25 @@ const Hero = () => {
 
         {/* Right Section */}
         <div className="relative mt-28">
-          <div className="flex flex-col space-y-16 text-black">
+          {/* <div className="flex flex-col space-y-16 text-black">
             <p className="text-lg">Hair Density</p>
             <p className="text-lg">Scalp Analysis</p>
             <p className="text-lg">Get Treated</p>
+          </div> */}
+          <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center space-y-2">
+              <p className="text-lg">Hair Density</p>
+              <div className="flex flex-col items-center">
+                <div className="w-[2px] h-20 bg-black"></div>
+                <div className="w-2 h-2 bg-black rounded-full"></div>
+              </div>
+              <p className="text-lg">Scalp Analysis</p>
+              <div className="flex flex-col items-center">
+                <div className="w-[2px] h-20 bg-black"></div>
+                <div className="w-2 h-2 bg-black rounded-full"></div>
+              </div>
+              <p className="text-lg">Get Treated</p>
+            </div>
           </div>
         </div>
       </div>
