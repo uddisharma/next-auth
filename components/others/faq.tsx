@@ -38,30 +38,36 @@ export default function FAQ() {
   };
 
   return (
-    <section className="mb-16 md:px-16">
-      <h2 className="text-2xl font-semibold mb-10 text-center">FAQs</h2>
-      <div className="flex flex-wrap gap-4">
+    <section className="mb-16 px-4 md:px-16">
+      <h2 className="text-2xl md:text-3xl font-semibold mb-10 text-center">
+        FAQs
+      </h2>
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
         {faqItems.map((item, index) => (
           <div
             key={index}
-            className="flex-1 md:flex-[0_0_48%] border border-gray-200 bg-white rounded-lg shadow-sm h-fit"
+            className="border border-gray-200 bg-white rounded-lg shadow-sm transition-all h-fit"
           >
             <button
-              className="flex justify-between items-center w-full p-4 text-left"
+              className="flex justify-between items-center w-full p-4 text-left hover:bg-gray-100 transition"
               onClick={() => toggleAccordion(index)}
             >
-              <span className="font-medium">{item.question}</span>
+              <span className="font-medium text-base md:text-lg">
+                {item.question}
+              </span>
               <ChevronDown
                 className={`transform transition-transform duration-200 ${
                   openIndex === index ? "rotate-180" : ""
                 }`}
               />
             </button>
-            {openIndex === index && (
-              <div className="p-4 pt-0">
-                <p className="text-gray-600">{item.answer}</p>
-              </div>
-            )}
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                openIndex === index ? "max-h-[300px] p-4 pt-0 h-fit" : "max-h-0"
+              }`}
+            >
+              <p className="text-gray-600">{item.answer}</p>
+            </div>
           </div>
         ))}
       </div>

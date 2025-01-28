@@ -59,7 +59,8 @@ const Footer = () => {
         </div>
         <div className="bg-yellow py-4 md:mx-6 px-4 rounded-[144px] mt-20">
           <p className="text-[#1E2A4A] text-sm text-center">
-            © 2024 Mr Mard. All Rights Reserved. Made With ❤️ In India.
+            © {new Date().getFullYear()} Mr Mard. All Rights Reserved. Made
+            With ❤️ In India.
           </p>
         </div>
       </div>

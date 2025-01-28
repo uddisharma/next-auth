@@ -22,7 +22,7 @@ const Blogs = () => {
           </Button>
         </Link>
       </div>
-      <section className="container mx-auto px-24 ">
+      <section className="container mx-auto px-4 md:px-24 ">
         <div className="grid md:grid-cols-3 gap-x-6 gap-y-12">
           {blogs?.map((blog, i) => {
             const formattedDate = format(blog.createdAt, "dd MMMM yyyy");

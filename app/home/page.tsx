@@ -14,7 +14,7 @@ import Footer from "@/components/others/footer";
 const Banner = () => {
   return (
     <div className="min-h-screen container m-auto">
-      <Header className="bg-yellow pb-20" />
+      <Header className="bg-yellow md:pb-20" />
       <Hero />
       <Cta />
       <Work />
@@ -23,7 +23,7 @@ const Banner = () => {
       <Chart1 />
       <Ai />
       <Blogs />
-      <div className="my-16 mb-28">
+      <div className="my-8 md:my-12 mb-28">
         <FAQ />
       </div>
       <Footer />

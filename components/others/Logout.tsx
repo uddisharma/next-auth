@@ -30,11 +30,11 @@ const Logout = ({
             alt="Profile"
             width={40}
             height={40}
-            className="rounded-full w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
+            className="rounded-full w-10 h-10 md:w-[40px] md:h-[40px]"
           />
         </div>
       </PopoverTrigger>
-      <PopoverContent className="w-56 p-4 mr-6 rounded-lg shadow-md border border-gray-200 bg-white">
+      <PopoverContent className="w-56 p-4 mr-[-100px] mt-5 md:mt-0 md:mr-6 rounded-lg shadow-md border border-gray-200 bg-white">
         <div className="flex items-center gap-4">
           <Image
             src={image || "/user.png"}
