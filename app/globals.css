@@ -173,3 +173,76 @@ pre {
     font-weight: 700;
   }
 }
+
+.sqaure-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  ---radius: 50px;
+  ---bg-color: #1a2f4e;
+  ---padding: 16%;
+}
+
+.sqaure-wrapper > div {
+  flex: 0 0 auto;
+  width: 50%;
+  padding: var(---padding) 0;
+}
+
+.sqaure-wrapper > div:not(.no-box) {
+  background-color: var(---bg-color);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sqaure-wrapper .box {
+  border-radius: 30px;
+}
+
+.sqaure-wrapper .box:nth-child(2) {
+  border-radius: var(---radius) var(---radius) 0px 0px;
+}
+
+.sqaure-wrapper .box:nth-child(3) {
+  border-radius: 0px 0px 0 0;
+}
+
+.sqaure-wrapper .box:nth-child(3) {
+  border-radius: var(---radius) 0px 0 var(---radius);
+}
+
+.sqaure-wrapper .box:last-child {
+  border-radius: 0px 0px var(---radius) 0;
+}
+
+.sqaure-wrapper .no-box:before {
+  background-color: #fff;
+  position: absolute;
+  left: calc(var(---radius) / 2);
+  content: "";
+  top: calc(var(---radius) / 2);
+  height: 100%;
+  width: 100%;
+  border-radius: var(---radius);
+  left: 0;
+  top: 0;
+}
+
+.sqaure-wrapper .no-box {
+  position: relative;
+  z-index: -1;
+}
+
+.sqaure-wrapper .no-box:after {
+  content: "";
+  position: absolute;
+  top: calc(100% - var(---radius));
+  left: calc(100% - var(---radius));
+  background-color: #1a2f4e;
+  z-index: -2;
+  height: 100%;
+  width: 100%;
+}

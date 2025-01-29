@@ -59,7 +59,7 @@ const Hero = () => {
       </div>
 
       <div className="flex md:hidden flex-col space-y-8 bg-yellow px-5 pt-10 rounded-[0px_0px_144px_144px] overflow-hidden">
-        <h1 className="text-[45px] w-full text-btnblue text-center">
+        <h1 className="text-[40px] md:text-[45px] w-full text-btnblue text-center">
           Your Journey to{" "}
           <span className="text-btnblue font-bold">Healthier Hair</span> <br />{" "}
           Starts Here!
@@ -70,7 +70,7 @@ const Hero = () => {
         </p>
         <div className="flex flex-col justify-center items-center space-y-8 w-full">
           <Link href="/analyze">
-            <button className="px-6 w-[250px] py-5 text-white bg-[#1A2F4E] rounded-[12px] hover:opacity-90 m-auto shadow-[rgba(0,_0,_0,_0.25)_0px_54px_55px,_rgba(0,_0,_0,_0.12)_0px_-12px_30px,_rgba(0,_0,_0,_0.12)_0px_4px_6px,_rgba(0,_0,_0,_0.17)_0px_12px_13px,_rgba(0,_0,_0,_0.09)_0px_-3px_5px]">
+            <button className="px-6 w-[250px] py-3 text-white bg-[#1A2F4E] rounded-[12px] hover:opacity-90 m-auto shadow-[rgba(0,_0,_0,_0.25)_0px_54px_55px,_rgba(0,_0,_0,_0.12)_0px_-12px_30px,_rgba(0,_0,_0,_0.12)_0px_4px_6px,_rgba(0,_0,_0,_0.17)_0px_12px_13px,_rgba(0,_0,_0,_0.09)_0px_-3px_5px]">
               Get Your Hair Analysis
             </button>
           </Link>

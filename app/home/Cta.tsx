@@ -96,8 +96,8 @@ const Cta = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 mb-10">
       {/* Top buttons */}
-      <div className=" py-10 mb-5">
-        <div className=" flex-wrap justify-center gap-4 mb-12 hidden md:flex">
+      <div className=" py-10">
+        <div className=" flex-wrap justify-center gap-4 mb-10 hidden md:flex">
           <Button className="bg-[#1a2642] text-white hover:bg-[#243154] rounded-[12px] py-5">
             Get Your Hair Analysis
           </Button>
