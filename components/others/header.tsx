@@ -67,7 +67,7 @@ const Header = async ({ className }: { className?: string }) => {
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-10 w-10" />
+              <Menu className="h-7 w-7" />
               <span className="sr-only">Toggle menu</span>
             </Button>
           </SheetTrigger>

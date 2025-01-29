@@ -3,20 +3,17 @@ import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { signOut } from "next-auth/react";
 
 const Logout = ({
   image,
   name,
   email,
-  role,
   hidden,
 }: {
   image?: string;
   name?: string;
   email?: string;
-  role?: string;
   hidden?: boolean;
 }) => {
   return (
@@ -34,7 +31,7 @@ const Logout = ({
           />
         </div>
       </PopoverTrigger>
-      <PopoverContent className="w-56 p-4 mr-[-100px] mt-5 md:mt-0 md:mr-6 rounded-lg shadow-md border border-gray-200 bg-white">
+      <PopoverContent className="w-56 p-4 mt-3 mr-5 md:mt-0 md:mr-6 rounded-lg shadow-md border border-gray-200 bg-white">
         <div className="flex items-center gap-4">
           <Image
             src={image || "/user.png"}
