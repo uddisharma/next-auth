@@ -17,7 +17,8 @@ const Header = async ({ className }: { className?: string }) => {
         <nav className="hidden md:flex items-center gap-8 text-black">
           <Link href="/technology">Our Technology</Link>
           <Link href="/analyze">Analyze</Link>
-          <Link href="/pricing">Pricing</Link>
+          <Link href="/about-us">About us</Link>
+          <Link href="/blogs">Blogs</Link>
         </nav>
         <div className="flex items-center gap-4">
           {sessions?.name ? (
@@ -52,8 +53,11 @@ const Header = async ({ className }: { className?: string }) => {
                 <Link href="/analyze" className="text-lg font-medium">
                   Analyze
                 </Link>
-                <Link href="/pricing" className="text-lg font-medium">
-                  Pricing
+                <Link href="/about-us" className="text-lg font-medium">
+                  About us
+                </Link>
+                <Link href="/blogs" className="text-lg font-medium">
+                  Blogs
                 </Link>
               </nav>
             </SheetContent>
@@ -80,6 +84,9 @@ const Header = async ({ className }: { className?: string }) => {
               </Link>
               <Link href="/about-us" className="text-lg font-medium">
                 About us
+              </Link>
+              <Link href="/blogs" className="text-lg font-medium">
+                Blogs
               </Link>
             </nav>
           </SheetContent>

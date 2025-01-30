@@ -60,7 +60,7 @@ const Logout = ({
           >
             My Reports
           </Link>
-          <Link
+          {/* <Link
             href="/plans"
             className="block text-gray-800 text-sm font-medium hover:text-gray-900"
           >
@@ -77,7 +77,7 @@ const Logout = ({
             className="block text-gray-800 text-sm font-medium hover:text-gray-900"
           >
             Past Analysis
-          </Link>
+          </Link> */}
           <p
             onClick={() => signOut({ callbackUrl: "/" })}
             className="block text-gray-800 text-sm font-medium cursor-pointer"

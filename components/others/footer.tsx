@@ -32,7 +32,7 @@ const Footer = () => {
             <h3 className=" mb-4">About</h3>
             <ul className="space-y-2 text-sm text-white/80">
               <li>
-                <Link href="#">FAQ</Link>
+                <Link href="/">FAQ</Link>
               </li>
               <li>
                 <Link href="#">Work</Link>
