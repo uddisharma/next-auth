@@ -54,6 +54,9 @@ export const RegularRegister = z.object({
   dob: z.string().min(1, {
     message: "Date of birth is required",
   }),
+  deviceType: z.string().min(1, {
+    message: "Device type is required",
+  }),
 });
 
 export const PhoneSchema = z.object({

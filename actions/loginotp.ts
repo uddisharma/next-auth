@@ -44,6 +44,14 @@ export const loginOTP = async (values: LoginWithPhoneSchemaData) => {
       otp,
       loginType: "PHONE",
     });
+
+    await db.user.update({
+      where: { id: user.id },
+      data: {
+        lastLogin: new Date(),
+      },
+    });
+
     return { success: true, message: "Login successful!" };
   } catch (error) {
     if (error instanceof AuthError) {

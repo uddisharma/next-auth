@@ -120,6 +120,17 @@ export default function SignupForm() {
 
   const handleSaveUser = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    let deviceType = "Phone";
+    if (/mobile/i.test(userAgent)) {
+      deviceType = "Phone";
+    } else if (/tablet/i.test(userAgent)) {
+      deviceType = "Tablet";
+    } else {
+      deviceType = "Desktop";
+    }
+
     startTransition2(async () => {
       const res = await regularRegister({
         name: `${formData.firstName} ${formData.lastName}`,
@@ -127,6 +138,7 @@ export default function SignupForm() {
         gender: formData.gender,
         dob: `${formData.year}-${formData.month}-${formData.day}`,
         phone: decryptPhoneNumber(searchParams.get("token") ?? "") ?? "",
+        deviceType,
       });
       if (res?.success) {
         toast.success(res.message);
