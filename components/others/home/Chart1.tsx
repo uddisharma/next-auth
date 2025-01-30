@@ -80,7 +80,7 @@ export function Chart1() {
   }, []);
 
   return (
-    <div className="bg-white mb-10  grid grid-cols-1 lg:grid-cols-2 justify-center gap-10 m-auto md:py-10">
+    <div className="bg-white mb-8  grid grid-cols-1 lg:grid-cols-2 justify-center gap-10 m-auto md:py-10">
       <Card className="w-[95%] md:w-[500px] px-4 h-full m-auto border-none">
         <CardHeader>
           <CardTitle>Bar Chart - Multiple</CardTitle>

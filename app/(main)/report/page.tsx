@@ -63,7 +63,7 @@ export default function HairAnalysis() {
           Buy Now
         </Button>
       </div>
-      <div className="text-left py-12 md:my-20 px-5 md:px-24">
+      <div className="text-left py-12 px-5 md:px-24">
         <h1 className="text-2xl font-semibold mb-2">
           Take the first step Toward Healthier Hairs
         </h1>

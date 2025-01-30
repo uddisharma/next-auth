@@ -18,13 +18,13 @@ const Footer = () => {
             <h3 className=" mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm text-white/80">
               <li>
-                <Link href="#">Lorem</Link>
+                <Link href="/report">Report</Link>
               </li>
               <li>
-                <Link href="#">Lorem Ipsum</Link>
+                <Link href="/blogs">Blogs</Link>
               </li>
               <li>
-                <Link href="#">Lorem ip</Link>
+                <Link href="/contact-us">Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -32,13 +32,13 @@ const Footer = () => {
             <h3 className=" mb-4">About</h3>
             <ul className="space-y-2 text-sm text-white/80">
               <li>
-                <Link href="/">FAQ</Link>
+                <Link href="/about-us">About Us</Link>
               </li>
               <li>
-                <Link href="#">Work</Link>
+                <Link href="/how-it-works">How it works</Link>
               </li>
               <li>
-                <Link href="#">Services</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </li>
             </ul>
           </div>

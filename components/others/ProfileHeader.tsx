@@ -57,7 +57,12 @@ const ProfileHeader = ({ user }: { user: any }) => {
             <Bell className="h-5 w-5" />
           </Button>
 
-          <Logout image={user?.image || "/user.png"} hidden={true} />
+          <Logout
+            image={user?.image || "/user.png"}
+            name={user?.name}
+            email={user?.email}
+            hidden={true}
+          />
         </div>
       </div>
       <div className="mb-4 md:mb-8 rounded-lg bg-[#F6E05E] p-5 md:p-6"></div>

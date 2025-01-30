@@ -112,7 +112,7 @@ export default async function EditUserPage({ params }: PageProps) {
           </div>
 
           <div className="flex flex-col">
-            <label className="font-medium">Signup Success</label>
+            <label className="font-medium">Signup Completed</label>
             <span>{user.signUpSuccess ? "Yes" : "No"}</span>
           </div>
 

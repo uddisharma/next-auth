@@ -4,6 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const Logout = ({
   image,
@@ -16,11 +17,12 @@ const Logout = ({
   email?: string;
   hidden?: boolean;
 }) => {
+  const pathName = usePathname();
   return (
     <Popover>
       <PopoverTrigger asChild>
         <div
-          className={`${hidden ? "hidden" : "flex"} md:flex items-center gap-4 cursor-pointer`}
+          className={`${hidden ? "hidden" : "flex"} md:flex items-center cursor-pointer w-10 h-10 md:w-[40px] md:h-[38px]`}
         >
           <Image
             src={image || "/user.png"}
@@ -48,6 +50,14 @@ const Logout = ({
           </div>
         </div>
         <div className="mt-6 space-y-4">
+          {pathName === "/profile" && (
+            <Link
+              href="/"
+              className="block text-gray-800 text-sm font-medium hover:text-gray-900"
+            >
+              Home
+            </Link>
+          )}
           <Link
             href="/profile"
             className="block text-gray-800 text-sm font-medium hover:text-gray-900"

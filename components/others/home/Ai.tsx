@@ -3,8 +3,8 @@ import Image from "next/image";
 
 export default function AIInsightsSection() {
   return (
-    <section className="container mx-auto px-4 md:px-24 pt-8">
-      <h2 className="text-3xl md:text-4xl bg-white text-center text-btnblue py-8 mb-4">
+    <section className="container mx-auto px-4 md:px-24">
+      <h2 className="text-3xl md:text-4xl bg-white text-center text-btnblue py-8 mb-6">
         Our Advance AI Modal
       </h2>
       <div className="grid items-center gap-12 lg:grid-cols-2">

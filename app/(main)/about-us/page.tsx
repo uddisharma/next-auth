@@ -72,7 +72,7 @@ export default function AboutUs() {
         </section>
 
         {/* Additional Sections */}
-        <section className="mb-4">
+        <section className="mb-12">
           <p className="mb-8">
             We knew mens grooming and wellness was still an underground topic in
             India. Our conversations led us to realise that right now, men are

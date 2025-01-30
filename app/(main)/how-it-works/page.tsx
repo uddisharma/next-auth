@@ -19,7 +19,7 @@ export default function HowWeDoIt() {
           <Image
             src="/how-we-do/image1.png"
             alt="image1"
-            className="w-full h-auto my-20"
+            className="w-full h-auto my-16"
             width={500}
             height={500}
           />
@@ -36,7 +36,7 @@ export default function HowWeDoIt() {
           <Image
             src="/how-we-do/image2.png"
             alt="image1"
-            className="w-full h-auto my-20"
+            className="w-full h-auto my-16"
             width={500}
             height={500}
           />
@@ -61,7 +61,7 @@ export default function HowWeDoIt() {
           <Image
             src="/how-we-do/image3.png"
             alt="image1"
-            className="w-fit h-auto my-20 m-auto"
+            className="w-fit h-auto my-16 m-auto"
             width={500}
             height={500}
           />

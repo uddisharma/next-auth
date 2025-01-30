@@ -127,7 +127,7 @@ export default function ProfileForm({ admin }: Props) {
             disabled={isPending || !form.formState.isValid}
             className="w-fit flex justify-center bg-btnblue text-white px-4 py-2"
           >
-            {isPending ? "Updating..." : "Update Profile"}
+            {isPending ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       </form>
