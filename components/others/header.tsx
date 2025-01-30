@@ -25,7 +25,6 @@ const Header = async ({ className }: { className?: string }) => {
               image={sessions.image ?? "/user.png"}
               name={sessions.name}
               email={sessions.email ?? ""}
-              role={sessions.role}
               hidden={false}
             />
           ) : (
@@ -79,8 +78,8 @@ const Header = async ({ className }: { className?: string }) => {
               <Link href="/analyze" className="text-lg font-medium">
                 Analyze
               </Link>
-              <Link href="/pricing" className="text-lg font-medium">
-                Pricing
+              <Link href="/about-us" className="text-lg font-medium">
+                About us
               </Link>
             </nav>
           </SheetContent>
@@ -101,7 +100,6 @@ const Header = async ({ className }: { className?: string }) => {
               image={sessions.image ?? "/user.png"}
               name={sessions.name}
               email={sessions.email ?? ""}
-              role={sessions.role}
               hidden={false}
             />
           ) : (

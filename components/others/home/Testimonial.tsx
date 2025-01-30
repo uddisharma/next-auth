@@ -69,9 +69,9 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-16 px-4">
+    <section className="py-10 md:py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl bg-white text-center text-btnblue py-8 mb-5">
+        <h2 className="text-3xl md:text-4xl bg-white text-center text-btnblue py-8 mb-2">
           What Our Users Say
         </h2>
 

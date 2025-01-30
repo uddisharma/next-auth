@@ -25,7 +25,7 @@ export default function ReportsList({ reports }: { reports: Report[] }) {
     <Card className="w-full mx-auto">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-2xl font-bold">My Reports</CardTitle>
-        <Link href="/new-report">
+        <Link href="/analyze">
           <Button size="sm">
             <PlusCircle className="mr-2 h-4 w-4" />
             New Report

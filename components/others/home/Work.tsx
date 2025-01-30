@@ -5,7 +5,7 @@ import React from "react";
 const Work = () => {
   return (
     <>
-      <div className="px-4 md:hidden">
+      <div className="px-6 md:hidden bg-white">
         <div className="min-h-20 bg-white w-full flex justify-center items-center">
           <h2 className="text-4xl bg-white text-center text-btnblue py-8 mb-5">
             How It Works
@@ -17,7 +17,7 @@ const Work = () => {
             </p>
           </h2>
         </div>
-        <section className="flex flex-col items-center justify-center bg-btnblue p-6 px-10 rounded-[38px] shadow-md py-12">
+        <section className="flex flex-col items-center justify-center bg-btnblue mx-2 p-6 px-10 rounded-[38px] shadow-md py-12">
           <div className="max-w-sm w-full space-y-6">
             {[
               "Expert Guidance",

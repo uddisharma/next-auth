@@ -8,8 +8,8 @@ import { blogs } from "@/data/blogs";
 
 const Blogs = () => {
   return (
-    <div className="mt-10 bg-white pb-10 mb-5">
-      <h2 className="text-4xl  text-center text-btnblue py-8 mb-2">
+    <div className="mt-10 bg-white pb-5 mb-5">
+      <h2 className="text-3xl md:text-4xl text-center text-btnblue py-8 mb-2">
         Our Blogs
       </h2>
       <div className="flex justify-center m-auto mb-10">

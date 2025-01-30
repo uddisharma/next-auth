@@ -40,7 +40,7 @@ const chartConfig = {
 export function Chart() {
   return (
     <div className="bg-white mb-20 px-4">
-      <h2 className="text-4xl text-center text-btnblue py-8 mb-10">
+      <h2 className="text-3xl md:text-4xl text-center text-btnblue py-8 mb-4">
         Track Your Progress
       </h2>
       <Card className="max-w-[500px] m-auto border-none">
