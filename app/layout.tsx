@@ -7,6 +7,7 @@ import "./prosemirror.css";
 import { Toaster } from "@/components/ui/sonner";
 import NextTopLoader from "nextjs-toploader";
 import SubscriptionPopup from "@/components/others/leads/Popup";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default async function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <div className="w-full bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2]">
+            <Analytics />
             <Toaster />
             <NextTopLoader
               color="#1A2F4E"
