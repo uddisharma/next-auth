@@ -1,87 +1,89 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { Label, Pie, PieChart } from "recharts";
 import React from "react";
+import Image from "next/image";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+// import { TrendingUp } from "lucide-react";
+// import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+// import { Label, Pie, PieChart } from "recharts";
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
+// import {
+//   Card,
+//   CardContent,
+//   CardDescription,
+//   CardFooter,
+//   CardHeader,
+//   CardTitle,
+// } from "@/components/ui/card";
+// import {
+//   ChartConfig,
+//   ChartContainer,
+//   ChartTooltip,
+//   ChartTooltipContent,
+// } from "@/components/ui/chart";
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "#AAAED6",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "#1A2F4E",
-  },
-} satisfies ChartConfig;
+// const chartData = [
+//   { month: "January", desktop: 186, mobile: 80 },
+//   { month: "February", desktop: 305, mobile: 200 },
+//   { month: "March", desktop: 237, mobile: 120 },
+//   { month: "April", desktop: 73, mobile: 190 },
+//   { month: "May", desktop: 209, mobile: 130 },
+//   { month: "June", desktop: 214, mobile: 140 },
+// ];
 
-const chartData1 = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
-];
+// const chartConfig = {
+//   desktop: {
+//     label: "Desktop",
+//     color: "#AAAED6",
+//   },
+//   mobile: {
+//     label: "Mobile",
+//     color: "#1A2F4E",
+//   },
+// } satisfies ChartConfig;
 
-const chartConfig1 = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
-  },
-} satisfies ChartConfig;
+// const chartData1 = [
+//   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+//   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+//   { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
+//   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
+//   { browser: "other", visitors: 190, fill: "var(--color-other)" },
+// ];
+
+// const chartConfig1 = {
+//   visitors: {
+//     label: "Visitors",
+//   },
+//   chrome: {
+//     label: "Chrome",
+//     color: "hsl(var(--chart-1))",
+//   },
+//   safari: {
+//     label: "Safari",
+//     color: "hsl(var(--chart-2))",
+//   },
+//   firefox: {
+//     label: "Firefox",
+//     color: "hsl(var(--chart-3))",
+//   },
+//   edge: {
+//     label: "Edge",
+//     color: "hsl(var(--chart-4))",
+//   },
+//   other: {
+//     label: "Other",
+//     color: "hsl(var(--chart-5))",
+//   },
+// } satisfies ChartConfig;
 
 export function Chart1() {
-  const totalVisitors = React.useMemo(() => {
-    return chartData1.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+  // const totalVisitors = React.useMemo(() => {
+  //   return chartData1.reduce((acc, curr) => acc + curr.visitors, 0);
+  // }, []);
 
   return (
     <div className="bg-white mb-8  grid grid-cols-1 lg:grid-cols-2 justify-center gap-10 m-auto md:py-10">
-      <Card className="w-[95%] md:w-[500px] px-4 h-full m-auto border-none">
+      {/* <Card className="w-[95%] md:w-[500px] px-4 h-full m-auto border-none">
         <CardHeader>
           <CardTitle>Bar Chart - Multiple</CardTitle>
           <CardDescription>January - June 2024</CardDescription>
@@ -118,7 +120,6 @@ export function Chart1() {
       <Card className="w-[95%] md:w-[500px] px-4 h-full m-auto border-none">
         <CardHeader className="items-center pb-0">
           <CardTitle>Expenses</CardTitle>
-          {/* <CardDescription>January - June 2024</CardDescription> */}
         </CardHeader>
         <CardContent className="flex-1 pb-0">
           <ChartContainer
@@ -178,7 +179,21 @@ export function Chart1() {
             Showing total visitors for the last 6 months
           </div>
         </CardFooter>
-      </Card>
+      </Card> */}
+      <Image
+        src={"/home-chart2.png"}
+        width={500}
+        height={500}
+        alt="Home Chart"
+        className="m-auto"
+      />
+      <Image
+        src={"/home-chart3.png"}
+        width={500}
+        height={500}
+        alt="Home Chart"
+        className="m-auto"
+      />
     </div>
   );
 }

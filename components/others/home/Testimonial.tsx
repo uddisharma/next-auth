@@ -18,37 +18,19 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Ateeth Patel",
+    name: "kotesh",
     role: "Back-end developer at abc",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      "Using Mard’s treatment for 5 months can feel the change in my hair, definitely",
     date: "Mr. Mard user, 18/10/2024",
     avatar: "/user.png",
   },
   {
     id: 2,
-    name: "Sankalp",
+    name: "Balaji",
     role: "Back-end developer at abc",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    date: "Mr. Mard user, 18/10/2024",
-    avatar: "/user.png",
-  },
-  {
-    id: 3,
-    name: "Ateeth Patel",
-    role: "Back-end developer at abc",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    date: "Mr. Mard user, 18/10/2024",
-    avatar: "/user.png",
-  },
-  {
-    id: 4,
-    name: "Sankalp",
-    role: "Back-end developer at abc",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      "I got Mard's treatment kit after consulting its doctor , the kit was personalized as per my hair issues and after using it I sawx noticeable hair growth. ",
     date: "Mr. Mard user, 18/10/2024",
     avatar: "/user.png",
   },
@@ -69,13 +51,13 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-10 md:py-16 px-4">
+    <section className="px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl bg-white text-center text-btnblue py-8 mb-2">
+        <h2 className="text-3xl md:text-4xl bg-white text-center text-btnblue py-6 mb-2">
           What Our Users Say
         </h2>
 
-        <div className="relative max-w-5xl mx-auto overflow-hidden">
+        <div className="relative max-w-5xl mx-auto overflow-hidden pt-10">
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -90,7 +72,7 @@ export default function Testimonials() {
                   .map((testimonial) => (
                     <Card
                       key={testimonial.id}
-                      className="w-full mx-2 shadow-lg rounded-[12px] border border-gray-200 bg-gradient-to-t from-customGray to-customGray"
+                      className="w-full mx-2 bg-[#f7f6fb] shadow-[10px_10px_10px_rgba(0,0,0,0.1)] rounded-[12px]"
                     >
                       <CardContent className="p-6">
                         <div className="flex gap-4">
@@ -128,9 +110,9 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center gap-5 mt-6">
+        <div className="flex justify-center items-center gap-5 mt-6 pb-12">
           <Button variant="ghost" onClick={prevSlide}>
-            <ChevronLeft className="h-6 w-6" />
+            <ChevronLeft className="h-6 w-6 text-[#6a7176]" />
           </Button>
           <div className="flex justify-center items-center gap-2">
             {Array.from({ length: totalSlides }).map((_, index) => (
@@ -144,7 +126,7 @@ export default function Testimonials() {
             ))}
           </div>
           <Button variant="ghost" onClick={nextSlide}>
-            <ChevronRight className="h-6 w-6" />
+            <ChevronRight className="h-6 w-6 text-[#6a7176]" />
           </Button>
         </div>
       </div>

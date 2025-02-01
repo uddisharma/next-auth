@@ -92,16 +92,32 @@ import { Play } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
+const data = [
+  {
+    title: "Angle Hair Analysis",
+    content: "Understand your current scalp condition.",
+  },
+  {
+    title: "Personalized Hair-health Report",
+    content: "Get personalized report which was designed by doctors",
+  },
+  {
+    title: "Effective Treatment",
+    content:
+      "Get treated prescribed by our expert and achieve noticeable improvements in less time.",
+  },
+];
+
 const Cta = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 mb-10">
+    <div className="max-w-4xl mx-auto px-4 mb-12">
       {/* Top buttons */}
-      <div className=" py-10">
+      <div className="pt-10 pb-5 bg-white">
         <div className=" flex-wrap justify-center gap-4 mb-10 hidden md:flex">
-          <Button className="bg-[#1a2642] text-white hover:bg-[#243154] rounded-[12px] py-5">
+          <Button className="bg-btnblue text-white hover:bg-btnblue/80 rounded-[10px] py-5">
             Get Your Hair Analysis
           </Button>
-          <Button variant="outline" className="py-5 gap-2 rounded-[12px]">
+          <Button variant="outline" className="py-5 gap-2 rounded-[10px]">
             <div className="flex items-center gap-2 text-white bg-black rounded-full p-1">
               <Play size={16} />
             </div>
@@ -109,19 +125,19 @@ const Cta = () => {
           </Button>
         </div>
 
-        <div className="md:hidden flex flex-col items-center justify-center text-center  relative bg-white py-2">
+        <div className="md:hidden flex flex-col items-center justify-center text-center  relative  py-2">
           {/* Customer count */}
           <div className="relative z-10">
             <h2 className="text-4xl font-bold text-black">
               2200<span className="text-[#000]">+</span>
             </h2>
-            <p className="text-lg text-black">Happy Customers</p>
+            <p className="text-lg text-black mt-2">Happy Customers</p>
           </div>
-          <div className="flex -space-x-2 mt-2">
+          <div className="flex -space-x-2 my-5">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="relative w-16 h-16 rounded-full border-2 border-white overflow-hidden"
+                className="relative w-14 h-14 rounded-full border-2 border-white overflow-hidden"
               >
                 <Image
                   src={`/user.png`}
@@ -136,9 +152,9 @@ const Cta = () => {
         </div>
 
         {/* Customer count and avatars */}
-        <div className="hidden md:flex flex-wrap items-center justify-center gap-2 ">
+        <div className="hidden md:flex flex-wrap items-center justify-center gap-2">
           <div className="text-3xl font-bold">2200+</div>
-          <div className="flex flex-col sm:flex-row items-center ">
+          <div className="flex flex-col sm:flex-row items-center">
             <span className="text-black text-[12px] max-w-[80px]">
               Happy Customers
             </span>
@@ -146,14 +162,14 @@ const Cta = () => {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="relative w-10 h-10 rounded-full border-2 border-white overflow-hidden"
+                  className="relative w-14 h-14 rounded-full border-2 border-white overflow-hidden"
                 >
                   <Image
                     src={`/user.png`}
                     alt={`Customer ${i}`}
-                    width={32}
-                    height={32}
-                    className="object-cover"
+                    width={64}
+                    height={64}
+                    className="object-cover rounded-full"
                   />
                 </div>
               ))}
@@ -162,17 +178,28 @@ const Cta = () => {
         </div>
       </div>
 
+      <div className="hidden md:flex items-center justify-center w-full my-10">
+        <div className="relative flex items-center w-[80%]">
+          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-black transform -translate-y-1/2"></div>
+
+          {/* Dots */}
+          <div className="relative flex justify-between w-full">
+            <div className="w-3 h-3 bg-black rounded-full"></div>
+            <div className="w-3 h-3 bg-black rounded-full"></div>
+            <div className="w-3 h-3 bg-black rounded-full"></div>
+          </div>
+        </div>
+      </div>
+
       {/* Timeline - Vertical for mobile, horizontal for larger screens */}
-      <div className="relative flex flex-col items-center md:grid md:grid-cols-3 md:gap-6 pt-4 bg-white">
-        {[1, 2, 3].map((step, index) => (
+      <div className="relative flex flex-col items-center md:grid md:grid-cols-3 md:gap-6 md:pt-6">
+        {data?.map((step, index) => (
           <React.Fragment key={index}>
             {index > 0 && <div className="h-16 w-[2px] bg-black md:hidden" />}
-            <Card className="flex flex-col items-center text-center bg-[#1A2642] text-white p-6 rounded-lg w-[80%] md:w-full">
-              <h3 className="text-2xl pt-4 font-semibold">{`${step}. ${
-                step === 1 ? "Analyze" : step === 2 ? "Get Report" : "Treatment"
-              }`}</h3>
+            <Card className="flex flex-col items-center text-center bg-btnblue text-white p-6 rounded-lgw-full md:h-[230px]">
+              <h3 className="text-2xl pt-4 ">{step.title}</h3>
               <p className="text-lg md:text-sm m-4 text-gray-300">
-                Lorem Ipsum
+                {step.content}
               </p>
             </Card>
           </React.Fragment>

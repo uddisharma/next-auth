@@ -30,12 +30,13 @@ const Blogs = () => {
             return (
               <Link key={i} href={`/blogs/${blog?.id}`}>
                 <article className="cursor-pointer flex flex-col">
-                  <div className="relative h-[240px] mb-4">
+                  <div className="relative h-[240px] mb-4 border-[1px] border-gray-200 rounded-lg overflow-hidden">
                     <Image
                       src={blog?.image ?? "/blogs2.png"}
                       alt={blog?.title ?? "Blog"}
-                      fill
-                      className="rounded-lg object-cover"
+                      height={240}
+                      width={300}
+                      className="w-[90%] rounded-none h-full m-auto"
                     />
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray1 font-semibold mb-2">

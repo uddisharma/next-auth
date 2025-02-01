@@ -5,7 +5,7 @@ import React from "react";
 const Work = () => {
   return (
     <>
-      <div className="px-6 md:hidden bg-white">
+      <div className="px-6 md:hidden">
         <div className="min-h-20 bg-white w-full flex justify-center items-center">
           <h2 className="text-4xl bg-white text-center text-btnblue py-8 mb-5">
             How It Works
@@ -40,12 +40,13 @@ const Work = () => {
         </section>
       </div>
       <div className="hidden md:block ">
-        <div className="bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2] pt-24 max-w-5xl mx-auto px-4">
+        <div className="min-h-16 bg-white w-full flex justify-center items-center"></div>
+        <div className="bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2] py-14 max-w-5xl mx-auto px-4">
           <div className="grid grid-cols-2 gap-0 bg-btnblue rounded-[144px] min-h-[400px]  m-auto">
             <div className="rounded-[134px_0px_100px_0px] w-full bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2]">
               <div className="flex justify-center items-center h-full">
                 <div className="px-8 py-5 max-w-[800px] w-full">
-                  <h1 className="text-[35px] text-left text-blue-900">
+                  <h1 className="text-[35px] text-left text-btnblue">
                     How we work ?
                   </h1>
                   <p className="text-left text-black">
@@ -54,11 +55,11 @@ const Work = () => {
                     nulla, fugiat in fuga tempore ipsum ullam. Quo et assumenda
                     corporis praesentium maxime reiciendis?
                   </p>
-                  <div className="mt-2">
+                  <div className="my-2 mt-4">
                     <Link href={`/analyze`}>
                       <Button
                         variant="default"
-                        className="bg-btnblue text-white hover:bg-btnblue/80 p-[6px_30px] text-[14px] rounded-[11px]"
+                        className="bg-btnblue text-white p-[6px_30px] text-[14px] rounded-[11px]"
                       >
                         Get Analysis
                       </Button>

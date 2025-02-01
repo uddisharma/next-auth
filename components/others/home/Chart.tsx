@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import Image from "next/image";
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
   { month: "February", desktop: 305, mobile: 200 },
@@ -40,10 +41,21 @@ const chartConfig = {
 export function Chart() {
   return (
     <div className="bg-white mb-20 px-4">
-      <h2 className="text-3xl md:text-4xl text-center text-btnblue py-8 mb-4">
+      <h2 className="text-3xl md:text-4xl text-center text-btnblue pt-8">
         Track Your Progress
       </h2>
-      <Card className="max-w-[500px] m-auto border-none">
+      <div className="relative">
+        <div className="h-[65px] w-[65px] bg-yellow rounded-full flex items-center justify-center m-auto absolute top-[30%] left-[15%] right-[80%]"></div>
+        <div className="flex justify-center py-28">
+          <Image
+            src={"/home-chart.png"}
+            width={500}
+            height={500}
+            alt="Home Chart"
+          />
+        </div>
+      </div>
+      {/* <Card className="max-w-[500px] m-auto border-none">
         <CardHeader>
           <CardTitle>Bar Chart - Multiple</CardTitle>
           <CardDescription>January - June 2024</CardDescription>
@@ -76,7 +88,7 @@ export function Chart() {
             Showing total visitors for the last 6 months
           </div>
         </CardFooter>
-      </Card>
+      </Card> */}
     </div>
   );
 }

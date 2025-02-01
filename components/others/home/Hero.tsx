@@ -16,13 +16,13 @@ const Hero = () => {
         {/* Left Section */}
         <div className="flex flex-col space-y-8">
           <h1 className="text-[45px] text-btnblue text-left xs:text-center">
-            Your Journey to{" "}
-            <span className="text-btnblue font-bold">Healthier Hair</span>{" "}
-            <br /> Starts Here!
+            NO MORE{" "}
+            <span className="text-btnblue font-bold">TRAIL AND ERROR</span>{" "}
+            <br />
           </h1>
           <p className="text-[18px] text-black max-w-lg pr-10">
-            Get tailored hair care treatments based on advanced hair and scalp
-            analysis.
+            It’s time to find the solution you can finally trust because you
+            deserve results. Never let Hair loss take your confidence
           </p>
           <div className="flex flex-col space-y-8 w-[250px] max-w-[250px]">
             <Link href="/analyze">
