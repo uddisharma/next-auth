@@ -16,7 +16,7 @@ const Blogs = () => {
         <Link href={`/blogs`}>
           <Button
             variant="default"
-            className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_30px] text-[14px] rounded-[11px]"
+            className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_30px] text-[14px] rounded-[11px] py-5"
           >
             View All
           </Button>
@@ -62,7 +62,7 @@ const Blogs = () => {
                   <Link href={`/blogs/${blog?.id}`}>
                     <Button
                       variant="default"
-                      className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_12px] text-[14px] rounded-[11px]"
+                      className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_12px] text-[14px] rounded-[11px] py-5 px-8"
                     >
                       Read More
                     </Button>

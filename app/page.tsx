@@ -10,20 +10,24 @@ import { Chart } from "@/components/others/home/Chart";
 import { Chart1 } from "@/components/others/home/Chart1";
 import AIInsightsSection from "@/components/others/home/Ai";
 import Blogs from "@/components/others/home/Blogs";
+import Progress from "@/components/others/home/Progress";
+import Analyze from "@/components/others/home/Analyze";
 
 const Home = () => {
   return (
-    <div className="min-h-screen container m-auto">
+    <div className="min-h-screen container m-auto bg-white dark:md:bg-dot-black/[0.2] md:bg-dot-white/[0.2]">
       <Header className="bg-yellow md:pb-20" />
       <Hero />
       <Cta />
       <Work />
+      <Progress />
+      <Analyze />
       <Testimonials />
       <Chart />
       <Chart1 />
       <AIInsightsSection />
       <Blogs />
-      <div className="my-8 md:my-12 mb-28">
+      <div className="my-8 md:my-12">
         <FAQ />
       </div>
       <Footer />

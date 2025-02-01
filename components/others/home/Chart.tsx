@@ -40,7 +40,7 @@ const chartConfig = {
 
 export function Chart() {
   return (
-    <div className="bg-white mb-20 px-4">
+    <div className="bg-white mb-20 px-4 hidden md:block">
       <h2 className="text-3xl md:text-4xl text-center text-btnblue pt-8">
         Track Your Progress
       </h2>

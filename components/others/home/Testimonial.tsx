@@ -57,13 +57,16 @@ export default function Testimonials() {
           What Our Users Say
         </h2>
 
-        <div className="relative max-w-5xl mx-auto overflow-hidden pt-10">
+        <div className="relative max-w-5xl mx-auto overflow-hidden md:pt-10">
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
             {Array.from({ length: totalSlides }).map((_, index) => (
-              <div key={index} className="flex w-full flex-shrink-0 px-4 py-5">
+              <div
+                key={index}
+                className="flex w-full flex-shrink-0 px-4 py-5 gap-10"
+              >
                 {testimonials
                   .slice(
                     index * slidesPerView,
@@ -72,7 +75,11 @@ export default function Testimonials() {
                   .map((testimonial) => (
                     <Card
                       key={testimonial.id}
-                      className="w-full mx-2 bg-[#f7f6fb] shadow-[10px_10px_10px_rgba(0,0,0,0.1)] rounded-[12px]"
+                      className="w-full mx-2 bg-[#f7f6fb] 
+                      rounded-[12px]"
+                      style={{
+                        boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.45)",
+                      }}
                     >
                       <CardContent className="p-6">
                         <div className="flex gap-4">
@@ -110,7 +117,7 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center gap-5 mt-6 pb-12">
+        <div className="flex justify-center items-center gap-5 mt-6 pb-8 md:pb-12">
           <Button variant="ghost" onClick={prevSlide}>
             <ChevronLeft className="h-6 w-6 text-[#6a7176]" />
           </Button>

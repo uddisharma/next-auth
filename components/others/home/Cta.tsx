@@ -90,6 +90,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Play } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const data = [
@@ -110,13 +111,15 @@ const data = [
 
 const Cta = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 mb-12">
+    <div className="max-w-5xl mx-auto px-4 md:mb-12">
       {/* Top buttons */}
       <div className="pt-10 pb-5 bg-white">
         <div className=" flex-wrap justify-center gap-4 mb-10 hidden md:flex">
-          <Button className="bg-btnblue text-white hover:bg-btnblue/80 rounded-[10px] py-5">
-            Get Your Hair Analysis
-          </Button>
+          <Link href={`/analyze`}>
+            <Button className="bg-btnblue text-white hover:bg-btnblue/80 rounded-[10px] py-5">
+              Get Your Hair Analysis
+            </Button>
+          </Link>
           <Button variant="outline" className="py-5 gap-2 rounded-[10px]">
             <div className="flex items-center gap-2 text-white bg-black rounded-full p-1">
               <Play size={16} />
@@ -125,9 +128,9 @@ const Cta = () => {
           </Button>
         </div>
 
-        <div className="md:hidden flex flex-col items-center justify-center text-center  relative  py-2">
+        <div className="md:hidden flex flex-col items-center justify-center text-center  relative py-2 md:pb-10 ">
           {/* Customer count */}
-          <div className="relative z-10">
+          <div className="flex gap-3 z-10">
             <h2 className="text-4xl font-bold text-black">
               2200<span className="text-[#000]">+</span>
             </h2>
@@ -192,11 +195,11 @@ const Cta = () => {
       </div>
 
       {/* Timeline - Vertical for mobile, horizontal for larger screens */}
-      <div className="relative flex flex-col items-center md:grid md:grid-cols-3 md:gap-6 md:pt-6">
+      <div className="relative  flex-col items-center md:grid md:grid-cols-3 md:gap-6 md:pt-6 hidden">
         {data?.map((step, index) => (
           <React.Fragment key={index}>
             {index > 0 && <div className="h-16 w-[2px] bg-black md:hidden" />}
-            <Card className="flex flex-col items-center text-center bg-btnblue text-white p-6 rounded-lgw-full md:h-[230px]">
+            <Card className="flex flex-col items-center text-center bg-btnblue text-white p-6 rounded-lgw-full md:h-[200px]">
               <h3 className="text-2xl pt-4 ">{step.title}</h3>
               <p className="text-lg md:text-sm m-4 text-gray-300">
                 {step.content}
