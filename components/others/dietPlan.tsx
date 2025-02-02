@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function MealPlan() {
   return (
     <div className="p-5 w-full bg-btnblue flex items-center justify-center rounded-[71px]">
-      <div className="w-full max-w-7xl bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2] rounded-[144px] p-8 relative">
+      <div className="w-full max-w-6xl bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2] rounded-[144px] p-8 relative">
         <h1 className="text-2xl font-semibold text-center mb-12">
           For Vegetarians
         </h1>

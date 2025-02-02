@@ -27,7 +27,7 @@ const Home = () => {
       <Chart1 />
       <AIInsightsSection />
       <Blogs />
-      <div className="my-8 md:my-12">
+      <div className="my-8 md:my-16">
         <FAQ />
       </div>
       <Footer />

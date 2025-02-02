@@ -41,7 +41,7 @@ export default ReportBanner;
 
 const General = () => {
   return (
-    <div className="flex flex-col md:flex-row ">
+    <div className="flex flex-col md:flex-row px-10">
       {/* Left Sidebar (Full width on mobile) */}
       <Card className="w-full md:w-1/4 p-5 mb-6 md:mb-0">
         <h2 className="text-xl font-semibold text-center mb-6">

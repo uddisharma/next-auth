@@ -64,6 +64,7 @@ const config: Config = {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
           customGray: "#F7F6FB",
+          lightYellow: "#f9f3ce",
         },
       },
       backgroundImage: {
