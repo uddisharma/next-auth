@@ -6,7 +6,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Subscribe } from "@/actions/newsletter";
 import { toast } from "sonner";
-import { NewsLetterSchema, NewsLetterSchemaData } from "@/schemas";
+import { NewsLetterSchema, NewsLetterSchemaData } from "@/public/schemas";
 
 const Newsletter = () => {
   const {

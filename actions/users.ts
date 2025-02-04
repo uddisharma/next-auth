@@ -2,7 +2,7 @@
 
 import { revalidatePath, unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
-import { userSchema, type UserFormData } from "@/schemas";
+import { userSchema, type UserFormData } from "@/public/schemas";
 import { currentUser } from "@/lib/auth";
 import { Resource } from "@prisma/client";
 import { checkPermission } from "@/lib/checkPermission";

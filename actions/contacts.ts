@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { ContactFormData } from "@/schemas";
+import { ContactFormData } from "@/public/schemas";
 
 export async function submitContactForm(data: ContactFormData) {
   try {

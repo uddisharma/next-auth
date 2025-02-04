@@ -109,7 +109,14 @@ export default async function Blogs({ searchParams }: PageProps) {
                   <div className="flex items-center gap-2 text-sm mb-2 text-gray1 font-semibold">
                     <span>{formattedDate}</span>
                     <span>•</span>
-                    <span>{formattedDate}</span>
+                    <span>
+                      {timeconsume?.minutes > 0
+                        ? timeconsume.minutes + " min "
+                        : ""}
+                      {timeconsume?.seconds > 0
+                        ? timeconsume.seconds + " sec"
+                        : ""}
+                    </span>
                   </div>
                   <h3 className="text-2xl font-semibold">
                     {latestBlog?.title ?? "Title"}

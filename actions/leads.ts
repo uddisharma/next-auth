@@ -1,6 +1,6 @@
 "use server";
 import { db } from "@/lib/db";
-import { LeadsSchema, LeadsSchemaData } from "@/schemas";
+import { LeadsSchema, LeadsSchemaData } from "@/public/schemas";
 import { z } from "zod";
 
 export async function subscribe(values: LeadsSchemaData) {

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { mkConfig, generateCsv, download } from "export-to-csv";
-import { ExportType } from "@/schemas/types";
+import { ExportType } from "@/public/schemas/types";
 
 const ExportButton = ({ type }: { type: ExportType }) => {
   const [loading, setLoading] = useState(false);

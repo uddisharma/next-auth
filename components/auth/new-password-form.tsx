@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { NewPasswordSchema, NewPasswordSchemaData } from "@/schemas";
+import { NewPasswordSchema, NewPasswordSchemaData } from "@/public/schemas";
 
 import {
   Form,

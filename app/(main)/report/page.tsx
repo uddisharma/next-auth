@@ -10,75 +10,13 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
-
-interface FoodItem {
-  title: string;
-  image: string;
-  type: string;
-}
-
-const foodItems: FoodItem[] = [
-  {
-    title: "Breakfast",
-    image: "/vegetables.png",
-    type: "Veg",
-  },
-  {
-    title: "Lunch",
-    image: "/vegetables.png",
-    type: "Veg",
-  },
-  {
-    title: "Breakfast",
-    image: "/vegetables.png",
-    type: "Veg",
-  },
-  {
-    title: "Lunch",
-    image: "/vegetables.png",
-    type: "Veg",
-  },
-  {
-    title: "Dinner",
-    image: "/eggs.png",
-    type: "Veg",
-  },
-  {
-    title: "Snacks",
-    image: "/eggs.png",
-    type: "Veg",
-  },
-  {
-    title: "Dinner",
-    image: "/eggs.png",
-    type: "Veg",
-  },
-  {
-    title: "Snacks",
-    image: "/eggs.png",
-    type: "Veg",
-  },
-  {
-    title: "Dinner",
-    image: "/water.png",
-    type: "Veg",
-  },
-  {
-    title: "Snacks",
-    image: "/water.png",
-    type: "Veg",
-  },
-  {
-    title: "Dinner",
-    image: "/water.png",
-    type: "Veg",
-  },
-  {
-    title: "Snacks",
-    image: "/water.png",
-    type: "Veg",
-  },
-];
+import {
+  dietPlans,
+  reportData1,
+  reportData2,
+  reportData3,
+  reportData4,
+} from "@/data/report";
 
 export default function HairAnalysis() {
   return (
@@ -232,26 +170,33 @@ const General = () => {
           </p>
         </div>
         <div className="flex flex-col space-y-10 mt-[-25px]">
-          <MealPlan />
-          <MealPlan />
+          <MealPlan heading="For Vegetarians" data={reportData1} />
+          <MealPlan heading="For Non Vegetarians" data={reportData2} />
         </div>
         <div className="text-center my-16 px-5">
-          <h1 className="text-2xl font-semibold mb-2">Tailored Diet Plan</h1>
+          <h1 className="text-2xl font-semibold mb-2">
+            Personalised Lifestyle Changes for Healthy Hair
+          </h1>
+          <h2 className="text-xl font-normal mb-2">Small Habits, Big Impact</h2>
+        </div>
+        <div className="flex flex-col space-y-10 ">
+          <MealPlan heading="For Vegetarians" data={reportData3} />
+        </div>
+        <div className="text-center my-16 px-5">
+          <h1 className="text-2xl font-semibold mb-2">
+            Personalised Hair Care Products
+          </h1>
           <h2 className="text-xl font-normal mb-2">
-            Nourish Your Hair from Within
+            Our AI has curated a list of products suited to your scalp condition
+            and hair goals.
           </h2>
         </div>
         <div className="flex flex-col space-y-10 ">
-          <MealPlan />
-        </div>
-        <div className="text-center my-16 px-5">
-          <h1 className="text-2xl font-semibold mb-2">Tailored Diet Plan</h1>
-          <h2 className="text-xl font-normal mb-2">
-            Nourish Your Hair from Within
-          </h2>
-        </div>
-        <div className="flex flex-col space-y-10 ">
-          <MealPlan1 />
+          <MealPlan1
+            heading="For Vegetarians"
+            data={reportData4}
+            data2={reportData4}
+          />
         </div>
         <div className="mt-10 flex justify-center">
           <Button
@@ -299,19 +244,21 @@ const General = () => {
             }}
             className="food-swiper"
           >
-            {foodItems?.slice(0, 4).map((item, index) => (
+            {reportData1?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="rounded-xl overflow-hidden bg-card">
                   <div className="relative w-full h-[150px]">
                     <Image
                       src={item.image || "/placeholder.svg"}
-                      alt={item.title}
+                      alt={item.heading1}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <div className="p-3 text-center bg-[#f9f3ce]">
-                    <h3 className="font-medium">{item.title}</h3>
+                    <h3 className="font-medium h-[70px] min-h-[70px]">
+                      {item.heading1}
+                    </h3>
                   </div>
                 </div>
               </SwiperSlide>
@@ -332,19 +279,21 @@ const General = () => {
             }}
             className="food-swiper"
           >
-            {foodItems?.slice(4, 8).map((item, index) => (
+            {reportData2.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="rounded-xl overflow-hidden bg-card">
                   <div className="relative w-full h-[150px]">
                     <Image
                       src={item.image || "/placeholder.svg"}
-                      alt={item.title}
+                      alt={item.heading1}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <div className="p-3 text-center bg-[#f9f3ce]">
-                    <h3 className="font-medium">{item.title}</h3>
+                    <h3 className="font-medium min-h-[50px]">
+                      {item.heading1}
+                    </h3>
                   </div>
                 </div>
               </SwiperSlide>
@@ -374,19 +323,19 @@ const General = () => {
             }}
             className="food-swiper"
           >
-            {foodItems?.slice(8, 12).map((item, index) => (
+            {reportData3.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="rounded-xl overflow-hidden bg-card">
                   <div className="relative w-full h-[150px]">
                     <Image
                       src={item.image || "/placeholder.svg"}
-                      alt={item.title}
+                      alt={item.heading1}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <div className="p-3 text-center bg-[#f9f3ce]">
-                    <h3 className="font-medium">{item.title}</h3>
+                    <h3 className="font-medium ">{item.heading1}</h3>
                   </div>
                 </div>
               </SwiperSlide>
@@ -413,7 +362,7 @@ const General = () => {
           </div>
           <div className="p-6 bg-[#eaecef] blur-sm rounded-[15px] mb-10 mt-5">
             <Image
-              src="/men.png"
+              src="/report/Shampoo.jpg"
               alt="not found"
               className="rounded-full border-[7px] border-black w-[300px] h-[300px] m-auto my-10"
               height={400}
@@ -421,7 +370,7 @@ const General = () => {
             />
             <div className="my-6">
               <h2 className="font-bold text-[25px] px-2 text-center">
-                Personalised Hair
+                Sulfate-Free Nourishing Shampoo
               </h2>
               <p className="text-blue-600 text-[20px] mt-6 px-5 text-left">
                 Our AI has curated a list of products suited to your scalp
@@ -454,8 +403,8 @@ const Analysis = () => {
           </p>
         </div>
         <div className="flex flex-col space-y-10 mt-[-25px] blur-sm">
-          <MealPlan />
-          <MealPlan />
+          <MealPlan heading="For Vegetarians" data={reportData1} />
+          <MealPlan heading="For Vegetarians" data={reportData1} />
         </div>
         <div className="text-center my-16 px-5">
           <h1 className="text-2xl font-semibold mb-2">
@@ -464,7 +413,7 @@ const Analysis = () => {
           <h2 className="text-xl font-normal mb-2">Small Habits, Big Impact</h2>
         </div>
         <div className="flex flex-col space-y-10 pb-12 blur-sm">
-          <MealPlan />
+          <MealPlan heading="For Vegetarians" data={reportData1} />
         </div>
       </div>
       <div className="md:hidden">
@@ -483,19 +432,21 @@ const Analysis = () => {
             }}
             className="food-swiper"
           >
-            {foodItems?.slice(0, 4).map((item, index) => (
+            {reportData1.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="rounded-xl overflow-hidden bg-card">
                   <div className="relative w-full h-[150px]">
                     <Image
                       src={item.image || "/placeholder.svg"}
-                      alt={item.title}
+                      alt={item.heading1}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <div className="p-3 text-center bg-[#f9f3ce]">
-                    <h3 className="font-medium">{item.title}</h3>
+                    <h3 className="font-medium min-h-[70px]">
+                      {item.heading1}
+                    </h3>
                   </div>
                 </div>
               </SwiperSlide>
@@ -516,19 +467,21 @@ const Analysis = () => {
             }}
             className="food-swiper"
           >
-            {foodItems?.slice(4, 8).map((item, index) => (
+            {reportData2?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="rounded-xl overflow-hidden bg-card">
                   <div className="relative w-full h-[150px]">
                     <Image
                       src={item.image || "/placeholder.svg"}
-                      alt={item.title}
+                      alt={item.heading1}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <div className="p-3 text-center bg-[#f9f3ce]">
-                    <h3 className="font-medium">{item.title}</h3>
+                    <h3 className="font-medium min-h-[50px]">
+                      {item.heading1}
+                    </h3>
                   </div>
                 </div>
               </SwiperSlide>
@@ -558,19 +511,19 @@ const Analysis = () => {
             }}
             className="food-swiper"
           >
-            {foodItems?.slice(8, 12).map((item, index) => (
+            {reportData3?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div className="rounded-xl overflow-hidden bg-card">
                   <div className="relative w-full h-[150px]">
                     <Image
                       src={item.image || "/placeholder.svg"}
-                      alt={item.title}
+                      alt={item.heading1}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <div className="p-3 text-center bg-[#f9f3ce]">
-                    <h3 className="font-medium">{item.title}</h3>
+                    <h3 className="font-medium">{item.heading1}</h3>
                   </div>
                 </div>
               </SwiperSlide>

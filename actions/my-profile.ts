@@ -6,7 +6,7 @@ import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
-import { ProfileFormData, ProfileSchema } from "@/schemas";
+import { ProfileFormData, ProfileSchema } from "@/public/schemas";
 
 export async function updateProfile(userData: any) {
   const session = await currentUser();

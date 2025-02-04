@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { User } from "@/schemas/types";
+import { User } from "@/public/schemas/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Dialog,

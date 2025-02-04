@@ -113,11 +113,11 @@ export default async function BlogsPage({ searchParams }: PageProps) {
                   className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
                 >
                   <div>{blog.title?.slice(0, 20)}</div>
-
                   <div
                     className="text-left"
                     dangerouslySetInnerHTML={{
-                      __html: blog.content?.slice(0, 20) || "",
+                      __html:
+                        blog.content?.slice(0, 50) + "..." || "Big Content",
                     }}
                   />
 

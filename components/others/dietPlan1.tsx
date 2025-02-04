@@ -1,7 +1,21 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 
-export default function MealPlan1() {
+interface pageProps {
+  heading: string;
+  data: {
+    image: string;
+    heading: string;
+    listData: string[];
+  }[];
+  data2: {
+    image: string;
+    heading: string;
+    listData: string[];
+  }[];
+}
+
+export default function MealPlan1(data: pageProps) {
   return (
     <div className="p-5 w-full bg-btnblue flex items-center justify-center rounded-[71px]">
       <div className="w-full max-w-6xl bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2] rounded-[144px] p-8 relative">
@@ -10,12 +24,15 @@ export default function MealPlan1() {
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-8 relative z-10 pb-10">
-          {new Array(2).fill(null).map((_, index) => (
-            <div className="flex flex-col items-center text-center max-w-[350px] m-auto">
+          {data?.data?.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center text-center max-w-[350px] m-auto"
+            >
               <div className="w-[200px] h-[200px] rounded-full overflow-hidden mb-4">
                 <Image
-                  src="/blogs3.png"
-                  alt="Spinach smoothie ingredients"
+                  src={item?.image}
+                  alt={item?.heading}
                   width={192}
                   height={192}
                   className="w-[200px] h-[200px] object-cover"
@@ -23,16 +40,16 @@ export default function MealPlan1() {
               </div>
 
               <h2 className="text-xl font-semibold mb-2 text-left w-full">
-                Breakfast
+                {item?.heading}
               </h2>
 
               <ul
                 style={{ listStyleType: "disc" }}
                 className="text-gray-700 text-left pl-5"
               >
-                <li>1 cup spinach cup spinach</li>
-                <li>1/2 cup chia seeds cup spinach</li>
-                <li>1/2 cup almonds cup spinach</li>
+                {item?.listData?.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </ul>
             </div>
           ))}
@@ -53,14 +70,17 @@ export default function MealPlan1() {
             </Button>
           </div>
 
-          <div className="blur-md ">
+          <div className="blur-md">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-8 relative z-10 pb-10">
-              {new Array(2).fill(null).map((_, index) => (
-                <div className="flex flex-col items-center text-center max-w-[350px] m-auto">
+              {data?.data2.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center text-center max-w-[350px] m-auto"
+                >
                   <div className="w-[200px] h-[200px] rounded-full overflow-hidden mb-4">
                     <Image
-                      src="/blogs3.png"
-                      alt="Spinach smoothie ingredients"
+                      src={item?.image}
+                      alt={item?.heading}
                       width={192}
                       height={192}
                       className="w-[200px] h-[200px] object-cover"
@@ -68,16 +88,16 @@ export default function MealPlan1() {
                   </div>
 
                   <h2 className="text-xl font-semibold mb-2 text-left w-full">
-                    Breakfast
+                    {item?.heading}
                   </h2>
 
                   <ul
                     style={{ listStyleType: "disc" }}
                     className="text-gray-700 text-left pl-5"
                   >
-                    <li>1 cup spinach cup spinach</li>
-                    <li>1/2 cup chia seeds cup spinach</li>
-                    <li>1/2 cup almonds cup spinach</li>
+                    {item?.listData?.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
                   </ul>
                 </div>
               ))}

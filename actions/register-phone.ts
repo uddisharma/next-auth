@@ -1,6 +1,9 @@
 "use server";
 
-import { RegisterWithOtpSchema, RegisterWithOtpSchemaData } from "@/schemas";
+import {
+  RegisterWithOtpSchema,
+  RegisterWithOtpSchemaData,
+} from "@/public/schemas";
 import { db } from "@/lib/db";
 import { generateOtp } from "@/lib/otp";
 import { sendSMS } from "@/lib/sms";

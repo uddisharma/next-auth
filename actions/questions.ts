@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
-import { QuestionFormValues, QuestionSchema } from "@/schemas";
+import { QuestionFormValues, QuestionSchema } from "@/public/schemas";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Resource } from "@prisma/client";

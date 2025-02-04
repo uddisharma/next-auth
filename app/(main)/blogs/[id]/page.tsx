@@ -124,7 +124,7 @@ export default async function BlogPage({ params }: PageProps) {
                 alt="Author"
                 width={40}
                 height={40}
-                className="rounded-full"
+                className="rounded-full h-[40px] w-[40px]"
               />
               <div className="text-[15px] text-gray-600 ">
                 <p>

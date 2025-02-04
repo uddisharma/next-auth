@@ -2,7 +2,7 @@
 
 import { currentRole } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { permissions } from "@/schemas/types";
+import { permissions } from "@/public/schemas/types";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 

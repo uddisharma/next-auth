@@ -4,9 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { format } from "date-fns";
-import { blogs } from "@/data/blogs";
+import { db } from "@/lib/db";
 
-const Blogs = () => {
+const Blogs = async () => {
+  const blogs = await db.blog.findMany({
+    where: {
+      published: true,
+    },
+    take: 3,
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      createdAt: true,
+      image: true,
+    },
+  });
+
   return (
     <div className="mt-10 bg-white pb-5 mb-5">
       <h2 className="text-3xl md:text-4xl text-center text-btnblue py-8 mb-2">

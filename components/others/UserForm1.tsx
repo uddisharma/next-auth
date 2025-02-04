@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoginType } from "@prisma/client";
-import { userSchema2, userSchema2Data } from "@/schemas";
+import { userSchema2, userSchema2Data } from "@/public/schemas";
 
 export default function UserForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);

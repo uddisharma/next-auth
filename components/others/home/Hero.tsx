@@ -26,7 +26,13 @@ const Hero = () => {
           </p>
           <div className="flex flex-col space-y-8 w-[250px] max-w-[250px]">
             <Link href="/analyze">
-              <button className="px-6 py-3 text-white bg-btnblue rounded-[12px] hover:opacity-90 box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; ">
+              <button
+                style={{
+                  boxShadow:
+                    "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
+                }}
+                className="px-6 py-3 text-white bg-btnblue rounded-[12px] hover:opacity-90 border-t-2 border-t-[#EDDE79] border-b-2 border-b-btnblue/90"
+              >
                 Get Your Hair Analysis
               </button>
             </Link>

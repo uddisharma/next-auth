@@ -4,11 +4,12 @@ export function calculateReadingTime(text: string): {
 } {
   const wordsPerMinute = 200;
   const words = text.split(/\s+/).length;
-  const minutes = words / wordsPerMinute;
-  const seconds = Math.ceil(minutes * 60);
-
+  const totalMinutes = words / wordsPerMinute;
+  const totalSeconds = Math.ceil(totalMinutes * 60);
+  const minutes = Math.floor(totalMinutes);
+  const seconds = totalSeconds % 60;
   return {
-    minutes: Math.floor(minutes),
+    minutes: minutes,
     seconds: seconds,
   };
 }

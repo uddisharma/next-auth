@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
-import { ExportType } from "@/schemas/types";
+import { ExportType } from "@/public/schemas/types";
 
 export async function GET(
   request: Request,

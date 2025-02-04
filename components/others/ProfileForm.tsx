@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Camera, Loader2, Mail, Trash2 } from "lucide-react";
-import { profileSchema, ProfileFormValues } from "@/schemas";
+import { profileSchema, ProfileFormValues } from "@/public/schemas";
 import Image from "next/image";
 import { timeAgo } from "@/lib/timeAgo";
 import {

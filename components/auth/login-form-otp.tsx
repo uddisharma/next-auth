@@ -21,7 +21,7 @@ import {
   OtpSchemaData,
   PhoneSchema,
   PhoneSchemaData,
-} from "@/schemas";
+} from "@/public/schemas";
 import { useSearchParams } from "next/navigation";
 
 const LoginOtpForm = () => {

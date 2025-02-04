@@ -1,6 +1,6 @@
 "use server";
 
-import { ResetSchema, ResetSchemaData } from "@/schemas";
+import { ResetSchema, ResetSchemaData } from "@/public/schemas";
 import { getUserByEmailorPhone } from "@/data/user";
 import { sendPasswordResetEmail } from "@/lib/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
