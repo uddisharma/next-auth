@@ -18,7 +18,7 @@ const Header = async ({ className }: { className?: string }) => {
           <Link href="/technology">Our Technology</Link>
           <Link href="/analyze">Analyze</Link>
           <Link href="/about-us">About us</Link>
-          <Link href="/blogs">Blogs</Link>
+          {/* <Link href="/blogs">Blogs</Link> */}
         </nav>
         <div className="flex items-center gap-4">
           {sessions?.name ? (
@@ -32,7 +32,7 @@ const Header = async ({ className }: { className?: string }) => {
             <Link href="/auth">
               <Button
                 variant="default"
-                className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px]"
+                className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px] py-3"
               >
                 Sign up / Log in
               </Button>
@@ -56,9 +56,9 @@ const Header = async ({ className }: { className?: string }) => {
                 <Link href="/about-us" className="text-lg font-medium">
                   About us
                 </Link>
-                <Link href="/blogs" className="text-lg font-medium">
+                {/* <Link href="/blogs" className="text-lg font-medium">
                   Blogs
-                </Link>
+                </Link> */}
               </nav>
             </SheetContent>
           </Sheet>
@@ -87,6 +87,9 @@ const Header = async ({ className }: { className?: string }) => {
               </Link>
               <Link href="/blogs" className="text-lg font-medium">
                 Blogs
+              </Link>
+              <Link href="/report" className="text-lg font-medium">
+                Report
               </Link>
             </nav>
           </SheetContent>

@@ -66,7 +66,9 @@ const Blogs = async () => {
                         : ""}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">{blog?.title}</h3>
+                  <h3 className="text-xl font-semibold mb-3 min-h-[50px]">
+                    {blog?.title}
+                  </h3>
                   <p
                     className="text-black text-sm mb-4 flex-grow"
                     dangerouslySetInnerHTML={{

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AIInsightsSection() {
   return (
@@ -25,16 +26,20 @@ export default function AIInsightsSection() {
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
             AI-Powered Baldness Insights
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl text-muted-foreground ">
             Get personalized recommendations and optimize Plans with our
             AI-powered insights.
           </p>
-          <Button
-            size="lg"
-            className="bg-btnblue hover:bg-btnblue/90 rounded-[12px]"
-          >
-            Learn More
-          </Button>
+          <div className="mt-10">
+            <Link href="/analyze">
+              <Button
+                size="lg"
+                className="bg-btnblue hover:bg-btnblue/90 rounded-[12px]"
+              >
+                Learn More
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

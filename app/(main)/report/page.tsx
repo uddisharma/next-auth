@@ -3,15 +3,15 @@ import MealPlan from "@/components/others/dietPlan";
 import MealPlan1 from "@/components/others/dietPlan1";
 import FAQ from "@/components/others/faq";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import {
-  dietPlans,
+  // dietPlans,
   reportData1,
   reportData2,
   reportData3,
@@ -22,7 +22,7 @@ export default function HairAnalysis() {
   return (
     <div className="container mx-auto">
       <MobileVerion />
-      <div className="p-4 mt-10 rounded-xl">
+      <div className="p-4 rounded-xl">
         <Tabs defaultValue="general" className="w-full">
           <div className="flex justify-center mb-6 md:mb-10">
             <TabsList className="grid w-full max-w-md grid-cols-2 items-center justify-center rounded-[144px]  border-btnblue border-[1px] h-[45px] text-btnblue font-bold">
@@ -58,7 +58,7 @@ export default function HairAnalysis() {
 const MobileVerion = () => {
   return (
     <>
-      <div className="md:bg-yellow bg-[#f9f3ce] py-6  md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px] mt-5 ">
+      {/* <div className="md:bg-yellow bg-[#f9f3ce] py-6  md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px]  ">
         <p className="text-[#1E2A4A] text-[25px] text-center font-semibold hidden md:block">
           Hair Health Report for Naveen
         </p>
@@ -140,9 +140,9 @@ const MobileVerion = () => {
             </ul>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
-      <div className="md:bg-yellow bg-[#f9f3ce] py-4  md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px] mt-5 md:hidden">
+      <div className="md:bg-yellow bg-[#f9f3ce] py-4 md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px] md:hidden mb-3">
         <p className="text-[#1E2A4A] text-[25px] text-center font-semibold">
           Diet Plans
         </p>
@@ -391,10 +391,10 @@ const Analysis = () => {
     <>
       <div className="hidden md:block">
         <div className="text-center my-10 px-5 pb-12">
-          <h1 className="text-2xl font-semibold mb-3">
+          <h1 className="text-2xl font-semibold mb-2">
             Personalised Diet Plan
           </h1>
-          <h2 className="text-xl font-normal mb-3">
+          <h2 className="text-xl font-normal mb-2">
             Nourish Your Hair from Within
           </h2>
           <p className=" text-btnblue">

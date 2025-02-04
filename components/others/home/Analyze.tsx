@@ -1,13 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function Analyze() {
-  const [activeIndex, setActiveIndex] = React.useState(0);
+  // const [activeIndex, setActiveIndex] = React.useState(0);
 
-  const buttons = ["Lorem", "Lorem"];
+  // const buttons = ["Lorem", "Lorem"];
 
   return (
     <div className="md:hidden bg-[#eaeaea] rounded-[48px] my-10 py-16">
@@ -15,7 +15,7 @@ export default function Analyze() {
         Analyse Deeply
       </h2>
 
-      <div className="flex justify-center gap-3">
+      {/* <div className="flex justify-center gap-3">
         {buttons.map((text, index) => (
           <Button
             key={index}
@@ -32,14 +32,14 @@ export default function Analyze() {
             {text}
           </Button>
         ))}
-      </div>
+      </div> */}
 
       <Image
         src="/analyze.png"
         alt="progress"
         width={500}
         height={500}
-        className="px-10 m-auto mt-16"
+        className="px-10 m-auto mt-10"
       />
       <Image
         src="/analyze2.png"

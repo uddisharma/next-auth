@@ -60,22 +60,22 @@ export const reportData3: {
   {
     image: "/report/Stress.jpg",
     heading1: "Avoid stress",
-    heading2: "Drink at least 2–3 liters of water daily.",
+    heading2: "",
   },
   {
     image: "/report/Sleep.avif",
     heading1: "Quality Sleep",
-    heading2: "Ensure 7–8 hours of quality sleep.",
+    heading2: "",
   },
   {
     image: "/report/no-smoking-1298904_1280.webp",
     heading1: "Quit Smoking",
-    heading2: "Minimize the use of blow dryers and flat irons",
+    heading2: "",
   },
   {
     image: "/report/hair-care.avif",
     heading1: "Start Hair care",
-    heading2: "Minimize the use of blow dryers and flat irons",
+    heading2: "",
   },
 ];
 

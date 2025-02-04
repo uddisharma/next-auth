@@ -4,13 +4,21 @@ export default function WhyChooseUs() {
       <h2 className="text-2xl font-semibold mb-6">Why Choose Our AI Model?</h2>
       <ul className="space-y-3">
         <li>
-          • Automatic Machine Learning Models: Built on thousands of AI Rules,
-          Patterns and Algorithms
+          1. Advanced Machine Learning Models: Built on TensorFlow and PyTorch
+          frameworks for robust and scalable performance.
         </li>
-        <li>• Deep Learning Neural Networks with 98% precision</li>
-        <li>• Highly trained expert models</li>
-        <li>• Regular updates and improvements</li>
-        <li>• Comprehensive analysis and detailed reports</li>
+        <li>
+          2. Real-Time Processing: Inference times as low as 500ms ensure
+          instant results.
+        </li>
+        <li>
+          3. High Accuracy: Achieves over 95% precision in bald spot detection
+          and 90% accuracy in density analysis.
+        </li>
+        <li>
+          4. Privacy-First Design: Fully GDPR-compliant with end-to-end
+          encryption.
+        </li>
       </ul>
     </section>
   );

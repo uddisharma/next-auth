@@ -60,10 +60,10 @@ const Work = () => {
                     How we work ?
                   </h1>
                   <p className="text-left text-black">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Architecto ducimus veniam vitae magnam, tempora quia numquam
-                    nulla, fugiat in fuga tempore ipsum ullam. Quo et assumenda
-                    corporis praesentium maxime reiciendis?
+                    Get tailored hair care treatments based on advanced hair and
+                    scalp analysis. Get tailored hair care treatments based on
+                    advanced hair and scalp analysis.Get tailored hair care
+                    treatments based on advanced hair and scalp analysis.
                   </p>
                   <div className=" mt-4">
                     <Link href={`/analyze`}>
@@ -84,7 +84,7 @@ const Work = () => {
                 <div className="flex justify-center align-middle items-center h-full pt-5">
                   <div className="bg-yellow text-center p-6 rounded-[38px] shadow-md border-[1px] border-black py-12 px-10">
                     <h3 className="text-[18px] text-btnblue font-semibold">
-                      AI-Driven Insights
+                      Expert Guidance
                     </h3>
                     <p className="text-gray-700 mt-2">
                       Precision diagnostics for hair health.
@@ -112,7 +112,7 @@ const Work = () => {
               <div className="flex justify-center align-middle items-center h-full py-5">
                 <div className="bg-yellow text-center p-6 rounded-[38px] shadow-md border-[1px] border-black py-12 px-10 my-10">
                   <h3 className="text-[18px] text-btnblue font-semibold">
-                    AI-Driven Insights
+                    Tailored Solutions
                   </h3>
                   <p className="text-gray-700 mt-2">
                     Precision diagnostics for hair health.

@@ -3,6 +3,7 @@ import Image from "next/image";
 interface ProcessCardProps {
   number: number;
   title: string;
+  heading: string;
   content: string[];
   imageSrc: string;
   imageAlt: string;
@@ -12,10 +13,11 @@ interface ProcessCardProps {
 export default function ProcessCard({
   number,
   title,
+  heading,
   content,
   imageSrc,
   imageAlt,
-  bgColor = number % 2 === 0 ? "" : "bg-yellow",
+  bgColor = number % 2 === 1 ? "" : "bg-yellow",
 }: ProcessCardProps) {
   const isWhiteBackground = bgColor === "";
 
@@ -44,7 +46,8 @@ export default function ProcessCard({
               <h3 className="text-xl font-semibold mb-4">
                 {number}. {title}
               </h3>
-              <ul className="space-y-2">
+              <p className="pb-3 text-btnblue">{heading}</p>
+              <ul className="space-y-2 ml-4">
                 {content.map((item, index) => (
                   <li key={index} className="text-gray-700">
                     • {item}
@@ -58,18 +61,19 @@ export default function ProcessCard({
           className={`${isWhiteBackground ? "order-2" : "order-1 md:order-2"}`}
         >
           {isWhiteBackground ? (
-            <>
+            <div className="bg-white h-full p-8 rounded-[50px]">
               <h3 className="text-xl font-semibold mb-4">
                 {number}. {title}
               </h3>
-              <ul className="space-y-2">
+              <p className="pb-3 text-gray-700">{heading}</p>
+              <ul className="space-y-2 ml-4">
                 {content.map((item, index) => (
-                  <li key={index} className="text-gray-700">
+                  <li key={index} className="text-btnblue">
                     • {item}
                   </li>
                 ))}
               </ul>
-            </>
+            </div>
           ) : (
             <div className="flex justify-center">
               <div className="relative">

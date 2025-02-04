@@ -75,7 +75,13 @@ const Hero = () => {
         </p>
         <div className="flex flex-col justify-center items-center space-y-8 w-full pb-5">
           <Link href="/analyze">
-            <button className="px-6 w-[250px] py-3 text-white bg-btnblue rounded-[12px] hover:opacity-90 m-auto shadow-[rgba(0,_0,_0,_0.25)_0px_54px_55px,_rgba(0,_0,_0,_0.12)_0px_-12px_30px,_rgba(0,_0,_0,_0.12)_0px_4px_6px,_rgba(0,_0,_0,_0.17)_0px_12px_13px,_rgba(0,_0,_0,_0.09)_0px_-3px_5px]">
+            <button
+              style={{
+                boxShadow:
+                  "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
+              }}
+              className="px-6 py-3 text-white bg-btnblue rounded-[12px] hover:opacity-90 border-t-2 border-t-[#EDDE79] border-b-2 border-b-btnblue/90"
+            >
               Get Your Hair Analysis
             </button>
           </Link>
