@@ -12,7 +12,7 @@ const Categories = () => {
   };
 
   return (
-    <section className="bg-[#1E2A4A] py-16 my-10">
+    <section className="bg-btnblue py-16 my-10">
       <div className="container mx-auto">
         <h2 className="text-2xl text-white mb-8 px-16">Categories</h2>
         <div className="flex gap-4 flex-wrap pb-4 no-scrollbar justify-center">
@@ -21,7 +21,7 @@ const Categories = () => {
               onClick={() => handleCategory(category.name)}
               key={i}
               variant="outline"
-              className="border-yellow hover:bg-yellow text-btnblue whitespace-nowrap min-w-[120px]"
+              className="bg-btnblue text-yellow whitespace-nowrap min-w-[120px] border-yellow font-semibold"
             >
               {category?.name}
             </Button>

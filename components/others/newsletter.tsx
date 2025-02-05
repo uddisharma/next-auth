@@ -35,8 +35,10 @@ const Newsletter = () => {
   return (
     <section className="bg-btnblue py-20 mb-10 flex justify-center">
       <div className="container px-4 text-center max-w-lg">
-        <h2 className="text-2xl text-white mb-2">Sign up to our Newsletter</h2>
-        <p className="text-white/80 mb-8">
+        <h2 className="text-[30px] text-white mb-2 font-semibold">
+          Sign up to our Newsletter
+        </h2>
+        <p className="text-white/80 mb-8 text-[15px] mt-2">
           Stay up to date with the latest news, announcements, and articles
         </p>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -44,7 +46,7 @@ const Newsletter = () => {
             <Input
               {...register("email")}
               placeholder="Enter your email"
-              className="bg-transparent border-white/20 text-white placeholder:text-white/50 p-5 w-full"
+              className="bg-transparent border-white text-white placeholder:text-white/50 p-5 w-full placeholder:text-white"
             />
             <Button
               disabled={isSubmitting}
@@ -55,7 +57,7 @@ const Newsletter = () => {
             </Button>
           </div>
           {errors.email && (
-            <p className="mt-4 text-left text-red-500">
+            <p className="mt-2 text-left text-red-500">
               {errors.email.message}
             </p>
           )}

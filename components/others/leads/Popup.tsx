@@ -45,11 +45,14 @@ export default function SubscriptionPopup() {
             {/* Privacy Notice */}
             <p className="text-white/90 text-center text-sm md:text-base">
               By submitting, you're agreeing to our{" "}
-              <a href="#" className="underline hover:text-yellow">
+              <a href="/privacy-policy" className="underline hover:text-yellow">
                 Privacy Policy
               </a>{" "}
               and{" "}
-              <a href="#" className="underline hover:text-yellow">
+              <a
+                href="/terms-conditions"
+                className="underline hover:text-yellow"
+              >
                 Terms of Services
               </a>
             </p>

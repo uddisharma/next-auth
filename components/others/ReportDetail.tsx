@@ -38,9 +38,9 @@ export default function ReportDetails({ report }: { report: Report }) {
                 Detailed view of the report
               </CardDescription>
             </div>
-            <div className="flex justify-end space-x-4">
+            {/* <div className="flex justify-end space-x-4">
               <Button variant="outline">Export Report</Button>
-            </div>
+            </div> */}
           </div>
         </CardHeader>
         <CardContent>

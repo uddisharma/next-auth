@@ -88,7 +88,7 @@ export function SubscriptionForm({
         <Button
           type="submit"
           disabled={isPending}
-          className="w-full h-14 text-[#1B2537] bg-[#EBE086] hover:bg-[#EBE086]/90 text-lg font-semibold"
+          className="w-full h-14 text-[#1B2537] bg-yellow hover:bg-yellow/90 text-lg font-semibold"
           size="lg"
         >
           {isPending ? "Submitting..." : "Let's Go!"}

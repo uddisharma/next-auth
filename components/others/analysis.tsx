@@ -97,12 +97,12 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
           </div>
           <div>
             <ProgressDots total={data.length} current={currentStep} />
-            <div className="space-y-14 mt-16">
-              <div className="space-y-2">
+            <div className="space-y-10 mt-16">
+              <div className="space-y-6">
                 <h1 className="text-2xl font-bold text-gray-900">
                   {currentQuestion.text}
                 </h1>
-                <p className="text-gray-600">
+                <p className="mt-4 text-btnblue font-normal">
                   To get started, let us know your gender to provide insights
                   tailored to your unique hair profile.
                 </p>
@@ -181,7 +181,7 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
                   )}
                 </div>
                 {errors && (
-                  <p className="text-red-500 text-xs mt-5">{errors}</p>
+                  <p className="text-red-500 text-xs mt-3">{errors}</p>
                 )}
               </div>
             </div>

@@ -97,7 +97,7 @@ export default function AboutUs() {
             Yes, appearance matters in today’s world. And feeling good about
             your appearance will only make you confident about yourself.
           </p>
-          <p>
+          <p className="pb-16">
             We want to foster a community where men can come together and invest
             in their well-being. So that, one day, men will wear caps as a cover
             against sunlight, and not against insecurity.

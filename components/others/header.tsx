@@ -32,7 +32,7 @@ const Header = async ({ className }: { className?: string }) => {
             <Link href="/auth">
               <Button
                 variant="default"
-                className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px] py-3"
+                className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px] py-5"
               >
                 Sign up / Log in
               </Button>

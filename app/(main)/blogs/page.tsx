@@ -119,7 +119,7 @@ export default async function Blogs({ searchParams }: PageProps) {
                     </span>
                   </div>
                   <h3 className="text-2xl font-semibold">
-                    {latestBlog?.title ?? "Title"}
+                    {latestBlog?.title?.slice(0, 70) ?? "Title"}
                   </h3>
                   <p
                     className="text-black mt-2"
@@ -131,7 +131,7 @@ export default async function Blogs({ searchParams }: PageProps) {
                 <Link href={`/blogs/${latestBlog?.id}`}>
                   <Button
                     variant="default"
-                    className="self-start mt-5 bg-btnblue text-white hover:bg-btnblue/80 p-[10px_20px] text-[14px] rounded-[10px]"
+                    className="self-start mt-5 bg-btnblue text-white hover:bg-btnblue/80 p-[8px_12px] text-[14px] rounded-[10px]"
                   >
                     Read More
                   </Button>
@@ -178,7 +178,7 @@ export default async function Blogs({ searchParams }: PageProps) {
                           </span>
                         </div>
                         <h3 className="text-xl font-semibold mb-3">
-                          {blog?.title}
+                          {blog?.title?.slice(0, 30) ?? "Title"}
                         </h3>
                         <p
                           className="text-black text-sm mb-4 flex-grow"
@@ -190,7 +190,7 @@ export default async function Blogs({ searchParams }: PageProps) {
                         <Link href={`/blogs/${blog?.id}`}>
                           <Button
                             variant="default"
-                            className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_12px] text-[14px] rounded-[11px]"
+                            className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[8px_12px] text-[14px] rounded-[11px] "
                           >
                             Read More
                           </Button>

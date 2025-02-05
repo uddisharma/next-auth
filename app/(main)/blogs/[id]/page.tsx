@@ -105,12 +105,9 @@ export default async function BlogPage({ params }: PageProps) {
   return (
     <div className="min-h-screen flex flex-col md:px-24 mb-10">
       <main className="flex-grow container mx-auto px-4 py-2 md:py-8">
-        <Link
-          href="/articles"
-          className="inline-flex items-center text-[#115FD6] mb-3 hover:text-gray-900"
-        >
+        <p className="inline-flex items-center text-[#115FD6] mb-3 hover:text-gray-900">
           {blog?.category ?? "Category"}
-        </Link>
+        </p>
         <div>
           <article>
             {/* Article Header */}
@@ -318,9 +315,11 @@ export default async function BlogPage({ params }: PageProps) {
                   <p className="text-[22px] text-black mb-10">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   </p>
-                  <Button className="px-6 py-2  bg-btnblue text-white hover:bg-btnblue/80">
-                    Get Started
-                  </Button>
+                  <Link href="/analyze">
+                    <Button className="px-6 py-2  bg-btnblue text-white hover:bg-btnblue/80">
+                      Get Started
+                    </Button>
+                  </Link>
                 </div>
               </aside>
             </div>

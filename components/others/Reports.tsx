@@ -70,7 +70,7 @@ export default function ReportsList({ reports }: { reports: Report[] }) {
                           View Report
                         </Button>
                       </Link>
-                      <Link href={`/profile/my-reports/${report.id}`}>
+                      {/* <Link href={`/profile/my-reports/${report.id}`}>
                         <Button variant="outline" size="sm">
                           <FileText className="mr-2 h-4 w-4" />
                           View Analysis
@@ -81,7 +81,7 @@ export default function ReportsList({ reports }: { reports: Report[] }) {
                           <FileText className="mr-2 h-4 w-4" />
                           Export
                         </Button>
-                      </Link>
+                      </Link> */}
                     </div>
                     <div className="md:hidden">
                       <Popover>
@@ -102,7 +102,7 @@ export default function ReportsList({ reports }: { reports: Report[] }) {
                                 View Report
                               </Button>
                             </Link>
-                            <Link href={`/profile/my-reports/${report.id}`}>
+                            {/* <Link href={`/profile/my-reports/${report.id}`}>
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -121,7 +121,7 @@ export default function ReportsList({ reports }: { reports: Report[] }) {
                                 <FileText className="mr-2 h-4 w-4" />
                                 Export
                               </Button>
-                            </Link>
+                            </Link> */}
                           </div>
                         </PopoverContent>
                       </Popover>

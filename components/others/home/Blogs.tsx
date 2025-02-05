@@ -66,7 +66,7 @@ const Blogs = async () => {
                         : ""}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 min-h-[50px]">
+                  <h3 className="text-xl font-semibold mb-3 min-h-[55px]">
                     {blog?.title}
                   </h3>
                   <p

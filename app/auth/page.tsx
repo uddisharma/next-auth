@@ -56,7 +56,7 @@ export default function SignUpPage() {
               <br />
               you can
               <Link
-                href="/login"
+                href="/auth"
                 className="text-[#115FD6] hover:underline ml-1 font-semibold"
               >
                 Login here !
@@ -72,7 +72,7 @@ export default function SignUpPage() {
                   Contact Number
                 </label>
                 <div className="flex gap-3">
-                  <div className="flex items-center gap-2 border border-black rounded-[11px] px-3 py-2.5 bg-white w-[90px] h-[40px] md:h-[35px]">
+                  <div className="flex items-center gap-2 border border-black rounded-[11px] px-3 py-2.5 bg-white w-[90px] h-[40px] md:h-[40px]">
                     <svg
                       className="w-5 h-5 text-gray-400"
                       viewBox="0 0 24 24"
@@ -92,7 +92,7 @@ export default function SignUpPage() {
                     type="tel"
                     placeholder="00000 00000"
                     maxLength={10}
-                    className="flex-1 border border-black rounded-[11px] px-4 py-2.5 focus:outline-none focus:border-[#1E1B4B] h-[40px] md:h-[35px] text-center w-full"
+                    className="flex-1 border border-black rounded-[11px] px-4 py-2.5 focus:outline-none focus:border-[#1E1B4B] h-[40px] md:h-[40px] text-center w-full"
                     {...register("phoneNumber")}
                   />
                 </div>
@@ -107,7 +107,7 @@ export default function SignUpPage() {
 
               <button
                 type="submit"
-                className="w-full bg-[#1E1B4B] text-white py-3.5 rounded-lg hover:bg-btnblue transition-colors"
+                className="w-full bg-[#1E1B4B] text-white py-3 rounded-lg hover:bg-btnblue transition-colors"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Verifying..." : "Verify OTP"}
@@ -126,17 +126,16 @@ export default function SignUpPage() {
         {/* Right Section */}
         <div className="hidden lg:block w-1/2 bg-yellow relative rounded-lg">
           <div className="absolute top-8 right-8">
-            <p className="text-gray-600 text-lg">+910000000000</p>
+            <p className="text-gray-600 text-lg">+91 8861452659</p>
           </div>
 
           <div className="absolute left-0 right-0 top-[75%] bottom-32 text-left w-full px-10">
-            <h2 className="text-[35px] text-btnblue">Sign up to name</h2>
-            <p className="text-btnblue text-lg">Lorem Ipsum is simply</p>
+            <h2 className="text-[35px] text-btnblue">Sign up to Mr. Mard</h2>
+            <p className="text-btnblue text-lg">Get started with us</p>
           </div>
-
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] w-[300px] h-[300px]">
+          <div className="absolute top-1/2 left-1/2 -translate-x-[40%] -translate-y-[60%] w-[400px] h-[400px]">
             <Image
-              src="/register.png"
+              src="/auth.png"
               alt="Person working at desk illustration"
               width={300}
               height={270}

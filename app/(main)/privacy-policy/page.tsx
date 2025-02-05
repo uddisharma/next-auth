@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
         </p>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Information We Collect</h3>
+          <h3 className="text-[22px] mb-3">Information We Collect</h3>
           <ul className="list-disc pl-8 mb-3">
             <li>
               Contact Information: Name, email address, phone number, shipping
@@ -31,7 +31,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">How We Use Your Information</h3>
+          <h3 className="text-[22px] mb-3">How We Use Your Information</h3>
           <ul className="list-disc pl-8 mb-3">
             <li>To fulfill your orders and process payments.</li>
             <li>
@@ -48,7 +48,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Data Sharing and Disclosure</h3>
+          <h3 className="text-[22px] mb-3">Data Sharing and Disclosure</h3>
           <ul className="list-disc pl-8 mb-3">
             <li>
               We will not sell, share, or disclose your Personal Information to
@@ -68,7 +68,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Data Retention</h3>
+          <h3 className="text-[22px] mb-3">Data Retention</h3>
           <p>
             We will retain your Personal Information for as long as necessary to
             fulfill the purposes described in this Privacy Policy, unless a
@@ -77,7 +77,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Your Privacy Choices</h3>
+          <h3 className="text-[22px] mb-3">Your Privacy Choices</h3>
           <ul className="list-disc pl-8 mb-3">
             <li>
               You can access and update your Personal Information through your
@@ -91,7 +91,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Security</h3>
+          <h3 className="text-[22px] mb-3">Security</h3>
           <p>
             We take reasonable measures to protect your Personal Information
             from unauthorized access, disclosure, alteration, or destruction.
@@ -101,7 +101,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Children’s Privacy</h3>
+          <h3 className="text-[22px] mb-3">Children’s Privacy</h3>
           <p>
             Our Platform is not intended for children under the age of 13. We do
             not knowingly collect Personal Information from children under 13.
@@ -109,7 +109,7 @@ export default function PrivacyPolicy() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Changes to this Privacy Policy</h3>
+          <h3 className="text-[22px] mb-3">Changes to this Privacy Policy</h3>
           <p>
             We may update this Privacy Policy from time to time by posting the
             revised version on the Platform. You are advised to review this
@@ -117,8 +117,8 @@ export default function PrivacyPolicy() {
           </p>
         </section>
 
-        <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Contact Us</h3>
+        <section className="mb-16">
+          <h3 className="text-[22px] mb-3">Contact Us</h3>
           <p>
             If you have any questions about this Privacy Policy, please contact
             us at{" "}

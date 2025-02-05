@@ -1,6 +1,9 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { motion } from "framer-motion";
+
 const Hero = () => {
   return (
     <div className="bg-white pb-8">
@@ -26,18 +29,27 @@ const Hero = () => {
           </p>
           <div className="flex flex-col space-y-8 w-[250px] max-w-[250px]">
             <Link href="/analyze">
-              <button
+              <motion.button
+                initial={{ y: -10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow:
+                    "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
+                }}
+                whileTap={{ scale: 0.95 }}
                 style={{
                   boxShadow:
                     "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
                 }}
-                className="px-6 py-3 text-white bg-btnblue rounded-[12px] hover:opacity-90 border-t-2 border-t-[#EDDE79] border-b-2 border-b-btnblue/90"
+                className="px-10 py-3 text-white bg-[#1b1139] rounded-[15px] border-t-2 border-t-[#EDDE79] border-b-2 border-b-btnblue/90 font-normal"
               >
                 Get Your Hair Analysis
-              </button>
+              </motion.button>
             </Link>
             <Link href="/technology">
-              <button className="px-6 py-[10px] w-[215px] text-btnblue bg-yellow border-black border-[1.5px] rounded-[12px]  hover:opacity-90 ">
+              <button className="px-14 py-[10px] w-[245px] text-[#1b1139] bg-yellow border-black border-[1.5px] rounded-[12px]  hover:opacity-90 font-normal">
                 Learn More
               </button>
             </Link>
@@ -75,15 +87,24 @@ const Hero = () => {
         </p>
         <div className="flex flex-col justify-center items-center space-y-8 w-full pb-5">
           <Link href="/analyze">
-            <button
+            <motion.button
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow:
+                  "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
+              }}
+              whileTap={{ scale: 0.95 }}
               style={{
                 boxShadow:
                   "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
               }}
-              className="px-6 py-3 text-white bg-btnblue rounded-[12px] hover:opacity-90 border-t-2 border-t-[#EDDE79] border-b-2 border-b-btnblue/90"
+              className="px-6 py-3 text-white bg-[#1b1139] rounded-[15px] border-t-2 border-t-[#EDDE79] border-b-2 border-b-btnblue/90 font-normal"
             >
               Get Your Hair Analysis
-            </button>
+            </motion.button>
           </Link>
         </div>
         <div className="bg-white rounded-[30px] overflow-hidden mx-2 mt-5">

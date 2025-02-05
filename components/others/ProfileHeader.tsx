@@ -3,6 +3,7 @@ import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Logout from "@/components/others/Logout";
+import Link from "next/link";
 
 const ProfileHeader = ({ user }: { user: any }) => {
   const currentDate = new Date().toLocaleDateString("en-US", {
@@ -32,7 +33,7 @@ const ProfileHeader = ({ user }: { user: any }) => {
         </div>
 
         <div className="flex items-center gap-4 w-full md:w-auto">
-          <div className="relative w-full md:w-[300px]">
+          {/* <div className="relative w-full md:w-[300px]">
             <Input
               type="search"
               placeholder="Search"
@@ -51,7 +52,13 @@ const ProfileHeader = ({ user }: { user: any }) => {
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               />
             </svg>
-          </div>
+          </div> */}
+
+          <Link href="/contact-us">
+            <div className="flex items-center justify-center w-[250px] h-[45px] md:h-[35px] bg-btnblue text-white text-center rounded-md border-none">
+              Need Help?
+            </div>
+          </Link>
 
           <Button className="hidden md:flex" variant="ghost" size="icon">
             <Bell className="h-5 w-5" />

@@ -50,7 +50,7 @@ const Logout = ({
           </div>
         </div>
         <div className="mt-6 space-y-4">
-          {pathName === "/profile" && (
+          {pathName.startsWith("/profile") && (
             <Link
               href="/"
               className="block text-gray-800 text-sm font-medium hover:text-gray-900"

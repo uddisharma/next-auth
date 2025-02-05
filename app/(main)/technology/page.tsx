@@ -133,7 +133,7 @@ export default function Home() {
           </p>
           <Button
             size="lg"
-            className="bg-btnblue hover:bg-btnblue/80 rounded-[12px] text-white py-3"
+            className="bg-btnblue hover:bg-btnblue rounded-[12px] text-white py-5"
           >
             Get free trial access
           </Button>

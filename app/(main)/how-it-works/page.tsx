@@ -69,9 +69,9 @@ export default function HowWeDoIt() {
 
         <section className="mb-12">
           <h2 className="text-3xl  mb-4">How We Do It</h2>
-          <ol className="list-decimal pl-5 space-y-10">
+          <ol className=" pl-5 space-y-10">
             <li>
-              <h3 className="text-xl ">Upload Your Photo</h3>
+              <h3 className="text-xl ">Step 1: Upload Your Photo</h3>
               <p>
                 Users upload a clear photo of their scalp to our secure
                 platform. The AI begins analyzing key scalp metrics within
@@ -79,7 +79,7 @@ export default function HowWeDoIt() {
               </p>
             </li>
             <li>
-              <h3 className="text-xl ">AI-Powered Analysis</h3>
+              <h3 className="text-xl ">Step 2: AI-Powered Analysis</h3>
               <p>The model scans for:</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Bald spots and their dimension</li>
@@ -88,7 +88,7 @@ export default function HowWeDoIt() {
               </ul>
             </li>
             <li>
-              <h3 className="text-xl ">Generate Insights</h3>
+              <h3 className="text-xl ">Step 3: Generate Insights</h3>
               <p>
                 Using dermatological benchmarks and machine learning algorithms,
                 the AI delivers:
@@ -102,7 +102,7 @@ export default function HowWeDoIt() {
               </ul>
             </li>
             <li>
-              <h3 className="text-xl ">Monitor Progress</h3>
+              <h3 className="text-xl ">Step 4: Monitor Progress</h3>
               <p>
                 Our platform allows users to upload follow-up photos
                 periodically. The AI compares new data with past assessments to
@@ -110,7 +110,7 @@ export default function HowWeDoIt() {
               </p>
             </li>
             <li>
-              <h3 className="text-xl ">Expert Consultation</h3>
+              <h3 className="text-xl ">Step 5: Expert Consultation</h3>
               <p>
                 For advanced guidance, users can connect with our specialists
                 who review AI reports and suggest tailored solutions.
@@ -119,7 +119,7 @@ export default function HowWeDoIt() {
           </ol>
         </section>
 
-        <section className="mb-12">
+        <section className="mb-12 pt-16">
           <h2 className="text-3xl  mb-10">Results That Matter</h2>
           <h3 className="text-2xl  mb-2">Case Study Example: Client A</h3>
           <ul className="list-disc pl-5 space-y-2">
@@ -160,7 +160,7 @@ export default function HowWeDoIt() {
 
           <Button
             variant="default"
-            className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[15px_20px] text-[14px] rounded-[10px]"
+            className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[15px_20px] text-[14px] rounded-[10px] py-5"
           >
             Get Analysis
           </Button>

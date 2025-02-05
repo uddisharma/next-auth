@@ -12,6 +12,7 @@ import { ContactFormData, contactSchema } from "@/public/schemas";
 import { useTransition } from "react";
 import { submitContactForm } from "@/actions/contacts";
 import { toast } from "sonner";
+import { IconBrandInstagram, IconBrandYoutube } from "@tabler/icons-react";
 
 export default function ContactPage() {
   const [isPending, startTransition] = useTransition();
@@ -50,7 +51,15 @@ export default function ContactPage() {
 
         <div className="grid md:grid-cols-2 gap-8 bg-white p-5 w-full">
           {/* Contact Information */}
-          <div className="bg-[#011C2B] text-white p-8 rounded-lg">
+          <div
+            style={{
+              backgroundImage: 'url("/contact-us.png")',
+              backgroundSize: "250px",
+              backgroundPosition: "right bottom",
+              backgroundRepeat: "no-repeat",
+            }}
+            className="bg-[#011C2B] text-white p-8 rounded-lg"
+          >
             <h2 className="text-2xl mb-6">Contact Information</h2>
             <p className="text-gray-300 mb-8">
               Say something to start a live chat!
@@ -59,39 +68,42 @@ export default function ContactPage() {
             <div className="space-y-8 md:space-y-12 md:mt-32">
               <div className="flex items-center gap-4">
                 <Phone className="h-5 w-5" />
-                <span>+910000000000</span>
+                <span>+91 8861452659</span>
               </div>
               <div className="flex items-center gap-4">
                 <Mail className="h-5 w-5" />
-                <span>mrmard11233@gmail.com</span>
+                <span>contactus@mrmard.com</span>
               </div>
               <div className="flex items-center gap-4">
-                <MapPin className="h-5 w-5" />
-                <span>Bengaluru, India</span>
+                <MapPin className="h-9 w-9" />
+                <span>
+                  302, 12th main, Mahadeshwara Nagar, Stage 2, BTM Layout,
+                  Bengaluru, Karnataka, 560076
+                </span>
               </div>
             </div>
 
             <div className="flex gap-4 mt-10 md:mt-40">
               <a
-                href="#"
+                href={`https://youtube.com/@mrmard_official?si=wWuuxQwTgVgOtnND`}
+                target="_blank"
                 className="bg-white/10 p-2 rounded-full hover:bg-white/20"
               >
-                <span className="sr-only">Facebook</span>
-                <div className="w-6 h-6 bg-yellow rounded-full" />
+                <IconBrandYoutube className="w-5 h-5 rounded-full" />
               </a>
               <a
-                href="#"
+                href={`https://www.instagram.com/mr.mardofficial`}
+                target="_blank"
                 className="bg-white/10 p-2 rounded-full hover:bg-white/20"
               >
-                <span className="sr-only">Instagram</span>
-                <div className="w-6 h-6 bg-white rounded-full" />
+                <IconBrandInstagram className="w-5 h-5 rounded-full" />
               </a>
               <a
-                href="#"
+                href={`https://youtube.com/@mrmard_official?si=wWuuxQwTgVgOtnND`}
+                target="_blank"
                 className="bg-white/10 p-2 rounded-full hover:bg-white/20"
               >
-                <span className="sr-only">Twitter</span>
-                <div className="w-6 h-6 bg-yellow rounded-full" />
+                <IconBrandYoutube className="w-5 h-5 rounded-full" />
               </a>
             </div>
           </div>
@@ -157,35 +169,6 @@ export default function ContactPage() {
                 )}
               </div>
             </div>
-
-            {/* <div className="space-y-5">
-              <Label>Select Subject?</Label>
-              <RadioGroup
-                defaultValue="general1"
-                className="flex flex-wrap gap-4"
-                {...register("subject")}
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="general1" id="general1" />
-                  <Label htmlFor="general1">General Inquiry</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="general2" id="general2" />
-                  <Label htmlFor="general2">General Inquiry</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="general3" id="general3" />
-                  <Label htmlFor="general3">General Inquiry</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="general4" id="general4" />
-                  <Label htmlFor="general4">General Inquiry</Label>
-                </div>
-              </RadioGroup>
-              {errors.subject && (
-                <p className="text-red-500 text-sm">{errors.subject.message}</p>
-              )}
-            </div> */}
 
             <div className="space-y-5">
               <Label>Select Subject?</Label>

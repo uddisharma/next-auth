@@ -1,5 +1,9 @@
-import { IconBrandInstagram, IconBrandYoutube } from "@tabler/icons-react";
-import { Phone, UtilityPole } from "lucide-react";
+import {
+  IconBrandInstagram,
+  IconBrandYoutube,
+  IconLocation,
+} from "@tabler/icons-react";
+import { Phone } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -45,17 +49,26 @@ const Footer = () => {
             </div>
             <div className="text-sm text-white/80 space-y-2 m-auto grid grid-cols-2 justify-between gap-x-10 mt-5 md:block">
               <p className="flex gap-4 ">
-                <UtilityPole className="w-4 h-4" /> Bengaluru, India
+                <IconLocation className="w-8 h-8" />
+                Flat no 302, dhyan residency, mahadeshwara layout, btm 2nd stage
               </p>
               <p className="flex gap-4 ">
-                <Phone className="w-4 h-4" /> 0000000000
+                <Phone className="w-4 h-4" /> 8861452659
               </p>
-              <p className="flex gap-4 ">
-                <IconBrandInstagram className="w-4 h-4" /> Services
-              </p>
-              <p className="flex gap-4 ">
-                <IconBrandYoutube className="w-4 h-4" /> Services
-              </p>
+              <Link
+                href={`https://www.instagram.com/mr.mardofficial`}
+                target="_blank"
+                className="flex gap-4 "
+              >
+                <IconBrandInstagram className="w-5 h-5" /> Instagram
+              </Link>
+              <Link
+                href={`https://youtube.com/@mrmard_official?si=wWuuxQwTgVgOtnND`}
+                target="_blank"
+                className="flex gap-4 "
+              >
+                <IconBrandYoutube className="w-[18px] h-[18px]" /> Youtube
+              </Link>
             </div>
           </div>
           <div className="bg-yellow py-4 md:mx-6 px-4 rounded-[144px] md:mt-20">
@@ -105,17 +118,26 @@ const Footer = () => {
             </div>
             <div className="space-y-2 text-sm text-white/80">
               <p className="flex gap-4 ">
-                <UtilityPole className="w-4 h-4" /> Bengaluru, India
+                <IconLocation className="w-5 h-5" />
+                Flat no 302, dhyan residency, mahadeshwara layout, btm 2nd stage
               </p>
               <p className="flex gap-4 ">
-                <Phone className="w-4 h-4" /> 0000000000
+                <Phone className="w-4 h-4" /> 8861452659
               </p>
-              <p className="flex gap-4 ">
-                <IconBrandInstagram className="w-4 h-4" /> Services
-              </p>
-              <p className="flex gap-4 ">
-                <IconBrandYoutube className="w-4 h-4" /> Services
-              </p>
+              <Link
+                href={`https://www.instagram.com/mr.mardofficial`}
+                target="_blank"
+                className="flex gap-4 "
+              >
+                <IconBrandInstagram className="w-5 h-5" /> Instagram
+              </Link>
+              <Link
+                href={`https://youtube.com/@mrmard_official?si=wWuuxQwTgVgOtnND`}
+                target="_blank"
+                className="flex gap-4 "
+              >
+                <IconBrandYoutube className="w-[18px] h-[18px]" /> Youtube
+              </Link>
             </div>
           </div>
           <div className="bg-yellow py-4 md:mx-6 px-4 rounded-[144px] md:mt-20">

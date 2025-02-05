@@ -7,7 +7,7 @@ export default function TermsAndConditions() {
         <h2 className="text-[40px] mb-6 text-center">Terms and Conditions</h2>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Introduction</h3>
+          <h3 className="text-[22px] mb-3">Introduction</h3>
           <p>
             The terms “We” / “Us” / “Our”/”Company” individually and
             collectively refer to Mr. Mard and the terms “Visitor” / ”User”
@@ -22,7 +22,7 @@ export default function TermsAndConditions() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Use of Content</h3>
+          <h3 className="text-[22px] mb-3">Use of Content</h3>
           <p>
             All logos, brands, marks, and content appearing on this site are
             properties either owned or used under license by the business and/or
@@ -31,7 +31,7 @@ export default function TermsAndConditions() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Acceptable Website Use</h3>
+          <h3 className="text-[22px] mb-3">Acceptable Website Use</h3>
           <h4 className="text-[24px] mb-2">Security Rules</h4>
           <p>
             Visitors are prohibited from violating or attempting to violate the
@@ -47,7 +47,7 @@ export default function TermsAndConditions() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Indemnity</h3>
+          <h3 className="text-[22px] mb-3">Indemnity</h3>
           <p>
             The User agrees to indemnify and hold harmless the Company, its
             officers, directors, employees, and agents from any claims arising
@@ -56,7 +56,7 @@ export default function TermsAndConditions() {
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px] mb-3">Liability</h3>
+          <h3 className="text-[22px] mb-3">Liability</h3>
           <p>
             The Company and its affiliates shall not be liable for any damages
             arising from the use or inability to use the service, including
@@ -64,8 +64,8 @@ export default function TermsAndConditions() {
           </p>
         </section>
 
-        <section className="mb-8">
-          <h3 className="text-[28px] mb-3">
+        <section className="mb-16">
+          <h3 className="text-[22px] mb-3">
             Disclaimer of Consequential Damages
           </h3>
           <p>

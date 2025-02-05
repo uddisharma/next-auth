@@ -404,7 +404,7 @@ const Analysis = () => {
         </div>
         <div className="flex flex-col space-y-10 mt-[-25px] blur-sm">
           <MealPlan heading="For Vegetarians" data={reportData1} />
-          <MealPlan heading="For Vegetarians" data={reportData1} />
+          <MealPlan heading="For Vegetarians" data={reportData2} />
         </div>
         <div className="text-center my-16 px-5">
           <h1 className="text-2xl font-semibold mb-2">
@@ -413,7 +413,7 @@ const Analysis = () => {
           <h2 className="text-xl font-normal mb-2">Small Habits, Big Impact</h2>
         </div>
         <div className="flex flex-col space-y-10 pb-12 blur-sm">
-          <MealPlan heading="For Vegetarians" data={reportData1} />
+          <MealPlan heading="For Vegetarians" data={reportData3} />
         </div>
       </div>
       <div className="md:hidden">
