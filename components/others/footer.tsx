@@ -6,7 +6,7 @@ import React from "react";
 const Footer = () => {
   return (
     <>
-      <footer className="bg-btnblue text-white rounded-[48px_48px_0_0] md:rounded-[144px_144px_0_0] hidden md:block">
+      <footer className="bg-btnblue text-white rounded-[48px_48px_0_0] md:rounded-[144px_144px_0_0] hidden md:block container m-auto">
         <div className="container mx-auto px-4 pt-16 pb-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 justify-center m-auto text-center md:text-left">
             <div className="m-auto">

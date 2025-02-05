@@ -3,93 +3,130 @@ export default function PrivacyPolicy() {
     <div className="text-black md:mx-40 mb-10">
       <main className="container mx-auto px-4 py-2 md:py-6">
         <h2 className="text-[40px] mb-6 text-center">Privacy Policy</h2>
-        <h3 className="text-[28px] mb-3">Lorem Ipsum</h3>
-        <p className="mb-8 ">
-          At Mr. Mard, we prioritize your privacy and are committed to
-          protecting the personal information you share with us. This Privacy
-          Policy explains how we collect, use, and safeguard your data.
+
+        <p className="mb-8">
+          This Privacy Policy describes how Mr. Mard (“we”, “us”, or “our”)
+          collects, uses, and discloses personal information (“Personal
+          Information”) in connection with your use of our website and services
+          (collectively, the “Platform”).
         </p>
 
         <section className="mb-8">
-          <h3 className="text-[28px]  mb-3">Information We Collect</h3>
-          <p className="mb-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            tincidunt augue eu turpis dignissim, non pulvinar nisl vehicula. We
-            collect the following types of information:
-          </p>
+          <h3 className="text-[28px] mb-3">Information We Collect</h3>
           <ul className="list-disc pl-8 mb-3">
             <li>
-              Personal Identification Information (e.g., name, email address,
-              phone number)
+              Contact Information: Name, email address, phone number, shipping
+              address, and billing address.
             </li>
-            <li>Photographic Data (images uploaded for analysis)</li>
-            <li>Usage Data (browsing behavior on our website)</li>
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <h3 className="text-[28px]  mb-3">How We Use Your Information</h3>
-          <p className="mb-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
-            eros nec justo vehicula fermentum. Your data is used to:
-          </p>
-          <ul className="list-disc pl-8 mb-3">
-            <li>Provide personalized recommendations based on AI analysis</li>
-            <li>Improve the functionality of our platform</li>
-            <li>Communicate updates and promotional offers</li>
-          </ul>
-        </section>
-
-        <section className="mb-8">
-          <h3 className="text-[28px]  mb-3">Sharing Your Information</h3>
-          <p className="mb-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            fringilla, magna eget hendrerit cursus, sapien nulla suscipit quam,
-            quis tincidunt odio libero id magna:
-          </p>
-          <ul className="list-disc pl-8 mb-3">
-            <li>We do not sell or share your data with third parties</li>
             <li>
-              Information may be shared with service providers to enhance our
-              offerings
+              Order Information: Products purchased, order history, payment
+              information (excluding full credit card details), and any
+              associated communication regarding your orders.
+            </li>
+            <li>
+              Technical Information: Device information, IP address, browsing
+              activity on the Platform, and cookies.
             </li>
           </ul>
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px]  mb-3">Data Security</h3>
+          <h3 className="text-[28px] mb-3">How We Use Your Information</h3>
+          <ul className="list-disc pl-8 mb-3">
+            <li>To fulfill your orders and process payments.</li>
+            <li>
+              To communicate with you about your orders, including order
+              confirmations, shipping updates, and customer service inquiries.
+            </li>
+            <li>
+              To personalize your experience on the Platform by recommending
+              products and content that may be of interest to you.
+            </li>
+            <li>To improve the Platform and our services.</li>
+            <li>To comply with legal and regulatory requirements.</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px] mb-3">Data Sharing and Disclosure</h3>
+          <ul className="list-disc pl-8 mb-3">
+            <li>
+              We will not sell, share, or disclose your Personal Information to
+              any third party for marketing purposes.
+            </li>
+            <li>
+              We may share your Personal Information with service providers who
+              assist us with order fulfillment, payment processing, and website
+              maintenance. These service providers will be contractually
+              obligated to protect your Personal Information.
+            </li>
+            <li>
+              We may disclose your information to law enforcement or other
+              government agencies as required by law or legal process.
+            </li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px] mb-3">Data Retention</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ac dolor
-            et felis gravida varius. We use industry-standard encryption and
-            security practices to protect your information.
+            We will retain your Personal Information for as long as necessary to
+            fulfill the purposes described in this Privacy Policy, unless a
+            longer retention period is required or permitted by law.
           </p>
         </section>
 
         <section className="mb-8">
-          <h3 className="text-[28px]  mb-3">Your Privacy Rights</h3>
-          <p className="mb-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non
-            tortor vitae purus pharetra tincidunt:
-          </p>
+          <h3 className="text-[28px] mb-3">Your Privacy Choices</h3>
           <ul className="list-disc pl-8 mb-3">
-            <li>Access, modify, or delete your personal data at any time</li>
-            <li>Opt-out of receiving marketing communications</li>
+            <li>
+              You can access and update your Personal Information through your
+              account settings on the Platform.
+            </li>
+            <li>
+              You can opt out of receiving marketing communications from us by
+              following the unsubscribe instructions in such communications.
+            </li>
           </ul>
         </section>
 
-        <section className="mb-5">
-          <h3 className="text-[28px]  mb-3">
-            Cookies and Tracking Technologies
-          </h3>
-          <p className="mb-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-            bibendum est eu lacus ullamcorper, sit amet gravida magna sodales.
-            We use cookies to:
+        <section className="mb-8">
+          <h3 className="text-[28px] mb-3">Security</h3>
+          <p>
+            We take reasonable measures to protect your Personal Information
+            from unauthorized access, disclosure, alteration, or destruction.
+            However, no internet transmission or electronic storage method is
+            100% secure.
           </p>
-          <ul className="list-disc pl-8">
-            <li>Analyze website traffic</li>
-            <li>Enhance user experience</li>
-          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px] mb-3">Children’s Privacy</h3>
+          <p>
+            Our Platform is not intended for children under the age of 13. We do
+            not knowingly collect Personal Information from children under 13.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px] mb-3">Changes to this Privacy Policy</h3>
+          <p>
+            We may update this Privacy Policy from time to time by posting the
+            revised version on the Platform. You are advised to review this
+            Privacy Policy periodically for any changes.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h3 className="text-[28px] mb-3">Contact Us</h3>
+          <p>
+            If you have any questions about this Privacy Policy, please contact
+            us at{" "}
+            <a href="mailto:contactus@mrmard.com" className="text-blue-600">
+              contactus@mrmard.com
+            </a>
+            .
+          </p>
         </section>
       </main>
     </div>
