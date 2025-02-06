@@ -66,8 +66,8 @@ const Blogs = async () => {
                         : ""}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 min-h-[55px]">
-                    {blog?.title}
+                  <h3 className="text-xl font-semibold mb-3">
+                    {blog?.title?.slice(0, 70) ?? ""}
                   </h3>
                   <p
                     className="text-black text-sm mb-4 flex-grow"
