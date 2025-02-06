@@ -12,7 +12,7 @@ export async function submitReport(reportData: ReportFormData) {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
@@ -57,7 +57,7 @@ export async function getReports() {
   const session = await currentUser();
 
   if (!session) {
-    return redirect("/auth/login");
+    return redirect("/auth");
   }
 
   const hasPermission = await checkPermission(
