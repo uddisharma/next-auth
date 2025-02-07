@@ -5,6 +5,7 @@ import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { currentUser } from "@/lib/auth";
 import Logout from "./Logout";
+import Image from "next/image";
 
 const Header = async ({ className }: { className?: string }) => {
   const sessions = await currentUser();
@@ -12,7 +13,7 @@ const Header = async ({ className }: { className?: string }) => {
     <header className={`py-5 ${className}`}>
       <div className="container mx-auto px-10 items-center justify-between hidden md:flex">
         <Link href="/" className="text-xl font-bold">
-          Mr. Mard
+          <Image src="/logo.png" alt="Mr. Mard" width={120} height={50} />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-black">
           <Link href="/technology">Our Technology</Link>
@@ -96,11 +97,8 @@ const Header = async ({ className }: { className?: string }) => {
         </Sheet>
 
         {/* Logo */}
-        <Link
-          href="/"
-          className="text-xl font-bold font-serif tracking-wide text-center flex-1"
-        >
-          Mr. Mard
+        <Link href="/">
+          <Image src="/logo.png" alt="Mr. Mard" width={120} height={50} />
         </Link>
 
         {/* Profile or Sign In */}

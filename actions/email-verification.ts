@@ -5,13 +5,17 @@ import { sendVerificationOTP } from "@/lib/mail";
 import { generateOtp } from "@/lib/otp";
 import { z } from "zod";
 
-export async function EmailVerification(phone: string, email: string) {
+export async function EmailVerification(
+  phone: string,
+  email: string,
+  isResend = false,
+) {
   try {
     const existingUserwithEmail = await db.user.findUnique({
       where: { email },
     });
 
-    if (existingUserwithEmail) {
+    if (!isResend && existingUserwithEmail) {
       return { success: false, message: "Email already exists" };
     }
 

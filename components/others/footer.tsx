@@ -4,6 +4,7 @@ import {
   IconLocation,
 } from "@tabler/icons-react";
 import { Phone } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -14,7 +15,15 @@ const Footer = () => {
         <div className="container mx-auto px-4 pt-16 pb-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 justify-center m-auto text-center md:text-left">
             <div className="m-auto">
-              <h3 className=" mb-4">Mr. Mard</h3>
+              <Link href="/" className="text-xl font-bold">
+                <Image
+                  src="/logo.png"
+                  alt="Mr. Mard"
+                  className="pb-5"
+                  width={120}
+                  height={50}
+                />
+              </Link>
               <p className="text-sm text-white/80 w-20">
                 Your go to place for all wellness needs
               </p>
@@ -83,7 +92,15 @@ const Footer = () => {
         <div className="container mx-auto px-4 pt-16 pb-10">
           <div className="flex flex-col space-y-10 pb-16 ml-2">
             <div className="">
-              <h3 className=" mb-4">Mr. Mard</h3>
+              <Link href="/" className="text-xl font-bold">
+                <Image
+                  src="/logo.png"
+                  className="pb-5"
+                  alt="Mr. Mard"
+                  width={120}
+                  height={50}
+                />
+              </Link>
               <p className="text-sm text-white/80 ">
                 Your go to place for all wellness needs
               </p>
