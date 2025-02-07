@@ -35,15 +35,16 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   });
 };
 
-export const sendVerificationOTP = async (
-  email: string,
-  otp: number,
-  otpExpires: Date,
-) => {
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: email,
-    subject: "2FA Code",
-    html: `<p>Your verification code: ${otp} and expires in 10 minutes</p>`,
-  });
+export const sendVerificationOTP = async (email: string, otp: number) => {
+  try {
+    await resend.emails.send({
+      from: "uddibhardwaj08@gmail.com",
+      to: email,
+      subject: "2FA Code",
+      html: `<p>Your verification code: ${otp} and expires in 10 minutes</p>`,
+    });
+    return { success: true, message: "OTP sent successfully" };
+  } catch (error) {
+    return { success: false, message: "Failed to send OTP" };
+  }
 };

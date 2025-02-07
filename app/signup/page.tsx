@@ -160,7 +160,7 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="grid min-h-screen space-y-5 text-textGray lg:grid-cols-2 bg-white gap-10 px-5 md:px-12 pb-10 p-5 md:p-10">
+    <div className="grid min-h-screen space-y-5 text-black lg:grid-cols-2 bg-white gap-10 px-5 md:px-12 pb-10 p-5 md:p-10">
       <div>
         <div className="mx-auto max-w-md space-y-6">
           <div className="space-y-4">
