@@ -87,6 +87,14 @@ export const sendOtpRequest = async (
 
   const { otp, otpExpires } = generateOtp();
 
+  const response = await fetch(
+    `https://www.fast2sms.com/dev/bulkV2?authorization=${process?.env.FAST2SMS_API_KEY}&route=dlt&sender_id=MRMOTP&message=179684&variables_values=${otp}%7C&flash=0&numbers=${phone}`,
+  );
+
+  if (!response.ok) {
+    return { success: false, message: "Failed to send OTP" };
+  }
+
   try {
     await db.user.update({
       where: { id: user.id },
@@ -95,7 +103,7 @@ export const sendOtpRequest = async (
         otpExpires,
       },
     });
-    return { success: "OTP sent successfully!" + " " + otp };
+    return { success: "OTP sent successfully!" };
   } catch (error) {
     return { error: "Failed to send OTP" };
   }
