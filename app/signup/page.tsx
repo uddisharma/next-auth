@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useState, useEffect, useTransition } from "react";
-import Link from "next/link";
+import type React from "react";
+import { useState, useEffect, useTransition } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
+import { EmailVerification, VerifyEmail } from "@/actions/email-verification";
+import { regularRegister } from "@/actions/register";
+import { decryptPhoneNumber } from "@/lib/encryption";
+import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Select,
   SelectContent,
@@ -15,11 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "sonner";
-import { EmailVerification, VerifyEmail } from "@/actions/email-verification";
-import { regularRegister } from "@/actions/register";
-import { decryptPhoneNumber } from "@/lib/encryption";
-import { useSearchParams, useRouter } from "next/navigation";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SignupForm() {
   const [isPending, startTransition] = useTransition();
@@ -40,6 +41,7 @@ export default function SignupForm() {
     month: "",
     year: "",
   });
+  const [isResendDisabled, setIsResendDisabled] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -72,6 +74,8 @@ export default function SignupForm() {
         }));
       }, 1000);
       return () => clearTimeout(timer);
+    } else {
+      setIsResendDisabled(false);
     }
   }, [verification.resendTimer]);
 
@@ -80,7 +84,7 @@ export default function SignupForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSendOtp = () => {
+  const handleSendOtp = (isResend = false) => {
     if (!formData.email) {
       return toast.error("Email is required");
     }
@@ -88,7 +92,7 @@ export default function SignupForm() {
     const phone = decryptPhoneNumber(decryptPhone) ?? "";
 
     startTransition(async () => {
-      const res = await EmailVerification(phone, formData.email);
+      const res = await EmailVerification(phone, formData.email, isResend);
       if (res?.success === false) {
         toast.error(res?.message);
       } else {
@@ -97,8 +101,9 @@ export default function SignupForm() {
           ...verification,
           isOtpSent: true,
           isVerified: false,
+          resendTimer: 30,
         });
-        setVerification((prev) => ({ ...prev, resendTimer: 30 }));
+        setIsResendDisabled(true);
       }
     });
   };
@@ -158,9 +163,8 @@ export default function SignupForm() {
       }
     });
   };
-
   return (
-    <div className="grid min-h-screen space-y-5 text-textGray lg:grid-cols-2 bg-white gap-10 px-5 md:px-12 pb-10 p-5 md:p-10">
+    <div className="grid min-h-screen space-y-5 text-black lg:grid-cols-2 bg-white gap-10 px-5 md:px-12 pb-10 p-5 md:p-10">
       <div>
         <div className="mx-auto max-w-md space-y-6">
           <div className="space-y-4">
@@ -205,7 +209,7 @@ export default function SignupForm() {
               <div className="flex justify-end pt-3">
                 <Button
                   className="bg-btnblue hover:bg-btnblue/90 text-white"
-                  onClick={handleSendOtp}
+                  onClick={() => handleSendOtp(false)}
                   disabled={verification.isOtpSent || isPending}
                 >
                   Send Code
@@ -214,7 +218,7 @@ export default function SignupForm() {
             </div>
 
             {verification.isOtpSent && (
-              <div className="space-y-2">
+              <div className="space-y-2 pb-4">
                 <Label htmlFor="otp">Verification Code</Label>
                 <Input
                   id="otp"
@@ -225,7 +229,16 @@ export default function SignupForm() {
                   className="border-btnblue"
                   required
                 />
-                <div className="flex justify-end pt-3">
+                <div className="flex justify-between items-center pt-3">
+                  <Button
+                    className="bg-gray-200 hover:bg-gray-300 text-black"
+                    onClick={() => handleSendOtp(true)}
+                    disabled={isResendDisabled || isPending || !formData?.email}
+                  >
+                    {isResendDisabled
+                      ? `Resend in ${verification.resendTimer}s`
+                      : "Resend OTP"}
+                  </Button>
                   <Button
                     className="bg-btnblue hover:bg-btnblue/90 text-white"
                     onClick={handleVerifyOtp}

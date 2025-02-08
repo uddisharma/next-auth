@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { currentUser } from "@/lib/auth";
 import Logout from "./Logout";
 import Image from "next/image";
+import Image from "next/image";
 
 const Header = async ({ className }: { className?: string }) => {
   const sessions = await currentUser();

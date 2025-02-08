@@ -37,9 +37,15 @@ export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
       },
     });
 
-    // await sendSMS(phone, `Your OTP for signup is: ${otp}`);
+    const response = await fetch(
+      `https://www.fast2sms.com/dev/bulkV2?authorization=${process?.env.FAST2SMS_API_KEY}&route=dlt&sender_id=MRMOTP&message=179684&variables_values=${otp}%7C&flash=0&numbers=${phone}`,
+    );
 
-    return { success: true, message: "OTP sent successfully " + otp };
+    if (!response.ok) {
+      return { success: false, message: "Failed to send OTP" };
+    }
+
+    return { success: true, message: "OTP sent successfully" };
   } catch (error) {
     console.log(error);
     return { success: false, message: "Something went wrong" };
