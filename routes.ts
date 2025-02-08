@@ -9,6 +9,14 @@ export const publicRoutes = [
   "/signup",
   "/signup-details",
   "/otp-verification",
+  "technology",
+  "/about-us",
+  "/blogs",
+  "/contact-us",
+  "/privacy-policy",
+  "/how-it-works",
+  "/report",
+  "/terms-conditions",
 ];
 
 /**
