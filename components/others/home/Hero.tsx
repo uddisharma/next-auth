@@ -35,17 +35,17 @@ const Hero = () => {
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 whileHover={{
                   scale: 1.05,
-                  boxShadow:
-                    "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
+                  boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
                 }}
                 whileTap={{ scale: 0.95 }}
                 style={{
-                  boxShadow:
-                    "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
+                  boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
                 }}
-                className="px-10 py-3 text-white bg-[#1b1139] rounded-[15px] border-t-2 border-t-[#EDDE79] border-b-2 border-b-btnblue/90 font-normal"
+                className="bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[15px] "
               >
-                Get Your Hair Analysis
+                <span className="flex justify-center items-center rounded-[15px] bg-[#1b1139] text-white m-auto py-[10px] w-[245px]">
+                  Get Your Hair Analysis
+                </span>
               </motion.button>
             </Link>
             <Link href="/technology">
@@ -93,17 +93,17 @@ const Hero = () => {
               transition={{ duration: 0.4, ease: "easeOut" }}
               whileHover={{
                 scale: 1.05,
-                boxShadow:
-                  "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
+                boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
               }}
               whileTap={{ scale: 0.95 }}
               style={{
-                boxShadow:
-                  "0px -10px 20px rgba(26, 47, 78, 0.55), 0px 0px 10px rgba(26, 47, 78, 0.45)",
+                boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
               }}
-              className="px-6 py-3 text-white bg-[#1b1139] rounded-[15px] border-t-2 border-t-[#EDDE79] border-b-2 border-b-btnblue/90 font-normal"
+              className="bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[15px] "
             >
-              Get Your Hair Analysis
+              <span className="flex justify-center items-center rounded-[15px] bg-[#1b1139] text-white m-auto py-[13px] w-full px-7">
+                Get Your Hair Analysis
+              </span>
             </motion.button>
           </Link>
         </div>

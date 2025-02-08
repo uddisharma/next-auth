@@ -19,7 +19,7 @@ const testimonials: Testimonial[] = [
   {
     id: 1,
     name: "kotesh",
-    role: "Back-end developer at abc",
+    role: "",
     content:
       "Using Mard’s treatment for 5 months can feel the change in my hair, definitely",
     date: "Mr. Mard user, 18/10/2024",
@@ -28,10 +28,10 @@ const testimonials: Testimonial[] = [
   {
     id: 2,
     name: "Balaji",
-    role: "Back-end developer at abc",
+    role: "",
     content:
       "I got Mard's treatment kit after consulting its doctor , the kit was personalized as per my hair issues and after using it I sawx noticeable hair growth. ",
-    date: "Mr. Mard user, 18/10/2024",
+    date: "Mr. Mard user, 01/12/2024",
     avatar: "/user.png",
   },
 ];
@@ -97,9 +97,9 @@ export default function Testimonials() {
                               <h3 className="font-semibold text-lg">
                                 {testimonial.name}
                               </h3>
-                              <p className="text-sm text-black font-normal">
+                              {/* <p className="text-sm text-black font-normal">
                                 {testimonial.role}
-                              </p>
+                              </p> */}
                             </div>
                             <p className="text-gray-600 mb-4">
                               {testimonial.content}

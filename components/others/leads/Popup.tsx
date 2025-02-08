@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { SubscriptionForm } from "./Form";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import Image from "next/image";
 
 export default function SubscriptionPopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,9 +29,16 @@ export default function SubscriptionPopup() {
           {/* Content */}
           <div className="space-y-8">
             {/* Title */}
-            <h1 className="text-yellow text-4xl md:text-5xl text-center font-serif">
+            {/* <h1 className="text-yellow text-4xl md:text-5xl text-center font-serif">
               Mr. Mard
-            </h1>
+            </h1> */}
+            <Image
+              src="/logo.png"
+              alt="Mr Mard"
+              className="m-auto"
+              width={150}
+              height={100}
+            />
 
             {/* Main Heading */}
             <div className="text-center space-y-2">
