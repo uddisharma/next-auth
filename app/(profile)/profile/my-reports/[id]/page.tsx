@@ -20,6 +20,7 @@ export default async function ReportDetail({ params }: PageProps) {
       userId: sessions.id,
     },
   });
+  await db.$disconnect();
 
   if (!report) {
     notFound();

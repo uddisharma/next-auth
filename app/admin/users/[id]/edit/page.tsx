@@ -32,6 +32,7 @@ export default async function EditUserPage({ params }: PageProps) {
   const user = await db.user.findUnique({
     where: { id: params.id },
   });
+  await db.$disconnect();
 
   if (!user) {
     notFound();

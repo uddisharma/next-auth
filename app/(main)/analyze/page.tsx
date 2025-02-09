@@ -8,6 +8,7 @@ const Page = async () => {
     include: { options: true },
     orderBy: { sequence: "asc" },
   });
+  await db.$disconnect();
 
   return (
     <div>

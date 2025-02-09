@@ -10,6 +10,7 @@ export async function getPermissions(role: UserRole, resource: Resource) {
       },
     },
   });
+  await db.$disconnect();
 
   return (
     permission || {

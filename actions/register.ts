@@ -38,6 +38,7 @@ export const register = async (values: RegisterSchemaData) => {
       password: hashedPassword,
     },
   });
+  await db.$disconnect();
 
   const verificationToken = await generateVerificationToken(email);
   await sendVerificationEmail(verificationToken.email, verificationToken.token);
@@ -92,5 +93,7 @@ export const regularRegister = async (values: RegularRegisterData) => {
     // @ts-ignore
     console.log(error?.message);
     return { success: false, message: "An error occurred. Please try again." };
+  } finally {
+    await db.$disconnect();
   }
 };

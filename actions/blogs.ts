@@ -33,6 +33,7 @@ export async function addBlog(blogData: BlogFormData) {
       authorId: session?.id,
     },
   });
+  await db.$disconnect();
 
   revalidatePath("/admin/blogs");
   return blog;
@@ -61,6 +62,7 @@ export async function updateBlog(id: number, blogData: BlogFormData) {
     where: { id: Number(id) },
     data: validatedData,
   });
+  await db.$disconnect();
 
   revalidatePath("/admin/blogs");
   revalidatePath(`/admin/blogs/${id}`);
@@ -85,10 +87,13 @@ export const getBlogs = unstable_cache(
       return { message: "You don't have permission to read blogs" };
     }
 
-    return db.blog.findMany({
+    const blogs = db.blog.findMany({
       orderBy: { createdAt: "desc" },
       include: { author: true },
     });
+    await db.$disconnect();
+
+    return blogs;
   },
   ["blogs"],
   { revalidate: 60 }, // Revalidate every 60 seconds

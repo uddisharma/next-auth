@@ -32,8 +32,7 @@ export default async function EditBlogPage({ params }: PageProps) {
   const blog = await db.blog.findUnique({
     where: { id: Number(params.id) },
   });
-
-  console.log("content", blog?.content);
+  await db.$disconnect();
 
   if (!blog) {
     notFound();

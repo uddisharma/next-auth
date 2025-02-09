@@ -14,6 +14,7 @@ export default async function ProfilePage() {
   const user = await db.user.findUnique({
     where: { id: session.id },
   });
+  await db.$disconnect();
 
   if (!user) {
     return redirect("/auth");

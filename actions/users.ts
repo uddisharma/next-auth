@@ -53,6 +53,8 @@ export async function addUser(userData: UserFormData) {
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    await db.$disconnect();
   }
 }
 
@@ -79,6 +81,7 @@ export async function updateUser(userId: string, userData: UserFormData) {
     where: { id: userId },
     data: validatedData,
   });
+  await db.$disconnect();
 
   revalidatePath("/admin/users");
   revalidatePath(`/admin/users/${userId}`);
@@ -103,9 +106,11 @@ export const getUsers = unstable_cache(
       return { message: "You don't have permission to read users" };
     }
 
-    return db.user.findMany({
+    const users = await db.user.findMany({
       orderBy: { createdAt: "desc" },
     });
+    await db.$disconnect();
+    return users;
   },
   ["users"],
   { revalidate: 60 }, // Revalidate every 60 seconds

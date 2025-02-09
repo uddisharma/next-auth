@@ -17,6 +17,8 @@ export const getUserByEmailorPhone = async (email: string, phone?: string) => {
     }
   } catch (error) {
     return null;
+  } finally {
+    await db.$disconnect();
   }
 };
 
@@ -27,6 +29,8 @@ export const getUserById = async (id: string) => {
     return user;
   } catch (error) {
     return null;
+  } finally {
+    await db.$disconnect();
   }
 };
 
@@ -37,6 +41,8 @@ export const getUserByPhone = async (phone: string) => {
     return user;
   } catch (error) {
     return null;
+  } finally {
+    await db.$disconnect();
   }
 };
 
@@ -47,5 +53,7 @@ export const getUserByEmail = async (email: string) => {
     return user;
   } catch (error) {
     return null;
+  } finally {
+    await db.$disconnect();
   }
 };

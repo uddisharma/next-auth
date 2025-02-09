@@ -32,5 +32,7 @@ export async function subscribe(values: LeadsSchemaData) {
       return { success: false, message: error.errors[0].message };
     }
     return { success: false, message: "An error occurred. Please try again." };
+  } finally {
+    await db.$disconnect();
   }
 }

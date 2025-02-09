@@ -28,6 +28,7 @@ export async function updateAdminProfile(userId: string, userData: any) {
     where: { id: userId },
     data: userData,
   });
+  await db.$disconnect();
 
   revalidatePath("/admin/profile");
   return updatedUser;

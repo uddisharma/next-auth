@@ -44,6 +44,7 @@ export default async function ViewReportPage({ params }: PageProps) {
       user: true,
     },
   });
+  await db.$disconnect();
 
   if (!report) {
     notFound();

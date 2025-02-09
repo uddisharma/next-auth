@@ -23,5 +23,7 @@ export const Subscribe = async (email: string) => {
     return { success: true, message: "Thanks for subscribing !" };
   } catch (error) {
     return { success: false, message: "Failed to subscribe" };
+  } finally {
+    await db.$disconnect();
   }
 };

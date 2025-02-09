@@ -25,6 +25,7 @@ export async function generateMetadata({
   const blog = await db.blog.findUnique({
     where: { id: Number(params.id) },
   });
+  await db.$disconnect();
 
   if (!blog) {
     return {

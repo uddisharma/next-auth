@@ -28,6 +28,8 @@ export async function updateProfile(userData: any) {
   } catch (error) {
     console.error("Failed to update user:", error);
     return { success: false, message: "Failed to update user" };
+  } finally {
+    await db.$disconnect();
   }
 }
 
@@ -51,6 +53,7 @@ export async function deleteProfile() {
   await db.user.delete({
     where: { id: session.id },
   });
+  await db.$disconnect();
 
   revalidatePath("/profile");
 }
@@ -75,6 +78,8 @@ export async function updateAdminProfile(data: ProfileFormData) {
   } catch (error) {
     console.error("Failed to update user:", error);
     return { success: false, error: "Failed to update user" };
+  } finally {
+    await db.$disconnect();
   }
 }
 
@@ -102,6 +107,8 @@ export async function updateProfilePhoto(
   } catch (error) {
     console.error("Failed to update user:", error);
     return { success: false, error: "Failed to update user" };
+  } finally {
+    await db.$disconnect();
   }
 }
 
@@ -144,5 +151,7 @@ export async function updateProfileEmail(
   } catch (error) {
     console.error("Failed to update user:", error);
     return { success: false, message: "Failed to update user" };
+  } finally {
+    await db.$disconnect();
   }
 }

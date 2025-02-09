@@ -51,6 +51,7 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
   });
 
   const totalleads = await db.leads.count({ where });
+  await db.$disconnect();
   const totalPages = Math.ceil(totalleads / limit);
 
   return (

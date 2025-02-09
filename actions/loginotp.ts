@@ -64,6 +64,8 @@ export const loginOTP = async (values: LoginWithPhoneSchemaData) => {
     }
 
     throw error;
+  } finally {
+    await db.$disconnect();
   }
 };
 
@@ -106,5 +108,7 @@ export const sendOtpRequest = async (
     return { success: "OTP sent successfully!" };
   } catch (error) {
     return { error: "Failed to send OTP" };
+  } finally {
+    await db.$disconnect();
   }
 };

@@ -14,6 +14,7 @@ export default async function MyReportsPage() {
     where: { userId: sessions.id },
     orderBy: { createdAt: "desc" },
   });
+  await db.$disconnect();
 
   return (
     <div className="min-h-screen px-5 md:px-16 pt-5">

@@ -8,6 +8,7 @@ export async function submitContactForm(data: ContactFormData) {
     await db.contactSubmission.create({
       data,
     });
+    await db.$disconnect();
 
     return { success: true, message: "The form was successfully submitted" };
   } catch (error) {

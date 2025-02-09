@@ -73,6 +73,7 @@ export default async function UsersPage({ searchParams }: PageProps) {
   });
 
   const totalUsers = await db.user.count({ where });
+  await db.$disconnect();
   const totalPages = Math.ceil(totalUsers / limit);
 
   return (

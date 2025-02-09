@@ -17,6 +17,7 @@ export async function verifyOTP(userId: string, otp: number): Promise<boolean> {
     where: { id: userId },
     data: { otp: null, otpExpires: null },
   });
+  await db.$disconnect();
 
   return true;
 }

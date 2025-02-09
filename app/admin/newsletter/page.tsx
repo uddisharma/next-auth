@@ -52,6 +52,7 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
   });
 
   const totalNewsletter = await db.newsLetter.count({ where });
+  await db.$disconnect();
   const totalPages = Math.ceil(totalNewsletter / limit);
 
   return (

@@ -48,6 +48,8 @@ export async function EmailVerification(
       return { success: false, message: error.errors[0].message };
     }
     return { success: false, message: "An error occurred. Please try again." };
+  } finally {
+    await db.$disconnect();
   }
 }
 
@@ -69,5 +71,7 @@ export async function VerifyEmail(email: string, otp: string) {
     return { success: true, message: "Email verified successfully" };
   } catch (error) {
     return { success: false, message: "An error occurred. Please try again." };
+  } finally {
+    await db.$disconnect();
   }
 }

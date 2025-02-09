@@ -9,6 +9,8 @@ export const getTwoFactorTokenByToken = async (token: string) => {
     return twoFactorToken;
   } catch (error) {
     return null;
+  } finally {
+    await db.$disconnect();
   }
 };
 
@@ -21,5 +23,7 @@ export const getTwoFactorTokenByEmail = async (email: string) => {
     return twoFactorToken;
   } catch (error) {
     return null;
+  } finally {
+    await db.$disconnect();
   }
 };

@@ -70,6 +70,7 @@ export default async function Blogs({ searchParams }: PageProps) {
 
   const formattedDate = format(latestBlog.createdAt, "dd MMMM yyyy");
   const timeconsume = calculateReadingTime(latestBlog.content);
+  await db.$disconnect();
 
   return (
     <div className="min-h-screen flex flex-col">

@@ -27,6 +27,7 @@ export const generatePasswordResetToken = async (email: string) => {
       expires,
     },
   });
+  await db.$disconnect();
 
   return passwordResetToken;
 };
@@ -52,6 +53,7 @@ export const generateVerificationToken = async (email: string) => {
       expires,
     },
   });
+  await db.$disconnect();
 
   return verificationToken;
 };
@@ -76,6 +78,7 @@ export const generateTwoFactorToken = async (email: string) => {
       expires,
     },
   });
+  await db.$disconnect();
 
   return twoFactorToken;
 };

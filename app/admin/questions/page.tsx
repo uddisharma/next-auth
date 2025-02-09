@@ -58,6 +58,7 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
   });
 
   const totalQuestions = await db.question.count();
+  await db.$disconnect();
   const totalPages = Math.ceil(totalQuestions / limit);
 
   return (

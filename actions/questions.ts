@@ -46,6 +46,7 @@ export async function addQuestion(questionData: QuestionFormValues) {
       },
     },
   });
+  await db.$disconnect();
 
   revalidatePath("/admin/questions");
   return question;
@@ -93,6 +94,7 @@ export async function updateQuestion(
       },
     },
   });
+  await db.$disconnect();
 
   revalidatePath("/admin/questions");
   revalidatePath(`/admin/questions/${id}`);
@@ -117,10 +119,13 @@ export const getQuestions = unstable_cache(
       return { message: "You don't have permission to read questions" };
     }
 
-    return db.question.findMany({
+    const questions = db.question.findMany({
       orderBy: { sequence: "asc" },
       include: { options: true },
     });
+    await db.$disconnect();
+
+    return questions;
   },
   ["questions"],
   { revalidate: 60 }, // Revalidate every 60 seconds

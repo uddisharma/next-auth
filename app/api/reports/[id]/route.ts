@@ -41,5 +41,7 @@ export async function DELETE(
       { error: "Failed to delete report" },
       { status: 500 },
     );
+  } finally {
+    await db.$disconnect();
   }
 }

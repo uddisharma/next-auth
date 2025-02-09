@@ -78,6 +78,7 @@ export default async function ReportsPage({ searchParams }: PageProps) {
   });
 
   const totalReports = await db.report.count({ where });
+  await db.$disconnect();
   const totalPages = Math.ceil(totalReports / limit);
 
   return (

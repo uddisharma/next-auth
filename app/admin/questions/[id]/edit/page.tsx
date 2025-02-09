@@ -33,6 +33,7 @@ export default async function EditQuestionPage({ params }: PageProps) {
     where: { id: parseInt(params.id) },
     include: { options: true },
   });
+  await db.$disconnect();
 
   if (!question) {
     notFound();

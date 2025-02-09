@@ -69,6 +69,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
     orderBy: { createdAt: "desc" },
     include: { author: true },
   });
+  await db.$disconnect();
 
   const totalBlogs = await db.blog.count({ where });
   const totalPages = Math.ceil(totalBlogs / limit);

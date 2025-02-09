@@ -21,6 +21,7 @@ const Blogs = async () => {
       image: true,
     },
   });
+  await db.$disconnect();
 
   return (
     <div className="mt-10 bg-white pb-5 mb-5">

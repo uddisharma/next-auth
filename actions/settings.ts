@@ -66,6 +66,7 @@ export const settings = async (values: SettingsSchemaData) => {
       ...values,
     },
   });
+  await db.$disconnect();
 
   return { success: "Settings Updated!" };
 };

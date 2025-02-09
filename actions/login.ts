@@ -133,5 +133,7 @@ export const login = async (
     }
 
     throw error;
+  } finally {
+    await db.$disconnect();
   }
 };

@@ -70,8 +70,11 @@ export async function getReports() {
     return { message: "You don't have permission to read reports" };
   }
 
-  return db.report.findMany({
+  const reports = await db.report.findMany({
     orderBy: { createdAt: "desc" },
     include: { user: true },
   });
+  await db.$disconnect();
+
+  return reports;
 }

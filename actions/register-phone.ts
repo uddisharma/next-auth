@@ -6,7 +6,6 @@ import {
 } from "@/public/schemas";
 import { db } from "@/lib/db";
 import { generateOtp } from "@/lib/otp";
-import { sendSMS } from "@/lib/sms";
 
 export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
   try {
@@ -49,5 +48,7 @@ export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
   } catch (error) {
     console.log(error);
     return { success: false, message: "Something went wrong" };
+  } finally {
+    await db.$disconnect();
   }
 };
