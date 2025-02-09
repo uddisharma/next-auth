@@ -40,7 +40,7 @@ export default function Sidebar({ role }: { role: string | undefined }) {
           <Image
             src="/logo.png"
             alt="Mr. Mard"
-            className="m-auto"
+            className="ml-3"
             width={120}
             height={50}
           />
