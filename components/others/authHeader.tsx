@@ -1,13 +1,20 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 const AuthHeader = () => {
   return (
     <header className="py-5">
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="  text-xl">
-          Mr. Mard
+        <Link href="/" className="text-xl font-serif font-bold">
+          <Image
+            src="/logo.png"
+            alt="Mr. Mard"
+            className="m-auto"
+            width={120}
+            height={50}
+          />
         </Link>
         <Button
           variant="default"

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 
 const navItems = [
   { icon: Home, label: "Dashboard", href: "/admin/dashboard" },
@@ -36,7 +37,13 @@ export default function Sidebar({ role }: { role: string | undefined }) {
     <div className="w-64 bg-btnblue text-white h-screen flex flex-col fixed left-0">
       <div className="p-6">
         <Link href="/" className="text-xl font-serif font-bold">
-          Mr. Mard
+          <Image
+            src="/logo.png"
+            alt="Mr. Mard"
+            className="m-auto"
+            width={120}
+            height={50}
+          />
         </Link>
       </div>
 

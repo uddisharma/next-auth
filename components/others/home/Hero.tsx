@@ -1,10 +1,31 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const Hero = () => {
+  const [isShaking, setIsShaking] = useState(false);
+
+  useEffect(() => {
+    const shakeButton = () => {
+      setIsShaking(true);
+      const shakeTimeout = setTimeout(() => {
+        setIsShaking(false);
+      }, 2000);
+
+      const pauseTimeout = setTimeout(() => {
+        shakeButton();
+      }, 8000);
+
+      return () => {
+        clearTimeout(shakeTimeout);
+        clearTimeout(pauseTimeout);
+      };
+    };
+
+    shakeButton();
+  }, []);
   return (
     <div className="bg-white pb-8">
       <div
@@ -16,7 +37,6 @@ const Hero = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Left Section */}
         <div className="flex flex-col space-y-8">
           <h1 className="text-[45px] text-btnblue text-left xs:text-center">
             NO MORE{" "}
@@ -29,24 +49,18 @@ const Hero = () => {
           </p>
           <div className="flex flex-col space-y-8 w-[250px] max-w-[250px]">
             <Link href="/analyze">
-              <motion.button
-                initial={{ y: -10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
-                }}
-                whileTap={{ scale: 0.95 }}
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 1.001 }}
                 style={{
                   boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
                 }}
-                className="bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[15px] "
+                className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle ${isShaking ? "animate-shake" : ""}`}
               >
-                <span className="flex justify-center items-center rounded-[15px] bg-[#1b1139] text-white m-auto py-[10px] w-[245px]">
+                <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-[12px] border border-[#1b1139] bg-[linear-gradient(110deg,#0f0f1a,45%,#3a3f56,55%,#0f0f1a)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full ">
                   Get Your Hair Analysis
-                </span>
-              </motion.button>
+                </button>
+              </motion.div>
             </Link>
             <Link href="/technology">
               <button className="px-14 py-[10px] w-[245px] text-[#1b1139] bg-yellow border-black border-[1.5px] rounded-[12px]  hover:opacity-90 font-normal">
@@ -87,24 +101,18 @@ const Hero = () => {
         </p>
         <div className="flex flex-col justify-center items-center space-y-8 w-full pb-5">
           <Link href="/analyze">
-            <motion.button
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
-              }}
-              whileTap={{ scale: 0.95 }}
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 1.001 }}
               style={{
                 boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
               }}
-              className="bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[15px] "
+              className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle ${isShaking ? "animate-shake" : ""}`}
             >
-              <span className="flex justify-center items-center rounded-[15px] bg-[#1b1139] text-white m-auto py-[13px] w-full px-7">
+              <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-[12px] border border-[#1b1139] bg-[linear-gradient(110deg,#0f0f1a,45%,#3a3f56,55%,#0f0f1a)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full ">
                 Get Your Hair Analysis
-              </span>
-            </motion.button>
+              </button>
+            </motion.div>
           </Link>
         </div>
         <div className="bg-white rounded-[30px] overflow-hidden mx-2 mt-5">
