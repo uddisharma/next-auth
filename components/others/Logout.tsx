@@ -29,7 +29,7 @@ const Logout = ({
             alt="Profile"
             width={40}
             height={40}
-            className="rounded-full w-10 h-10 md:w-[40px] md:h-[40px]"
+            className="rounded-[12px] w-10 h-10 md:w-[40px] md:h-[40px]"
           />
         </div>
       </PopoverTrigger>

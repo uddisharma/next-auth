@@ -15,25 +15,25 @@ export async function submitReport(reportData: ReportFormData) {
     return redirect("/auth");
   }
 
-  const hasPermission = await checkPermission(
-    session?.role,
-    Resource.REPORTS,
-    "create",
-  );
+  // const hasPermission = await checkPermission(
+  //   session?.role,
+  //   Resource.REPORTS,
+  //   "create",
+  // );
 
-  if (!hasPermission) {
-    return {
-      success: false,
-      message: "You don't have permission to submit a report",
-    };
-  }
+  // if (!hasPermission) {
+  //   return {
+  //     success: false,
+  //     message: "You don't have permission to submit a report",
+  //   };
+  // }
 
   const validatedData = reportSchema.parse(reportData);
 
   let { questions } = validatedData;
 
   try {
-    const report = await db.report.create({
+    await db.report.create({
       data: {
         userId: session?.id,
         startTime: new Date(),
