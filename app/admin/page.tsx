@@ -31,7 +31,7 @@ async function fetchStats(timeRange: string | null) {
       },
     }),
   ]);
-  await db.$disconnect();
+  // await db.$disconnect();
 
   return { newUsers, reports, questions };
 }
@@ -59,7 +59,7 @@ export default async function Dashboard({
       role: true,
     },
   });
-  await db.$disconnect();
+  // await db.$disconnect();
 
   const { timeRange } = searchParams;
   const stats = await fetchStats(timeRange || null);

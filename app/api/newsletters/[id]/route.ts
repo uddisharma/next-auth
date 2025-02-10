@@ -41,7 +41,5 @@ export async function DELETE(
       { error: "Failed to delete newsletter" },
       { status: 500 },
     );
-  } finally {
-    await db.$disconnect();
   }
 }

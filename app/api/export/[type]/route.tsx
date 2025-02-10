@@ -43,7 +43,5 @@ export async function GET(
       { error: "Failed to export data" },
       { status: 500 },
     );
-  } finally {
-    await db.$disconnect();
   }
 }
