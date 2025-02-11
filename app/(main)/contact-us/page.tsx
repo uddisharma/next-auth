@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Mail, Phone } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ContactFormData, contactSchema } from "@/public/schemas";
+import { ContactFormData, contactSchema } from "@/schemas";
 import { useTransition } from "react";
 import { submitContactForm } from "@/actions/contacts";
 import { toast } from "sonner";

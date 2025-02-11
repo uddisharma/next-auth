@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginSchema, LoginSchemaData } from "@/public/schemas";
+import { LoginSchema, LoginSchemaData } from "@/schemas";
 
 import {
   Form,

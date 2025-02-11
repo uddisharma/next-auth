@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ResetSchema, ResetSchemaData } from "@/public/schemas";
+import { ResetSchema, ResetSchemaData } from "@/schemas";
 
 import {
   Form,

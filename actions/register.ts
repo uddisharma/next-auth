@@ -6,7 +6,7 @@ import {
   RegisterSchemaData,
   RegularRegister,
   RegularRegisterData,
-} from "@/public/schemas";
+} from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmailorPhone, getUserByPhone } from "@/data/user";
 import { generateVerificationToken } from "@/lib/tokens";

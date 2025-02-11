@@ -27,7 +27,7 @@ import {
 import { addQuestion, updateQuestion } from "@/actions/questions";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
-import { QuestionFormValues, QuestionSchema } from "@/public/schemas";
+import { QuestionFormValues, QuestionSchema } from "@/schemas";
 import { Card, CardContent } from "@/components/ui/card";
 import { DragHandleDots2Icon } from "@radix-ui/react-icons";
 

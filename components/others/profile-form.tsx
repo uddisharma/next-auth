@@ -15,8 +15,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
-import { User } from "@/public/schemas/types";
-import { ProfileFormData, ProfileSchema } from "@/public/schemas";
+import { User } from "@/schemas/types";
+import { ProfileFormData, ProfileSchema } from "@/schemas";
 import { updateAdminProfile } from "@/actions/my-profile";
 
 type Props = {

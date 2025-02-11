@@ -16,10 +16,10 @@ export default function GenderSelection({ onNext }: GenderSelectionProps) {
         <h1 className="text-2xl font-bold text-gray-900">
           What is your gender?
         </h1>
-        <p className="text-gray-600">
+        {/* <p className="text-gray-600">
           To get started, let us know your gender to provide insights tailored
           to your unique hair profile.
-        </p>
+        </p> */}
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4">

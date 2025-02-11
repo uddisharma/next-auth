@@ -102,14 +102,14 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
                 <h1 className="text-2xl font-bold text-gray-900">
                   {currentQuestion.text}
                 </h1>
-                <p className="mt-4 text-btnblue font-normal">
+                {/* <p className="mt-4 text-btnblue font-normal">
                   To get started, let us know your gender to provide insights
                   tailored to your unique hair profile.
-                </p>
+                </p> */}
               </div>
 
               <div>
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="grid grid-cols-4 sm:flex-row gap-4">
                   {currentQuestion.questionType === "SINGLE_SELECT" &&
                     currentQuestion.options.map((option) => (
                       <Button

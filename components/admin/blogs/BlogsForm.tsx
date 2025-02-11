@@ -35,7 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categories } from "@/data/categories";
-import { BlogFormData, BlogSchema } from "@/public/schemas";
+import { BlogFormData, BlogSchema } from "@/schemas";
 
 interface BlogFormProps {
   blog?: {

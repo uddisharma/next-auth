@@ -2,7 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
-import { SettingsSchemaData } from "@/public/schemas";
+import { SettingsSchemaData } from "@/schemas";
 import { getUserByEmailorPhone, getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { generateVerificationToken } from "@/lib/tokens";

@@ -7,7 +7,7 @@ import {
   LoginWithPhoneSchemaData,
   PhoneSchema,
   PhoneSchemaData,
-} from "@/public/schemas";
+} from "@/schemas";
 import { getUserByPhone } from "@/data/user";
 import { verifyOTP } from "@/data/verifyOtp";
 import { db } from "@/lib/db";

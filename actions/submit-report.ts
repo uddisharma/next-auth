@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
-import { reportSchema, type ReportFormData } from "@/public/schemas";
+import { reportSchema, type ReportFormData } from "@/schemas";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";

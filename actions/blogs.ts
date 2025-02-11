@@ -2,7 +2,7 @@
 
 import { revalidatePath, unstable_cache } from "next/cache";
 import { db } from "@/lib/db";
-import { BlogSchema, type BlogFormData } from "@/public/schemas";
+import { BlogSchema, type BlogFormData } from "@/schemas";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";

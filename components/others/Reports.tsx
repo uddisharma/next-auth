@@ -28,7 +28,7 @@ export default function ReportsList({ reports }: { reports: Report[] }) {
         <Link href="/analyze">
           <Button size="sm">
             <PlusCircle className="mr-2 h-4 w-4" />
-            New Report
+            Take Test Now
           </Button>
         </Link>
       </CardHeader>

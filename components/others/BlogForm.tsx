@@ -18,7 +18,7 @@ import {
 import { addBlog, updateBlog } from "@/actions/blogs";
 import { toast } from "sonner";
 import { Checkbox } from "../ui/checkbox";
-import { BlogSchema, BlogFormData } from "@/public/schemas";
+import { BlogSchema, BlogFormData } from "@/schemas";
 
 interface BlogFormProps {
   blog?: {

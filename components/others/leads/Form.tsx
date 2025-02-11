@@ -15,7 +15,7 @@ import {
 import { useTransition } from "react";
 import { subscribe } from "@/actions/leads";
 import { toast } from "sonner";
-import { LeadsSchema, LeadsSchemaData } from "@/public/schemas";
+import { LeadsSchema, LeadsSchemaData } from "@/schemas";
 
 export function SubscriptionForm({
   setIsOpen,

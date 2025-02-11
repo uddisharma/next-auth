@@ -24,7 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { userSchema1, userSchema1Data } from "@/public/schemas";
+import { userSchema1, userSchema1Data } from "@/schemas";
 
 interface UserFormProps {
   user?: {

@@ -8,21 +8,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Clock, Calendar, User, HelpCircle, CheckCircle } from "lucide-react";
+import { Clock, Calendar, HelpCircle, CheckCircle } from "lucide-react";
 import { Report } from "@prisma/client";
-
-// recommendation: {
-//     summary: "Overall, the candidate shows strong potential in software development.",
-//     strengths: ["Problem-solving skills", "Knowledge of algorithms", "Communication skills"],
-//     areasForImprovement: ["System design experience", "Familiarity with distributed systems"]
-// },
 
 export default function ReportDetails({ report }: { report: Report }) {
   return (
