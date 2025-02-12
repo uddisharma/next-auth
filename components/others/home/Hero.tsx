@@ -47,7 +47,7 @@ const Hero = () => {
             It’s time to find the solution you can finally trust because you
             deserve results. Never let Hair loss take your confidence
           </p>
-          <div className="flex flex-col space-y-8 w-[250px] max-w-[250px]">
+          <div className="flex flex-col space-y-7 w-[250px] max-w-[250px]">
             <Link href="/analyze">
               <motion.div
                 whileHover={{ scale: 1.01 }}
@@ -62,10 +62,30 @@ const Hero = () => {
                 </button>
               </motion.div>
             </Link>
-            <Link href="/technology">
-              <button className="px-14 py-[10px] w-[245px] text-[#1b1139] bg-yellow border-black border-[1.5px] rounded-[12px]  hover:opacity-90 font-normal">
+            <Link
+              className="min-w-[280px] flex justify-center items-center gap-1 m-auto text-gray-700"
+              href="/technology"
+            >
+              {/* <button className="px-14 py-[10px] w-[245px] text-[#1b1139] bg-yellow border-black border-[1.5px] rounded-[12px]  hover:opacity-90 font-normal">
                 Learn More
-              </button>
+              </button> */}
+              <div className="flex -space-x-2 items-center text-[15px]">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="relative w-10 h-10 rounded-full border-2 border-white overflow-hidden"
+                  >
+                    <Image
+                      src={`/user.png`}
+                      alt={`Customer ${i}`}
+                      width={320}
+                      height={320}
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+              Trusted by 1000+ customers
             </Link>
           </div>
         </div>
