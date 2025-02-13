@@ -40,7 +40,7 @@ export default function SignUpPage() {
       const encryptedPhone = encryptPhoneNumber(data.phoneNumber);
       router.push(`/otp?token=${encryptedPhone}`);
     } catch (error: any) {
-      alert(error.message || "An error occurred.");
+      toast.error(error.message || "An error occurred.");
     }
   };
 

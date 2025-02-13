@@ -3,7 +3,6 @@
 import { RegisterWithOtpSchema, RegisterWithOtpSchemaData } from "@/schemas";
 import { db } from "@/lib/db";
 import { generateOtp } from "@/lib/otp";
-import { sendSMS } from "@/lib/sms";
 
 export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
   try {
