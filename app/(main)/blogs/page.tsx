@@ -2,11 +2,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { checkPermission } from "@/lib/checkPermission";
-import { Resource } from "@prisma/client";
-import { FormError } from "@/components/others/form-error";
+// import { currentUser } from "@/lib/auth";
+// import { redirect } from "next/navigation";
+// import { checkPermission } from "@/lib/checkPermission";
+// import { Resource } from "@prisma/client";
+// import { FormError } from "@/components/others/form-error";
 import { db } from "@/lib/db";
 import { format } from "date-fns";
 import { calculateReadingTime } from "@/lib/calculatetime";
@@ -29,23 +29,23 @@ export default async function Blogs({ searchParams }: PageProps) {
       ? searchParams.category
       : undefined;
 
-  const session = await currentUser();
+  // const session = await currentUser();
 
-  if (!session) {
-    return redirect("/auth");
-  }
+  // if (!session) {
+  //   return redirect("/auth");
+  // }
 
-  const hasPermission = await checkPermission(
-    session?.role,
-    Resource.BLOGS,
-    "read",
-  );
+  // const hasPermission = await checkPermission(
+  //   session?.role,
+  //   Resource.BLOGS,
+  //   "read",
+  // );
 
-  if (!hasPermission) {
-    return (
-      <FormError message="You do not have permission to view this content!" />
-    );
-  }
+  // if (!hasPermission) {
+  //   return (
+  //     <FormError message="You do not have permission to view this content!" />
+  //   );
+  // }
 
   const blogs = await db.blog.findMany({
     where: {
@@ -65,11 +65,10 @@ export default async function Blogs({ searchParams }: PageProps) {
   });
 
   const totalBlogs = await db.blog.count({ where: { published: true } });
-
   const latestBlog = blogs && blogs[0];
 
-  const formattedDate = format(latestBlog.createdAt, "dd MMMM yyyy");
-  const timeconsume = calculateReadingTime(latestBlog.content);
+  const formattedDate = format(latestBlog?.createdAt, "dd MMMM yyyy");
+  const timeconsume = calculateReadingTime(latestBlog?.content);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -201,12 +200,10 @@ export default async function Blogs({ searchParams }: PageProps) {
                 })}
               </div>
             </section>
-
             <Pagination
               totalPages={totalBlogs ? Math.ceil(totalBlogs / limit) : 1}
               currentPage={Number(page)}
             />
-
             <div className="container mx-auto px-4">
               <Separator className="" />
             </div>
