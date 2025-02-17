@@ -1,130 +1,163 @@
+// "use client";
+// import React from "react";
+// import Image from "next/image";
+// export function Chart1() {
+//   return (
+// <div className="bg-white mb-8  md:grid grid-cols-1 lg:grid-cols-2 justify-center gap-10 m-auto md:py-10 hidden">
+//   <Image
+//     src={"/home-chart2.png"}
+//     width={500}
+//     height={500}
+//     alt="Home Chart"
+//     className="m-auto"
+//   />
+//   <Image
+//     src={"/home-chart3.png"}
+//     width={500}
+//     height={500}
+//     alt="Home Chart"
+//     className="m-auto"
+//   />
+// </div>
+//   );
+// }
+
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import * as React from "react";
+import { Bar, BarChart, Label, Pie, PieChart, Sector, XAxis } from "recharts";
+import { PieSectorDataItem } from "recharts/types/polar/Pie";
+import { CardContent } from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartStyle,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Footprints, Waves } from "lucide-react";
+const desktopData = [
+  { month: "january", desktop: 186, fill: "var(--color-january)" },
+  { month: "february", desktop: 305, fill: "var(--color-february)" },
+  { month: "march", desktop: 237, fill: "var(--color-march)" },
+  { month: "april", desktop: 173, fill: "var(--color-april)" },
+  { month: "may", desktop: 209, fill: "var(--color-may)" },
+];
 
-// import { TrendingUp } from "lucide-react";
-// import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-// import { Label, Pie, PieChart } from "recharts";
+const chartConfig = {
+  visitors: {
+    label: "Visitors",
+  },
+  desktop: {
+    label: "Desktop",
+  },
+  mobile: {
+    label: "Mobile",
+  },
+  january: {
+    label: "January",
+    color: "hsl(var(--chart-1))",
+  },
+  february: {
+    label: "February",
+    color: "hsl(var(--chart-2))",
+  },
+  march: {
+    label: "March",
+    color: "hsl(var(--chart-3))",
+  },
+  april: {
+    label: "April",
+    color: "hsl(var(--chart-4))",
+  },
+  may: {
+    label: "May",
+    color: "hsl(var(--chart-5))",
+  },
+} satisfies ChartConfig;
 
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardFooter,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
-// import {
-//   ChartConfig,
-//   ChartContainer,
-//   ChartTooltip,
-//   ChartTooltipContent,
-// } from "@/components/ui/chart";
+export default function Component() {
+  const id = "pie-interactive";
+  const [activeMonth, setActiveMonth] = React.useState(desktopData[0].month);
 
-// const chartData = [
-//   { month: "January", desktop: 186, mobile: 80 },
-//   { month: "February", desktop: 305, mobile: 200 },
-//   { month: "March", desktop: 237, mobile: 120 },
-//   { month: "April", desktop: 73, mobile: 190 },
-//   { month: "May", desktop: 209, mobile: 130 },
-//   { month: "June", desktop: 214, mobile: 140 },
-// ];
+  const activeIndex = React.useMemo(
+    () => desktopData.findIndex((item) => item.month === activeMonth),
+    [activeMonth],
+  );
+  const months = React.useMemo(() => desktopData.map((item) => item.month), []);
 
-// const chartConfig = {
-//   desktop: {
-//     label: "Desktop",
-//     color: "#AAAED6",
-//   },
-//   mobile: {
-//     label: "Mobile",
-//     color: "#1A2F4E",
-//   },
-// } satisfies ChartConfig;
+  const chartData1 = [
+    { date: "2024-07-15", running: 450, swimming: 300 },
+    { date: "2024-07-16", running: 380, swimming: 420 },
+    { date: "2024-07-17", running: 520, swimming: 120 },
+    { date: "2024-07-18", running: 140, swimming: 550 },
+    { date: "2024-07-19", running: 600, swimming: 350 },
+    { date: "2024-07-20", running: 480, swimming: 400 },
+    { date: "2024-07-15", running: 450, swimming: 300 },
+    { date: "2024-07-16", running: 380, swimming: 420 },
+    { date: "2024-07-17", running: 520, swimming: 120 },
+    { date: "2024-07-18", running: 140, swimming: 550 },
+  ];
 
-// const chartData1 = [
-//   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-//   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-//   { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-//   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-//   { browser: "other", visitors: 190, fill: "var(--color-other)" },
-// ];
-
-// const chartConfig1 = {
-//   visitors: {
-//     label: "Visitors",
-//   },
-//   chrome: {
-//     label: "Chrome",
-//     color: "hsl(var(--chart-1))",
-//   },
-//   safari: {
-//     label: "Safari",
-//     color: "hsl(var(--chart-2))",
-//   },
-//   firefox: {
-//     label: "Firefox",
-//     color: "hsl(var(--chart-3))",
-//   },
-//   edge: {
-//     label: "Edge",
-//     color: "hsl(var(--chart-4))",
-//   },
-//   other: {
-//     label: "Other",
-//     color: "hsl(var(--chart-5))",
-//   },
-// } satisfies ChartConfig;
-
-export function Chart1() {
-  // const totalVisitors = React.useMemo(() => {
-  //   return chartData1.reduce((acc, curr) => acc + curr.visitors, 0);
-  // }, []);
+  const chartConfig1 = {
+    running: {
+      label: "Running",
+      color: "hsl(var(--chart-1))",
+      icon: Footprints,
+    },
+    swimming: {
+      label: "Swimming",
+      color: "hsl(var(--chart-2))",
+      icon: Waves,
+    },
+  } satisfies ChartConfig;
 
   return (
-    <div className="bg-white mb-8  md:grid grid-cols-1 lg:grid-cols-2 justify-center gap-10 m-auto md:py-10 hidden">
-      {/* <Card className="w-[95%] md:w-[500px] px-4 h-full m-auto border-none">
-        <CardHeader>
-          <CardTitle>Bar Chart - Multiple</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
-        </CardHeader>
-        <CardContent className="border-none">
-          <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="dashed" />}
-              />
-              <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-              <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
-          <div className="flex gap-2 font-medium leading-none">
-            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-          </div>
-          <div className="leading-none text-muted-foreground">
-            Showing total visitors for the last 6 months
-          </div>
-        </CardFooter>
-      </Card>
-      <Card className="w-[95%] md:w-[500px] px-4 h-full m-auto border-none">
-        <CardHeader className="items-center pb-0">
-          <CardTitle>Expenses</CardTitle>
-        </CardHeader>
-        <CardContent className="flex-1 pb-0">
+    <div className="mb-1 md:grid grid-cols-1 lg:grid-cols-2 justify-center gap-5 m-auto md:py-20 hidden mx-12">
+      <div className="flex flex-col w-full max-w-[550px] h-[400px] m-auto bg-white shadow-lg rounded-lg px-10 justify-center items-center">
+        <ChartContainer
+          config={chartConfig1}
+          className="flex justify-center items-center w-full"
+        >
+          <BarChart accessibilityLayer data={chartData1} barSize={30}>
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => {
+                return new Date(value).toLocaleDateString("en-US", {
+                  weekday: "short",
+                });
+              }}
+            />
+            <Bar
+              dataKey="running"
+              stackId="a"
+              fill="var(--color-running)"
+              radius={[0, 0, 4, 4]}
+            />
+            <Bar
+              dataKey="swimming"
+              stackId="a"
+              fill="var(--color-swimming)"
+              radius={[4, 4, 0, 0]}
+            />
+            <ChartTooltip
+              content={<ChartTooltipContent hideLabel />}
+              cursor={false}
+              defaultIndex={1}
+            />
+          </BarChart>
+        </ChartContainer>
+      </div>
+      <div className="flex flex-col w-full max-w-[550px] h-[400px] m-auto bg-white shadow-lg rounded-lg">
+        <ChartStyle id={id} config={chartConfig} />
+        <CardContent className="flex flex-1 justify-center pb-0">
           <ChartContainer
-            config={chartConfig1}
-            className="mx-auto aspect-square max-h-[250px]"
+            id={id}
+            config={chartConfig}
+            className="mx-auto aspect-square w-full max-w-[300px]"
           >
             <PieChart>
               <ChartTooltip
@@ -132,11 +165,25 @@ export function Chart1() {
                 content={<ChartTooltipContent hideLabel />}
               />
               <Pie
-                data={chartData1}
-                dataKey="visitors"
-                nameKey="browser"
+                data={desktopData}
+                dataKey="desktop"
+                nameKey="month"
                 innerRadius={60}
                 strokeWidth={5}
+                activeIndex={activeIndex}
+                activeShape={({
+                  outerRadius = 0,
+                  ...props
+                }: PieSectorDataItem) => (
+                  <g>
+                    <Sector {...props} outerRadius={outerRadius + 10} />
+                    <Sector
+                      {...props}
+                      outerRadius={outerRadius + 25}
+                      innerRadius={outerRadius + 12}
+                    />
+                  </g>
+                )}
               >
                 <Label
                   content={({ viewBox }) => {
@@ -153,7 +200,7 @@ export function Chart1() {
                             y={viewBox.cy}
                             className="fill-foreground text-3xl font-bold"
                           >
-                            {totalVisitors.toLocaleString()}
+                            {desktopData[activeIndex].desktop.toLocaleString()}
                           </tspan>
                           <tspan
                             x={viewBox.cx}
@@ -171,29 +218,7 @@ export function Chart1() {
             </PieChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex-col gap-2 text-sm">
-          <div className="flex items-center gap-2 font-medium leading-none">
-            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-          </div>
-          <div className="leading-none text-muted-foreground">
-            Showing total visitors for the last 6 months
-          </div>
-        </CardFooter>
-      </Card> */}
-      <Image
-        src={"/home-chart2.png"}
-        width={500}
-        height={500}
-        alt="Home Chart"
-        className="m-auto"
-      />
-      <Image
-        src={"/home-chart3.png"}
-        width={500}
-        height={500}
-        alt="Home Chart"
-        className="m-auto"
-      />
+      </div>
     </div>
   );
 }

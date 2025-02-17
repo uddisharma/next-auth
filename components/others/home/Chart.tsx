@@ -1,23 +1,13 @@
 "use client";
-
-import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import Image from "next/image";
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
   { month: "February", desktop: 305, mobile: 200 },
@@ -38,57 +28,58 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function Chart() {
+export default function Component() {
   return (
-    <div className="bg-white mb-20 px-4 hidden md:block">
-      <h2 className="text-3xl md:text-4xl text-center text-btnblue pt-8">
+    <div className="h-full bg-white pb-1">
+      <h2 className="text-3xl md:text-4xl text-center text-btnblue pt-8 pb-5">
         Track Your Progress
       </h2>
       <div className="relative">
         <div className="h-[65px] w-[65px] bg-yellow rounded-full flex items-center justify-center m-auto absolute top-[30%] left-[15%] right-[80%]"></div>
-        <div className="flex justify-center py-28">
-          <Image
-            src={"/home-chart.png"}
-            width={500}
-            height={500}
-            alt="Home Chart"
-          />
-        </div>
+        <ChartContainer
+          className="m-auto h-[400px] md:w-[530px] my-16"
+          config={chartConfig}
+        >
+          <AreaChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="line" />}
+            />
+            <Area
+              dataKey="mobile"
+              type="natural"
+              fill="var(--color-mobile)"
+              fillOpacity={0.4}
+              stroke="var(--color-mobile)"
+              stackId="a"
+            />
+            <Area
+              dataKey="desktop"
+              type="natural"
+              fill="var(--color-desktop)"
+              fillOpacity={0.4}
+              stroke="var(--color-desktop)"
+              stackId="a"
+            />
+            <ChartLegend content={<ChartLegendContent />} />
+          </AreaChart>
+        </ChartContainer>
       </div>
-      {/* <Card className="max-w-[500px] m-auto border-none">
-        <CardHeader>
-          <CardTitle>Bar Chart - Multiple</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
-        </CardHeader>
-        <CardContent className="border-none">
-          <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="dashed" />}
-              />
-              <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-              <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
-          <div className="flex gap-2 font-medium leading-none">
-            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-          </div>
-          <div className="leading-none text-muted-foreground">
-            Showing total visitors for the last 6 months
-          </div>
-        </CardFooter>
-      </Card> */}
     </div>
   );
 }

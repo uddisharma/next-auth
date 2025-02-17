@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function AIInsightsSection() {
   return (
     <section className="container text-center md:text-left mx-auto px-4 md:px-24">
-      <h2 className="text-3xl md:text-4xl text-center text-btnblue  py-2 md:py-8 mb-8">
+      <h2 className="text-3xl md:text-4xl text-center text-btnblue  py-2 md:py-8 mb-12 bg-white">
         Our Advance AI Modal
       </h2>
       <div className="grid items-center gap-12 lg:grid-cols-2">
