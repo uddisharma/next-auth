@@ -9,12 +9,12 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "January", reports: 186, treatments: 80 },
+  { month: "February", reports: 305, treatments: 200 },
+  { month: "March", reports: 237, treatments: 120 },
+  { month: "April", reports: 73, treatments: 190 },
+  { month: "May", reports: 209, treatments: 130 },
+  { month: "June", reports: 214, treatments: 140 },
 ];
 
 const chartConfig = {
@@ -24,7 +24,7 @@ const chartConfig = {
   },
   mobile: {
     label: "Mobile",
-    color: "hsl(var(--chart-2))",
+    color: "#87cefa",
   },
 } satisfies ChartConfig;
 
@@ -61,7 +61,7 @@ export default function Component() {
               content={<ChartTooltipContent indicator="line" />}
             />
             <Area
-              dataKey="mobile"
+              dataKey="reports"
               type="natural"
               fill="var(--color-mobile)"
               fillOpacity={0.4}
@@ -69,7 +69,7 @@ export default function Component() {
               stackId="a"
             />
             <Area
-              dataKey="desktop"
+              dataKey="treatments"
               type="natural"
               fill="var(--color-desktop)"
               fillOpacity={0.4}

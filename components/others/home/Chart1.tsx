@@ -56,11 +56,11 @@ const chartConfig = {
   },
   january: {
     label: "January",
-    color: "hsl(var(--chart-1))",
+    color: "#Fca510",
   },
   february: {
     label: "February",
-    color: "hsl(var(--chart-2))",
+    color: "#87cefa",
   },
   march: {
     label: "March",
@@ -68,7 +68,7 @@ const chartConfig = {
   },
   april: {
     label: "April",
-    color: "hsl(var(--chart-4))",
+    color: "#87cefa",
   },
   may: {
     label: "May",
@@ -84,30 +84,29 @@ export default function Component() {
     () => desktopData.findIndex((item) => item.month === activeMonth),
     [activeMonth],
   );
-  const months = React.useMemo(() => desktopData.map((item) => item.month), []);
 
   const chartData1 = [
-    { date: "2024-07-15", running: 450, swimming: 300 },
-    { date: "2024-07-16", running: 380, swimming: 420 },
-    { date: "2024-07-17", running: 520, swimming: 120 },
-    { date: "2024-07-18", running: 140, swimming: 550 },
-    { date: "2024-07-19", running: 600, swimming: 350 },
-    { date: "2024-07-20", running: 480, swimming: 400 },
-    { date: "2024-07-15", running: 450, swimming: 300 },
-    { date: "2024-07-16", running: 380, swimming: 420 },
-    { date: "2024-07-17", running: 520, swimming: 120 },
-    { date: "2024-07-18", running: 140, swimming: 550 },
+    { date: "2024-07-15", haircuts: 350, hairTreatments: 190 },
+    { date: "2024-07-16", haircuts: 370, hairTreatments: 120 },
+    { date: "2024-07-17", haircuts: 250, hairTreatments: 180 },
+    { date: "2024-07-18", haircuts: 210, hairTreatments: 140 },
+    { date: "2024-07-19", haircuts: 350, hairTreatments: 160 },
+    { date: "2024-07-20", haircuts: 250, hairTreatments: 130 },
+    { date: "2024-07-21", haircuts: 180, hairTreatments: 110 },
+    { date: "2024-07-22", haircuts: 310, hairTreatments: 150 },
+    { date: "2024-07-23", haircuts: 280, hairTreatments: 100 },
+    { date: "2024-07-24", haircuts: 340, hairTreatments: 170 },
   ];
 
   const chartConfig1 = {
     running: {
       label: "Running",
-      color: "hsl(var(--chart-1))",
+      color: "#Fca510",
       icon: Footprints,
     },
     swimming: {
       label: "Swimming",
-      color: "hsl(var(--chart-2))",
+      color: "#87cefa",
       icon: Waves,
     },
   } satisfies ChartConfig;
@@ -132,13 +131,13 @@ export default function Component() {
               }}
             />
             <Bar
-              dataKey="running"
+              dataKey="haircuts"
               stackId="a"
               fill="var(--color-running)"
               radius={[0, 0, 4, 4]}
             />
             <Bar
-              dataKey="swimming"
+              dataKey="hairTreatments"
               stackId="a"
               fill="var(--color-swimming)"
               radius={[4, 4, 0, 0]}
