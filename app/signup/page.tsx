@@ -351,11 +351,11 @@ export default function SignupForm() {
 
               <div className="text-sm">
                 By creating an account, you agree to the{" "}
-                <Link href="/terms" className="underline">
+                <Link href="/terms-conditions" className="underline">
                   Terms of use
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="underline">
+                <Link href="/privacy-policy" className="underline">
                   Privacy Policy
                 </Link>
                 .
