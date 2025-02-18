@@ -31,7 +31,8 @@ export async function EmailVerification(
 
     const response = await sendVerificationOTP(email, otp);
 
-    if (!response?.success) return response;
+    if (!response?.success)
+      return { success: false, message: "Failed to send OTP" };
 
     await db.user.update({
       where: { phone },
@@ -41,7 +42,7 @@ export async function EmailVerification(
         otpExpires,
       },
     });
-    return { success: true, message: "OTP sent successfully" + " " + otp };
+    return { success: true, message: "OTP sent successfully" };
   } catch (error) {
     // @ts-ignore
     if (error instanceof z.ZodError) {
